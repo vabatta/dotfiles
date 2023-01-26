@@ -1,0 +1,41 @@
+# `sheldon` configuration file
+# ----------------------------
+#
+# You can modify this file directly or you can use one of the following
+# `sheldon` commands which are provided to assist in editing the config file:
+#
+# - `sheldon add` to add a new plugin to the config file
+# - `sheldon edit` to open up the config file in the default editor
+# - `sheldon remove` to remove a plugin from the config file
+#
+# See the documentation for more https://github.com/rossmacarthur/sheldon#readme
+
+[plugins]
+
+[plugins.spaceship]
+github = "spaceship-prompt/spaceship-prompt"
+
+[plugins.spaceship-vi-mode]
+github = "spaceship-prompt/spaceship-vi-mode"
+
+[plugins.zsh-vi-mode]
+github = "jeffreytse/zsh-vi-mode"
+
+[plugins.asdf]
+github = "ohmyzsh/ohmyzsh"
+use = ["plugins/asdf/asdf.plugin.zsh"]
+
+[plugins.fzf-tab]
+github = "Aloxaf/fzf-tab"
+
+[plugins.zsh-npm-scripts-autocomplete]
+github = "grigorii-zander/zsh-npm-scripts-autocomplete"
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+
+[plugins.zsh-autosuggestions]
+github = "zsh-users/zsh-autosuggestions"
+
+[plugins.zsh-completions]
+github = "zsh-users/zsh-completions"

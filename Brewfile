@@ -28,6 +28,7 @@ if OS.mac?
     cask "gswitch" # switch between graphics cards
     cask "betterdisplay" # better external displays support
     cask "gpg-suite-no-mail" # GPG Suite
+    cask "discord" # Discord
 
     # Applications from App Store
     mas "magnet", id: 441258766 # Magnet window manager

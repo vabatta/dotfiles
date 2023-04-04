@@ -4,6 +4,7 @@ if OS.mac?
     # taps
     tap "homebrew/cask"
     tap "homebrew/cask-fonts"
+    tap "homebrew/cask-versions"
 
     brew "mas" # Mac App Store CLI
     brew "noti" # utility to display notifications from scripts

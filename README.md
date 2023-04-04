@@ -4,8 +4,6 @@ This is a personal adaptation of [nicknisi's dotfiles](https://github.com/nickni
 It it basically a stream-lined setup for zsh to accomplish a minimal, but productive, environment with a touch of ol' style grooves with
 [Gruvbox](https://github.com/morhetz/gruvbox-contrib) themes.
 
-![capture-20221204193335](https://user-images.githubusercontent.com/293805/205530265-1d0b1a7f-ae2f-4c22-942c-2a1efa0f83a6.png)
-
 ## Initial setup
 
 The first thing you need to do is to clone this repo into a location of your choosing. For example, if you have a `~/Developer` directory where you clone all of your git repos, that's a good choice for this one, too. This repo is setup to not rely on the location of the dotfiles, so you can place it anywhere.
@@ -61,6 +59,12 @@ The `link` command will create [symbolic links](https://en.wikipedia.org/wiki/Sy
 The `homebrew` command sets up [homebrew](https://brew.sh/) by downloading and running the homebrew installers script. Homebrew is a macOS package manager, but it also work on linux via Linuxbrew. If the script detects that you're installing the dotfiles on linux, it will use that instead. For consistency between operating systems, linuxbrew is set up but you may want to consider an alternate package manager for your particular system.
 
 Once homebrew is installed, it executes the `brew bundle` command which will install the packages listed in the [Brewfile](./Brewfile).
+
+> Note: if you are on MacOS, make sure to be logged in the App Store or it might fail.
+
+```bash
+./install.sh appstore
+```
 
 ### `shell`
 

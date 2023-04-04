@@ -225,6 +225,18 @@ setup_macos() {
     fi
 }
 
+setup_appstore() {
+    title "Configuring App Store"
+
+    if [[ "$(uname)" == "Darwin" ]]; then
+        echo "Sign in to the App Store"
+        open -a "App Store"
+        read -p "Press any key to continue... " -n1 -s
+    else
+        warning "macOS not detected. Skipping."
+    fi
+}
+
 case "$1" in
     backup)
         backup
@@ -238,6 +250,9 @@ case "$1" in
     homebrew)
         setup_homebrew
         ;;
+    appstore)
+        setup_appstore
+        ;;
     shell)
         setup_shell
         ;;
@@ -250,6 +265,7 @@ case "$1" in
     all)
         setup_symlinks
         setup_terminfo
+        setup_appstore
         setup_homebrew
         setup_shell
         setup_git

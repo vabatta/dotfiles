@@ -11,7 +11,7 @@ if OS.mac?
     brew "trash" # rm, but put in the trash rather than completely delete
 
     # Applications from Cask
-    cask "kitty" # a better terminal emulator
+    cask "wezterm" # a better terminal emulator
     cask "imageoptim" # a tool to optimize images
     cask "1password" # 1password
     cask "1password-cli" # 1password cli

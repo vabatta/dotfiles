@@ -1,7 +1,6 @@
 # vim:ft=ruby
 
 if OS.mac?
-    # taps
     tap "homebrew/cask"
     tap "homebrew/cask-fonts"
     tap "homebrew/cask-versions"
@@ -9,6 +8,7 @@ if OS.mac?
     brew "mas" # Mac App Store CLI
     brew "noti" # utility to display notifications from scripts
     brew "trash" # rm, but put in the trash rather than completely delete
+    brew "pinentry-mac" # pinentry for gpg (mac specific)
 
     # Applications from Cask
     cask "wezterm" # a better terminal emulator
@@ -21,18 +21,17 @@ if OS.mac?
     cask "firefox-developer-edition" # Firefox Developer Edition
     cask "google-chrome" # Google Chrome
     cask "visual-studio-code" # Visual Studio Code
-    cask "vlc" # VLC for better video playback
+    cask "vlc" # better video playback
     cask "coconutbattery" # battery status
     cask "spotify" # Spotify
     cask "protonvpn" # ProtonVPN
-    cask "gswitch" # switch between graphics cards
+    cask "gswitch" # switch between graphics cards (for intel/amd)
     cask "betterdisplay" # better external displays support
     cask "gpg-suite-no-mail" # GPG Suite
     cask "discord" # Discord
 
     # Applications from App Store
     mas "magnet", id: 441258766 # Magnet window manager
-    mas "colorslurp", id: 1287239339 # ColorSlurp for color picking
 
     # Fonts
     cask "font-fira-code"
@@ -46,35 +45,42 @@ end
 tap "homebrew/bundle"
 tap "homebrew/core"
 
-# packages
-brew "asdf" # tooling version manager
+# system packages
+brew "zsh" # zsh (latest)
+brew "sheldon" # shell plugin manager
+brew "git" # Git version control (latest version)
+brew "vim" # Vim (latest)
+brew "python" # python (latest)
+brew "gnupg" # gpg (latest)
+brew "wget" # internet file retriever
+brew "tmux" # terminal multiplexer
+
+# system alternatives
+brew "fzf" # fuzzy file searcher, used in scripts and in vim
 brew "bat" # better cat
-brew "cloc" # lines of code counter
-brew "coreutils" # GNU core utilities (latest)
-brew "curl" # curl (latest)
-brew "entr" # file watcher / command runner
 brew "exa" # better ls
-brew "fd" # find alternative
-brew "fzf" # Fuzzy file searcher, used in scripts and in vim
+brew "fd" # better find
+brew "ripgrep" # very fast file searcher
+brew "neovim" # A better vim
+
+# live in the cli
+brew "tree" # pretty-print directory contents
+brew "glow" # markdown viewer
+brew "jq" # json viewer
+brew "cloc" # lines of code counter
+
+# develop in the cli
+brew "asdf" # tooling version manager
+brew "pnpm" # pnpm package manager
 brew "gh" # GitHub CLI
 brew "git-delta" # a better git diff
-brew "git" # Git version control (latest version)
-brew "glow" # markdown viewer
-brew "grep" # grep (latest)
-brew "helix" # a better editor
-brew "highlight" # code syntax highlighting
-brew "htop" # a top alternative
-brew "jq" # work with JSON files in shell scripts
-brew "neofetch" # pretty system info
-brew "neovim" # A better vim
-brew "python" # python (latest)
-brew "ripgrep" # very fast file searcher
-brew "sheldon" # shell plugin manager
-brew "shellcheck" # diagnostics for shell sripts
-brew "tmux" # terminal multiplexer
-brew "tree" # pretty-print directory contents
-brew "vim" # Vim (latest)
+brew "commitizen" # commitizen cli tool for git commits
+
+# other utilities
+brew "entr" # file watcher / command runner
 brew "wdiff" # word differences in text files
-brew "wget" # internet file retriever
 brew "z" # switch between most used directories
-brew "zsh" # zsh (latest)
+
+# system stats
+brew "htop" # a top alternative
+brew "neofetch" # pretty system info

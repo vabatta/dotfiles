@@ -1,0 +1,29 @@
+typeset THEME="light"
+if [[ -z "$1" ]]; then
+  if defaults read -g AppleInterfaceStyle &>/dev/null; then
+    typeset THEME="dark"
+  fi
+else
+  case "$1" in
+    light)
+      typeset THEME="light"
+      ;;
+    dark)
+      typeset THEME="dark"
+      ;;
+  esac
+fi
+
+# Change kitty theme
+typeset KITTY_SOCKET="/tmp/kittyterm.sock"
+typeset KITTY_THEME="gruvbox-${THEME}-soft.conf"
+if [ -S "$KITTY_SOCKET" ]; then
+    # kitty @ --to unix:${KITTY_SOCKET} env THEME=${THEME}
+    kitty @ --to unix:${KITTY_SOCKET} set-colors -a ${DOTFILES}/config/kitty/themes/${KITTY_THEME}
+fi
+
+# Change Terminal theme (safe to inject env as we force value above)
+typeset TERMINAL_THEME="gruvbox-${THEME}"
+osascript -e "tell application \"Terminal\"
+    set current settings of tabs of windows to settings set \"$TERMINAL_THEME\" # Theme name
+end tell"

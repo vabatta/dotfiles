@@ -47,29 +47,29 @@ tap "homebrew/bundle"
 tap "homebrew/core"
 
 # packages
-brew "exa" # better ls
+brew "asdf" # tooling version manager
 brew "bat" # better cat
 brew "cloc" # lines of code counter
-brew "git-delta" # a better git diff
+brew "coreutils" # GNU core utilities (latest)
+brew "curl" # curl (latest)
 brew "entr" # file watcher / command runner
+brew "exa" # better ls
 brew "fd" # find alternative
 brew "fzf" # Fuzzy file searcher, used in scripts and in vim
 brew "gh" # GitHub CLI
-brew "coreutils" # GNU core utilities (latest)
-brew "curl" # curl (latest)
+brew "git-delta" # a better git diff
 brew "git" # Git version control (latest version)
 brew "glow" # markdown viewer
-brew "gnupg" # GPG
 brew "grep" # grep (latest)
+brew "helix" # a better editor
 brew "highlight" # code syntax highlighting
 brew "htop" # a top alternative
 brew "jq" # work with JSON files in shell scripts
 brew "neofetch" # pretty system info
 brew "neovim" # A better vim
-brew "helix" # a better editor
 brew "python" # python (latest)
 brew "ripgrep" # very fast file searcher
-brew "asdf" # tooling version manager
+brew "sheldon" # shell plugin manager
 brew "shellcheck" # diagnostics for shell sripts
 brew "tmux" # terminal multiplexer
 brew "tree" # pretty-print directory contents
@@ -78,4 +78,3 @@ brew "wdiff" # word differences in text files
 brew "wget" # internet file retriever
 brew "z" # switch between most used directories
 brew "zsh" # zsh (latest)
-brew "sheldon" # shell plugin manager

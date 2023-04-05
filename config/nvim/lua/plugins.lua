@@ -43,7 +43,7 @@ require("lazy").setup({
 	{ "nvim-tree/nvim-tree.lua", dependencies = { { "nvim-tree/nvim-web-devicons", opt = true } } }, -- file tree
 	"github/copilot.vim", -- github copilot
 	{ "windwp/nvim-autopairs", config = true }, -- automatically complete brackets/parens/quotes
-	{ "junegunn/fzf.vim", dependencies = { { dir = vim.env.HOMEBREW_PREFIX .. "/opt/fzf" } } }, -- fzf
+	{ "junegunn/fzf.vim", dependencies = { { dir = (vim.env.HOMEBREW_PREFIX or "/opt/homebrew") .. "/opt/fzf" } } }, -- fzf
 	{ "nvim-lualine/lualine.nvim", dependencies = { { "nvim-tree/nvim-web-devicons", opt = true } } }
 })
 

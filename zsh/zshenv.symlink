@@ -9,8 +9,9 @@ export VIM_TMP="$HOME/.vim-tmp"
 export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/config"
 
 # Prefer US English and use UTF-8.
-export LANG='en_US.UTF-8'
-export LC_ALL='en_US.UTF-8'
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
+export GPG_TTY=$(tty)
 
 [[ -d "$CACHEDIR" ]] || mkdir -p "$CACHEDIR"
 [[ -d "$VIM_TMP" ]] || mkdir -p "$VIM_TMP"

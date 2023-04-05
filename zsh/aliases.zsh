@@ -16,8 +16,7 @@ if [[ -x "$(command -v exa)" ]]; then
 else
 	alias ls="ls ${colorflag}"
 fi
-alias l="ls -lah ${colorflag}"
-alias la="ls -AF ${colorflag}"
+alias la="ls -lah ${colorflag}"
 alias ll="ls -lFh ${colorflag}"
 alias lld="ls -l | grep ^d"
 alias rmf="rm -rf"

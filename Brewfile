@@ -16,7 +16,7 @@ if OS.mac?
     cask "1password" # 1password
     cask "1password-cli" # 1password cli
     cask "raycast" # better spotlight instead of alfred
-    cask "caffeine" # prevent sleep
+    cask "keepingyouawake" # prevent sleep
     cask "docker" # Docker
     cask "firefox-developer-edition" # Firefox Developer Edition
     cask "google-chrome" # Google Chrome

@@ -1,17 +1,12 @@
--- setup must be called before loading the colorscheme
-require("gruvbox").setup({
-	contrast = "soft"
-})
-
 -- Set theme based on system theme
 local function set_theme()
 	-- REVIEW: for some reason, this doesn't work all the time
 	-- local system_theme = vim.fn.system("zsh -i -c 'current_theme'")
 	local system_theme = vim.fn.system("zsh -c 'sh $DOTFILES/zsh/functions/current_theme'")
 	if system_theme == "dark" then
-		vim.o.background = "dark"
+		vim.opt.background = "dark"
 	else
-		vim.o.background = "light"
+		vim.opt.background = "light"
 	end
 end
 
@@ -25,4 +20,14 @@ vim.api.nvim_create_autocmd("Signal", {
 -- Call on load
 set_theme()
 
-vim.cmd([[colorscheme gruvbox]])
+return {
+  colorscheme = "gruvbox",
+
+  -- highlights = {
+  --   gruvbox = {
+  --     StatusLine = { fg = "#ebdbb2", bg = "#504945" },
+  --   },
+  -- },
+
+  plugins = {},
+}

@@ -150,20 +150,14 @@ brew install neovim
 
 However, it was likely installed already if you ran the `./install.sh brew` command provided in the dotfiles.
 
-All of the configuration for Neovim starts at `config/nvim/init.lua`, which is symlinked into the `~/.config/nvim` directory.
+All of the configuration for Neovim are managed using [AstroNvim](https://github.com/AstroNvim/AstroNvim).
+The base configuration is symlinked into the `~/.config/nvim` directory, and then the rest of the configuration is managed by AstroNvim.
+The directory for customization starts at `config/astronvim/lua/user`, which is symlinked into the `~/.config/astronvim` directory.
+
+Read the docs at [AstroNvim](https://github.com/AstroNvim/AstroNvim).
 
 > **Warning**
 > The first time you run `nvim` with this configuration, it will likely have a lot of errors. This is because it is dependent on a number of plugins being installed.
-
-### Installing plugins
-
-On the first run, all required plugins should automaticaly by installed by
-[lazy.nvim](https://github.com/folke/lazy.nvim), a plugin manager for neovim.
-
-All plugins are listed in [plugins.lua](./config/nvim/lua/plugins.lua). When a plugin is added, it will automatically be installed by lazy.nvim. To interface with lazy.nvim, simply run `:Lazy` from within vim.
-
-> **Note**
-> Plugins can be synced in a headless way from the command line using the `vimu` alias.
 
 ## tmux configuration
 
@@ -224,7 +218,7 @@ This will open a bash shell in the container which can then be used to manually 
 I almost exclusively work on macOS, so this list will be specific to that operating system, but several of these
 reccomendations are also available, cross-platform.
 
-- [Kitty](https://sw.kovidgoyal.net/kitty/) - A GPU-based terminal emulator
+- [WezTerm](https://wezfurlong.org/wezterm/index.html) - A GPU-based terminal emulator
 
 ## Credits
 

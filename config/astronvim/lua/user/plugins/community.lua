@@ -1,7 +1,7 @@
 return {
   "AstroNvim/astrocommunity",
   { import = "astrocommunity.pack.rust" },
-  { import = "astrocommunity.colorscheme.gruvbox", enabled = true },
+  { import = "astrocommunity.colorscheme.gruvbox-nvim", enabled = true },
   {
     "gruvbox.nvim",
     as = "gruvbox",

@@ -23,11 +23,5 @@ set_theme()
 return {
   colorscheme = "gruvbox",
 
-  -- highlights = {
-  --   gruvbox = {
-  --     StatusLine = { fg = "#ebdbb2", bg = "#504945" },
-  --   },
-  -- },
-
   plugins = {},
 }

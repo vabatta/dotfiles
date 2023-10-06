@@ -21,6 +21,9 @@ alias ll="ls -lFh ${colorflag}"
 alias lld="ls -l | grep ^d"
 alias rmf="rm -rf"
 
+# Don't have me think about vim or nvim
+alias vim=nvim
+
 # Utilities
 alias bb='brew update && brew upgrade'
 

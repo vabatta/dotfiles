@@ -1,6 +1,15 @@
 local wezterm = require 'wezterm'
 local config = {}
-require('theme')
+
+function scheme_for_appearance(appearance)
+	if appearance:find "Dark" then
+		return "Catppuccin Mocha"
+	else
+		return "Catppuccin Latte"
+	end
+end
+
+config.color_scheme = scheme_for_appearance(wezterm.gui.get_appearance())
 
 config.font = wezterm.font 'FiraCode Nerd Font Mono'
 config.font_size = 13.0

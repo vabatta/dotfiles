@@ -1,8 +1,8 @@
 # Dotfiles
 
 This is a personal adaptation of [nicknisi's dotfiles](https://github.com/nicknisi/dotfiles/) to better suit my needs and my setup.
-It it basically a stream-lined setup for zsh to accomplish a minimal, but productive, environment with a touch of ol' style grooves with
-[Gruvbox](https://github.com/morhetz/gruvbox-contrib) themes.
+Originally with a touch of ol' style grooves with [Gruvbox](https://github.com/morhetz/gruvbox-contrib) themes.
+Testing out [Catppuccin](https://github.com/catppuccin/catppuccin).
 
 ## Initial setup
 
@@ -150,11 +150,8 @@ brew install neovim
 
 However, it was likely installed already if you ran the `./install.sh brew` command provided in the dotfiles.
 
-All of the configuration for Neovim are managed using [AstroNvim](https://github.com/AstroNvim/AstroNvim).
-The base configuration is symlinked into the `~/.config/nvim` directory, and then the rest of the configuration is managed by AstroNvim.
-The directory for customization starts at `config/astronvim/lua/user`, which is symlinked into the `~/.config/astronvim` directory.
-
-Read the docs at [AstroNvim](https://github.com/AstroNvim/AstroNvim).
+All of the configuration for Neovim are managed using [LazyVim](https://github.com/LazyVim/LazyVim).
+The configuration is symlinked into the `~/.config/nvim` directory.
 
 > **Warning**
 > The first time you run `nvim` with this configuration, it will likely have a lot of errors. This is because it is dependent on a number of plugins being installed.

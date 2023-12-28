@@ -62,6 +62,7 @@ brew "exa" # better ls
 brew "fd" # better find
 brew "ripgrep" # very fast file searcher
 brew "neovim" # A better vim
+brew "lazygit" # a better git ui
 
 # live in the cli
 brew "tree" # pretty-print directory contents
@@ -83,5 +84,6 @@ brew "wdiff" # word differences in text files
 brew "z" # switch between most used directories
 
 # system stats
+brew "bottom" # a top alternative with integrations
 brew "htop" # a top alternative
 brew "neofetch" # pretty system info

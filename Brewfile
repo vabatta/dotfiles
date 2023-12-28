@@ -50,7 +50,6 @@ brew "zsh" # zsh (latest)
 brew "sheldon" # shell plugin manager
 brew "git" # Git version control (latest version)
 brew "vim" # Vim (latest)
-brew "python" # python (latest)
 brew "gnupg" # gpg (latest)
 brew "wget" # internet file retriever
 brew "tmux" # terminal multiplexer
@@ -63,6 +62,10 @@ brew "fd" # better find
 brew "ripgrep" # very fast file searcher
 brew "neovim" # A better vim
 brew "lazygit" # a better git ui
+
+# languages
+brew "python" # python
+brew "go" # go language
 
 # live in the cli
 brew "tree" # pretty-print directory contents

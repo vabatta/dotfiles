@@ -120,12 +120,6 @@ export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
 export LESS_TERMCAP_mr=$(tput rev)
 export LESS_TERMCAP_mh=$(tput dim)
 
-# source z.sh if it exists
-zpath="$(brew --prefix)/etc/profile.d/z.sh"
-if [ -f "$zpath" ]; then
-	zvm_after_init_commands+=("source $zpath")
-fi
-
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"

@@ -1,8 +1,8 @@
 # Dotfiles
 
-This is a personal adaptation of [nicknisi's dotfiles](https://github.com/nicknisi/dotfiles/) to better suit my needs and my setup.
-Originally with a touch of ol' style grooves with [Gruvbox](https://github.com/morhetz/gruvbox-contrib) themes.
-Testing out [Catppuccin](https://github.com/catppuccin/catppuccin).
+This is a personal adaptation of [nicknisi's dotfiles](https://github.com/nicknisi/dotfiles/) to better suit my needs and my setup.  
+Originally with a touch of ol' style grooves with [Gruvbox](https://github.com/morhetz/gruvbox-contrib) themes.  
+Now testing out [Catppuccin](https://github.com/catppuccin/catppuccin).
 
 ## Initial setup
 
@@ -125,13 +125,14 @@ The prompt for ZSH is configured in the `zshrc.symlink` file and performs the fo
 
 ### ZSH plugins
 
-There are a number of plugins in use for ZSH, and they are installed and maintained separately via the `sheldon` manager. `Sheldon` is a plugin manager available [here](https://github.com/rossmacarthur/sheldon). The plugins that are used are listed in the `.config/sheldon` and include
+There are a number of plugins in use for ZSH, and they are installed and maintained separately via the `sheldon` manager. `Sheldon` is a plugin manager available [here](https://github.com/rossmacarthur/sheldon).  
+The plugins that are used are listed in the `.config/sheldon` and include
 
 - [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting)
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
 - [zsh-completions](https://github.com/zsh-users/zsh-completions)
-- [zsh-npm-scripts-autocomplete](https://github.com/grigorii-zander/zsh-npm-scripts-autocomplete)
 - [fzf-tab](https://github.com/Aloxaf/fzf-tab)
+- and more...
 
 ### Prompt
 

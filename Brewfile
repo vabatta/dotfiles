@@ -52,6 +52,7 @@ brew "python" # python (latest)
 brew "git" # Git version control (latest)
 brew "vim" # Vim (latest)
 brew "gnupg" # gpg (latest)
+brew "make" # make (latest)
 brew "sheldon" # shell plugin manager
 brew "wget" # internet file retriever
 brew "tmux" # terminal multiplexer
@@ -62,25 +63,24 @@ brew "bat" # better cat
 brew "eza" # better ls
 brew "fd" # better find
 brew "ripgrep" # very fast file searcher
+
+# live & develop in the cli
 brew "neovim" # A better vim
 brew "lazygit" # a better git ui
-
-# live in the cli
+brew "rtx" # tooling version manager
+brew "gh" # GitHub CLI
+brew "commitizen" # commitizen cli tool for git commits
 brew "tree" # pretty-print directory contents
 brew "glow" # markdown viewer
 brew "jq" # json viewer
 brew "cloc" # lines of code counter
 
-# develop in the cli
-brew "rtx" # tooling version manager
-brew "gh" # GitHub CLI
-brew "git-lfs" # git large files handler
-brew "commitizen" # commitizen cli tool for git commits
-
 # other utilities
 brew "entr" # file watcher / command runner
 brew "wdiff" # word differences in text files
-brew "z" # switch between most used directories
+brew "zoxide" # switch between most used directories
+brew "tree-sitter" # better syntax highlighting library
+brew "git-lfs" # git large files handler
 
 # system stats
 brew "bottom" # a top alternative with integrations

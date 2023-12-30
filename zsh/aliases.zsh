@@ -9,9 +9,9 @@ alias .....="cd ../../../.."
 alias cdp='cd ~/Projects'
 alias cdd='cd ~/Downloads'
 
-# use exa if available
-if [[ -x "$(command -v exa)" ]]; then
-	alias ls='exa'
+# use eza if available
+if [[ -x "$(command -v eza)" ]]; then
+	alias ls='eza'
 	unset colorflag
 else
 	alias ls="ls ${colorflag}"

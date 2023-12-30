@@ -1,6 +1,6 @@
 typeset THEME=${THEME:-"light"}
 if [[ "$(uname)" == "Darwin" ]]; then
-    typeset THEME=$((defaults read -g AppleInterfaceStyle 2>/dev/null || echo 'Light') | tr '[:upper:]' '[:lower:]')
+	typeset THEME=$((defaults read -g AppleInterfaceStyle 2>/dev/null || echo 'Light') | tr '[:upper:]' '[:lower:]')
 fi
 
 # sanitize theme value

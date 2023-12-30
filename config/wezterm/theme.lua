@@ -9,7 +9,7 @@ wezterm.on('window-config-reloaded', function(window, pane)
 		overrides.colors = {
 			tab_bar = {
 				background = '#32302F',
-				
+
 				active_tab = {
 					bg_color = '#685C53',
 					fg_color = '#D9C39D',
@@ -45,7 +45,7 @@ wezterm.on('window-config-reloaded', function(window, pane)
 		overrides.colors = {
 			tab_bar = {
 				background = '#F5E4B7',
-				
+
 				active_tab = {
 					bg_color = '#D9C39D',
 					fg_color = '#32302F',

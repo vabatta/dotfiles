@@ -77,7 +77,6 @@ brew "cloc" # lines of code counter
 brew "asdf" # tooling version manager
 brew "pnpm" # pnpm package manager
 brew "gh" # GitHub CLI
-brew "git-delta" # a better git diff
 brew "git-lfs" # git large files handler
 brew "commitizen" # commitizen cli tool for git commits
 

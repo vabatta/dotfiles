@@ -137,6 +137,10 @@ There are a number of plugins in use for ZSH, and they are installed and maintai
 
 Uses [Spaceship prompt](https://spaceship-prompt.sh/).
 
+## Git Configuration
+
+A `~/.gitconfig.local` file is sourced if available for any local git configuration that should not be committed into the dotfiles git repo.
+
 ## Neovim setup
 
 > **Note**

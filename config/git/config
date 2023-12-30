@@ -4,7 +4,7 @@
 [include]
 	# A local gitconfig, outside of version control.
 	# If the file doesn't exist it is silently ignored
-	path = ~/.gitconfig-local
+	path = ~/.gitconfig.local
 [alias]
 	# list all aliases
 	la = "!git config -l | grep alias | cut -c 7-"
@@ -153,3 +153,8 @@
 [rebase]
 	instructionFormat = "[%an - %ar] %s"
 	autoStash = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

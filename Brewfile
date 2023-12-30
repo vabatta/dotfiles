@@ -7,8 +7,10 @@ if OS.mac?
 	cask "1password" # 1password
 	cask "1password-cli" # 1password cli
 	cask "raycast" # better spotlight instead of alfred
+	cask "shortcat" # keyboard shortcuts for everything
 	cask "google-chrome" # Google Chrome
 	cask "discord" # Discord
+	cask "slack" # Slack
 	cask "protonvpn" # ProtonVPN
 	cask "vlc" # better video playback
 	cask "spotify" # Spotify
@@ -22,6 +24,7 @@ if OS.mac?
 	cask "betterdisplay" # better external displays support
 	cask "coconutbattery" # battery status
 	cask "imageoptim" # a tool to optimize images
+	cask "handbrake" # a tool to convert videos
 	cask "gswitch" # switch between graphics cards (for intel/amd)
 
 	# Development applications
@@ -29,15 +32,15 @@ if OS.mac?
 	cask "docker" # Docker
 	cask "firefox-developer-edition" # Firefox Developer Edition
 	cask "visual-studio-code" # Visual Studio Code
+	cask "responsively" # a tool to develop responsive websites
+	cask "figma" # Figma
 
 	# Applications from App Store
 	mas "magnet", id: 441258766 # Magnet window manager
 
 	# Fonts
 	tap "homebrew/cask-fonts"
-	cask "font-fira-code"
 	cask "font-fira-code-nerd-font"
-	cask "font-jetbrains-mono"
 	cask "font-jetbrains-mono-nerd-font"
 elsif OS.linux?
 	brew "xclip" # access to clipboard (similar to pbcopy/pbpaste)

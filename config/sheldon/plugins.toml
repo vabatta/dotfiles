@@ -10,6 +10,8 @@
 #
 # See the documentation for more https://github.com/rossmacarthur/sheldon#readme
 
+shell = "zsh"
+
 [plugins]
 
 [plugins.spaceship]
@@ -20,10 +22,6 @@ github = "spaceship-prompt/spaceship-vi-mode"
 
 [plugins.zsh-vi-mode]
 github = "jeffreytse/zsh-vi-mode"
-
-[plugins.asdf]
-github = "ohmyzsh/ohmyzsh"
-use = ["plugins/asdf/asdf.plugin.zsh"]
 
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
@@ -39,3 +37,13 @@ github = "zsh-users/zsh-autosuggestions"
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
+
+[plugins.1password]
+github = "ohmyzsh/ohmyzsh"
+branch = "master"
+use = ["plugins/1password/1password.plugin.zsh"]
+
+[plugins.rtx]
+github = "ohmyzsh/ohmyzsh"
+branch = "master"
+use = ["plugins/rtx/rtx.plugin.zsh"]

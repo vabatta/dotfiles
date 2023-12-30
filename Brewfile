@@ -48,10 +48,11 @@ end
 
 # system packages
 brew "zsh" # zsh (latest)
-brew "sheldon" # shell plugin manager
-brew "git" # Git version control (latest version)
+brew "python" # python (latest)
+brew "git" # Git version control (latest)
 brew "vim" # Vim (latest)
 brew "gnupg" # gpg (latest)
+brew "sheldon" # shell plugin manager
 brew "wget" # internet file retriever
 brew "tmux" # terminal multiplexer
 
@@ -64,10 +65,6 @@ brew "ripgrep" # very fast file searcher
 brew "neovim" # A better vim
 brew "lazygit" # a better git ui
 
-# languages
-brew "python" # python
-brew "go" # go language
-
 # live in the cli
 brew "tree" # pretty-print directory contents
 brew "glow" # markdown viewer
@@ -75,8 +72,7 @@ brew "jq" # json viewer
 brew "cloc" # lines of code counter
 
 # develop in the cli
-brew "asdf" # tooling version manager
-brew "pnpm" # pnpm package manager
+brew "rtx" # tooling version manager
 brew "gh" # GitHub CLI
 brew "git-lfs" # git large files handler
 brew "commitizen" # commitizen cli tool for git commits

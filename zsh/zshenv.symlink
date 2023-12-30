@@ -19,9 +19,9 @@ export GPG_TTY=$(tty)
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
 
 fpath=(
-    $DOTFILES/zsh/functions
-    /usr/local/share/zsh/site-functions
-    $fpath
+	$DOTFILES/zsh/functions
+	/usr/local/share/zsh/site-functions
+	$fpath
 )
 
 typeset -aU path

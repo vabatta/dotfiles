@@ -48,9 +48,7 @@ end
 
 # system packages
 brew "zsh" # zsh (latest)
-brew "python" # python (latest)
 brew "git" # Git version control (latest)
-brew "vim" # Vim (latest)
 brew "gnupg" # gpg (latest)
 brew "make" # make (latest)
 brew "sheldon" # shell plugin manager
@@ -69,7 +67,6 @@ brew "neovim" # A better vim
 brew "lazygit" # a better git ui
 brew "rtx" # tooling version manager
 brew "gh" # GitHub CLI
-brew "commitizen" # commitizen cli tool for git commits
 brew "tree" # pretty-print directory contents
 brew "glow" # markdown viewer
 brew "jq" # json viewer
@@ -81,6 +78,8 @@ brew "wdiff" # word differences in text files
 brew "zoxide" # switch between most used directories
 brew "tree-sitter" # better syntax highlighting library
 brew "git-lfs" # git large files handler
+brew "parallel" # parallelize shell commands
+brew "noti" # display notifications from scripts
 
 # system stats
 brew "bottom" # a top alternative with integrations

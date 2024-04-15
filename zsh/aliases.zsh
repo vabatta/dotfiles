@@ -1,6 +1,9 @@
 # reload zsh config
 alias reload!='RELOAD=1 source ~/.zshrc'
 
+# Alias using zoxide
+alias cd='z'
+
 # Filesystem aliases
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -17,7 +20,7 @@ else
 	alias ls="ls ${colorflag}"
 fi
 alias la="ls -lah ${colorflag}"
-alias ll="ls -lFh ${colorflag}"
+alias ll="ls -lh ${colorflag}"
 alias lld="ls -l | grep ^d"
 alias rmf="rm -rf"
 

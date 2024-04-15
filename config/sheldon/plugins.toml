@@ -43,10 +43,10 @@ github = "ohmyzsh/ohmyzsh"
 branch = "master"
 use = ["plugins/1password/1password.plugin.zsh"]
 
-[plugins.rtx]
+[plugins.mise]
 github = "ohmyzsh/ohmyzsh"
 branch = "master"
-use = ["plugins/rtx/rtx.plugin.zsh"]
+use = ["plugins/mise/mise.plugin.zsh"]
 
 [plugins.zoxide]
 github = "ohmyzsh/ohmyzsh"

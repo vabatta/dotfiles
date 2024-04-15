@@ -1,4 +1,11 @@
-# 💤 LazyVim
+# Structure
 
-A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
-Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
+Everything is written in Lua.
+
+## Directories
+
+- `plugins/` - Plugins loading
+- `keymaps/` - Keymaps for plugins
+- `configs/` - Configuration for plugins
+- `autocmds/` - Autocommands
+- `utils/` - Utility functions

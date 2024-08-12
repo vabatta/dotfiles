@@ -1,5 +1,47 @@
 vim.g.mapleader = " "
-vim.g.maplocalleader = "\\"
+vim.g.maplocalleader = " "
+
+-- Disable menu loading
+vim.g.did_install_default_menus = 1
+vim.g.did_install_syntax_menu = 1
+
+vim.g.loaded_syntax_completion = 1 -- Do not load native syntax completion
+vim.g.loaded_spellfile_plugin = 1 -- Do not load spell files
+vim.g.loaded_2html_plugin = 1 -- Do not load tohtml.vim
+
+-- Whether to load netrw by default
+-- vim.g.loaded_netrw = 1
+-- vim.g.loaded_netrwFileHandlers = 1
+-- vim.g.loaded_netrwPlugin = 1
+-- vim.g.loaded_netrwSettings = 1
+-- newtrw liststyle: https://medium.com/usevim/the-netrw-style-options-3ebe91d42456
+vim.g.netrw_banner = 0
+vim.g.netrw_liststyle = 3
+
+-- Do not load zipPlugin.vim, gzip.vim and tarPlugin.vim (all of these plugins are
+-- related to reading files inside compressed containers)
+vim.g.loaded_gzip = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_vimball = 1
+vim.g.loaded_vimballPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_zipPlugin = 1
+
+-- Do not use builtin matchit.vim and matchparen.vim because we're using vim-matchup
+vim.g.loaded_matchit = 1
+vim.g.loaded_matchparen = 1
+
+vim.g.loaded_sql_completion = 1 -- Disable sql omni completion
+
+vim.g.editorconfig = 1 -- Enable native EditorConfig support
+vim.g.markdown_recommended_style = 0 -- Fix markdown indentation settings
+
+-- Disable remote plugins
+-- NOTE:
+--  > Disabling rplugin.vim will make `wilder.nvim` complain about missing rplugins during :checkhealth,
+--  > but since it's config doesn't require python rtp (strictly), it's fine to ignore that for now.
+vim.g.loaded_remote_plugins = 1
 
 local opt = vim.opt
 
@@ -15,6 +57,7 @@ opt.completeopt = "menu,menuone,noselect"
 opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
 opt.confirm = true -- Confirm to save changes before exiting modified buffer
 opt.cursorline = true -- Enable highlighting of the current line
+opt.cursorcolumn = true -- Enable highlighting of the current column
 opt.expandtab = true -- Use spaces instead of tabs
 opt.formatoptions = "jcroqlnt" -- tcqj
 opt.grepformat = "%f:%l:%c:%m"
@@ -23,7 +66,7 @@ opt.ignorecase = true -- Ignore case
 opt.inccommand = "nosplit" -- preview incremental substitute
 opt.laststatus = 3 -- global statusline
 opt.linebreak = true -- Wrap long lines at a character in 'breakat'
-opt.list = true -- Show some invisible characters (tabs...
+opt.list = true -- Show some invisible characters (tabs...)
 opt.mouse = "a" -- Enable mouse mode
 opt.number = true -- Print line number
 opt.pumblend = 10 -- Popup blend
@@ -60,14 +103,11 @@ opt.winminwidth = 5 -- Minimum window width
 opt.wrap = false -- Disable line wrap
 
 opt.fillchars = { foldopen = "", foldclose = "", fold = " ", foldsep = " ", diff = "╱", eob = " " }
-opt.listchars = { space = "·", tab = "→ ", eol = "¬", trail = "⋅", extends = "❯", precedes = "❮" }
+opt.listchars = { space = "·", tab = "→ ", eol = "↵", trail = "⋅", extends = "❯", precedes = "❮" }
 
 if vim.fn.has("nvim-0.10") == 1 then
 	opt.smoothscroll = true
 end
-
--- Fix markdown indentation settings
-vim.g.markdown_recommended_style = 0
 
 -- coloring
 local system_theme = function()

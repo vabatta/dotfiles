@@ -30,7 +30,7 @@ if OS.mac?
 	# Development applications
 	cask "wezterm" # a better terminal emulator
 	cask "docker" # Docker
-	cask "firefox-developer-edition" # Firefox Developer Edition
+	cask "firefox@developer-edition" # Firefox Developer Edition
 	cask "visual-studio-code" # Visual Studio Code
 	cask "responsively" # a tool to develop responsive websites
 	cask "figma" # Figma
@@ -39,7 +39,6 @@ if OS.mac?
 	mas "magnet", id: 441258766 # Magnet window manager
 
 	# Fonts
-	tap "homebrew/cask-fonts"
 	cask "font-fira-code-nerd-font"
 	cask "font-jetbrains-mono-nerd-font"
 elsif OS.linux?
@@ -65,7 +64,7 @@ brew "ripgrep" # very fast file searcher
 # live & develop in the cli
 brew "neovim" # A better vim
 brew "lazygit" # a better git ui
-brew "rtx" # tooling version manager
+brew "mise" # tooling version manager
 brew "gh" # GitHub CLI
 brew "tree" # pretty-print directory contents
 brew "glow" # markdown viewer

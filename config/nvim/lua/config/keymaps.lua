@@ -14,12 +14,6 @@ local core_map = {
 	["n|n"] = map_cmd("nzzzv"):with_noremap():with_desc("edit: Next search result"),
 	["n|N"] = map_cmd("Nzzzv"):with_noremap():with_desc("edit: Prev search result"),
 	["n|J"] = map_cmd("mzJ`z"):with_noremap():with_desc("edit: Join next line"),
-	-- ["n|<Esc>"] = map_callback(function()
-	-- 		_flash_esc_or_noh()
-	-- 	end)
-	-- 	:with_noremap()
-	-- 	:with_silent()
-	-- 	:with_desc("edit: Clear search highlight"),
 	["n|<C-h>"] = map_cmd("<C-w>h"):with_noremap():with_desc("window: Focus left"),
 	["n|<C-l>"] = map_cmd("<C-w>l"):with_noremap():with_desc("window: Focus right"),
 	["n|<C-j>"] = map_cmd("<C-w>j"):with_noremap():with_desc("window: Focus down"),
@@ -133,18 +127,6 @@ local telescope_map = {
 		:with_noremap()
 		:with_silent()
 		:with_desc("edit: Show undo history"),
-	["n|<leader>fp"] = map_callback(function()
-			require("telescope").extensions.projects.projects({})
-		end)
-		:with_noremap()
-		:with_silent()
-		:with_desc("find: Project"),
-	["n|<leader>fr"] = map_callback(function()
-			require("telescope").extensions.frecency.frecency({})
-		end)
-		:with_noremap()
-		:with_silent()
-		:with_desc("find: File by frecency"),
 	["n|<leader>fw"] = map_callback(function()
 			require("telescope").extensions.live_grep_args.live_grep_args()
 		end)

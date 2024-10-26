@@ -16,10 +16,9 @@ Everything is written in Lua.
 
 - `ui` - Enhance the appearance and interaction of Neovim.
 - `lang` - Language servers and syntax highlighting.
-
-- `filesystem`
-- `navigation`
-- `manipulation`
+- `tool` - Adds functionalities to Neovim.
+- `navigation` - Navigation between files and code.
+- `manipulation` - Manipulation of text and code.
 
 ## Plugins
 

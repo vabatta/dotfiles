@@ -7,25 +7,21 @@ if OS.mac?
 	cask "1password" # 1password
 	cask "1password-cli" # 1password cli
 	cask "raycast" # better spotlight instead of alfred
-	cask "shortcat" # keyboard shortcuts for everything
 	cask "google-chrome" # Google Chrome
 	cask "discord" # Discord
-	cask "slack" # Slack
-	cask "protonvpn" # ProtonVPN
-	cask "vlc" # better video playback
 	cask "spotify" # Spotify
+	cask "iina" # modern video player
+	cask "obsidian" # Obsidian note taking
 
 	# Utilities applications
 	brew "mas" # Mac App Store CLI
-	brew "noti" # utility to display notifications from scripts
-	brew "pinentry-mac" # pinentry for gpg (mac specific)
 	brew "trash" # rm, but put in the trash rather than completely delete
 	cask "keepingyouawake" # prevent sleep
 	cask "betterdisplay" # better external displays support
 	cask "coconutbattery" # battery status
+	cask "jordanbaird-ice" # top status bar manager
 	cask "imageoptim" # a tool to optimize images
 	cask "handbrake" # a tool to convert videos
-	cask "gswitch" # switch between graphics cards (for intel/amd)
 
 	# Development applications
 	cask "wezterm" # a better terminal emulator
@@ -37,6 +33,7 @@ if OS.mac?
 
 	# Applications from App Store
 	mas "magnet", id: 441258766 # Magnet window manager
+	mas "yoink", id: 457622435 # drag-n-drop on-screen widget
 
 	# Fonts
 	cask "font-fira-code-nerd-font"
@@ -48,10 +45,8 @@ end
 # system packages
 brew "zsh" # zsh (latest)
 brew "git" # Git version control (latest)
-brew "gnupg" # gpg (latest)
 brew "make" # make (latest)
 brew "sheldon" # shell plugin manager
-brew "wget" # internet file retriever
 brew "tmux" # terminal multiplexer
 
 # system alternatives
@@ -83,4 +78,4 @@ brew "noti" # display notifications from scripts
 # system stats
 brew "bottom" # a top alternative with integrations
 brew "htop" # a top alternative
-brew "neofetch" # pretty system info
+brew "fastfetch" # pretty system info

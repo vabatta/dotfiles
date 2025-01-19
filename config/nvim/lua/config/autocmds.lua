@@ -45,3 +45,20 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 		vim.api.nvim_set_current_dir(vim.fn.expand("%:p:h"))
 	end,
 })
+
+local lspattach = vim.api.nvim_create_augroup("LspKeymapLoader", { clear = true })
+local mapping = require("config.keymaps")
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	group = lspattach,
+	callback = function(event)
+		-- LSP Keymaps
+		mapping.lsp(event.buf)
+
+		-- LSP Inlay Hints
+		local client = vim.lsp.get_client_by_id(event.data.client_id)
+		if client and client.server_capabilities.inlayHintProvider ~= nil then
+			vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
+		end
+	end,
+})

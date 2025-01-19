@@ -25,6 +25,7 @@ if OS.mac?
 
 	# Development applications
 	cask "wezterm" # a better terminal emulator
+	cask "ghostty" # a way better terminal emulator
 	cask "docker" # Docker
 	cask "firefox@developer-edition" # Firefox Developer Edition
 	cask "visual-studio-code" # Visual Studio Code
@@ -38,6 +39,8 @@ if OS.mac?
 	# Fonts
 	cask "font-fira-code-nerd-font"
 	cask "font-jetbrains-mono-nerd-font"
+	cask "font-hack-nerd-font"
+	cask "font-monoid-nerd-font"
 elsif OS.linux?
 	brew "xclip" # access to clipboard (similar to pbcopy/pbpaste)
 end

@@ -6,7 +6,7 @@ Now testing out [Catppuccin](https://github.com/catppuccin/catppuccin).
 
 ## Initial setup
 
-The first thing you need to do is to clone this repo into a location of your choosing. For example, if you have a `~/Developer` directory where you clone all of your git repos, that's a good choice for this one, too. This repo is setup to not rely on the location of the dotfiles, so you can place it anywhere.
+The first thing you need to do is to clone this repo into a location of your choosing.
 
 > **Note**
 > If you're on macOS, you'll also need to install the XCode CLI tools before continuing.
@@ -136,16 +136,13 @@ The plugins that are used are listed in the `.config/sheldon` and include
 
 ### Prompt
 
-Uses [Spaceship prompt](https://spaceship-prompt.sh/).
+Uses [powerlevel10k](https://github.com/romkatv/powerlevel10k).
 
 ## Git Configuration
 
 A `~/.gitconfig.local` file is sourced if available for any local git configuration that should not be committed into the dotfiles git repo.
 
 ## Neovim setup
-
-> **Note**
-> This is no longer a vim setup. The configuration has been moved to be Neovim-specific and (mostly) written in [Lua](https://www.lua.org/). `vim` is also set up as an alias to `nvim` to help with muscle memory.
 
 The simplest way to install Neovim is to install it from homebrew.
 
@@ -155,7 +152,7 @@ brew install neovim
 
 However, it was likely installed already if you ran the `./install.sh brew` command provided in the dotfiles.
 
-All of the configuration for Neovim are managed using [LazyVim](https://github.com/LazyVim/LazyVim).
+All of the configuration for Neovim are managed using [mini.deps](https://github.com/echasnovski/mini.deps).
 The configuration is symlinked into the `~/.config/nvim` directory.
 
 > **Warning**
@@ -220,7 +217,7 @@ This will open a bash shell in the container which can then be used to manually 
 I almost exclusively work on macOS, so this list will be specific to that operating system, but several of these
 reccomendations are also available, cross-platform.
 
-- [WezTerm](https://wezfurlong.org/wezterm/index.html) - A GPU-based terminal emulator
+- [Ghostty](https://ghostty.org) - fast, feature-rich, and cross-platform terminal emulator
 
 ## Credits
 

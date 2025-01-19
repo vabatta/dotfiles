@@ -120,6 +120,12 @@ setup_git() {
 			git config --global credential.helper "cache --timeout 3600"
 		fi
 	fi
+
+	read -rn 1 -p "Setup 1password integration? [y/N] " onepassword
+	if [[ $onepassword =~ ^([Yy])$ ]]; then
+		mkdir -p ~/.1password
+		ln -s ~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock ~/.1password/agent.sock
+	fi
 }
 
 setup_homebrew() {

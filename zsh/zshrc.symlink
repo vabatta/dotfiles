@@ -126,6 +126,9 @@ export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
 export LESS_TERMCAP_mr=$(tput rev)
 export LESS_TERMCAP_mh=$(tput dim)
 
+# https://github.com/romkatv/powerlevel10k/issues/1554
+unset ZSH_AUTOSUGGEST_USE_ASYNC
+
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"

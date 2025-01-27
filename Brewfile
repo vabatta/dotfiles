@@ -24,9 +24,7 @@ if OS.mac?
 	cask "handbrake" # a tool to convert videos
 
 	# Development applications
-	cask "wezterm" # a better terminal emulator
 	cask "ghostty" # a way better terminal emulator
-	cask "docker" # Docker
 	cask "firefox@developer-edition" # Firefox Developer Edition
 	cask "visual-studio-code" # Visual Studio Code
 	cask "responsively" # a tool to develop responsive websites
@@ -44,6 +42,11 @@ if OS.mac?
 elsif OS.linux?
 	brew "xclip" # access to clipboard (similar to pbcopy/pbpaste)
 end
+
+# containers
+brew "colima" # container runtimes on macOS (and Linux) with minimal setup
+brew "docker" # docker container runtime
+brew "kubectl" # kubernetes
 
 # system packages
 brew "zsh" # zsh (latest)

@@ -23,17 +23,20 @@ github = "jeffreytse/zsh-vi-mode"
 [plugins.fzf-tab]
 github = "Aloxaf/fzf-tab"
 
+[plugins.fzf-tab-source]
+github = "Freed-Wu/fzf-tab-source"
+
 [plugins.zsh-npm-scripts-autocomplete]
 github = "grigorii-zander/zsh-npm-scripts-autocomplete"
-
-[plugins.zsh-syntax-highlighting]
-github = "zsh-users/zsh-syntax-highlighting"
 
 [plugins.zsh-autosuggestions]
 github = "zsh-users/zsh-autosuggestions"
 
 [plugins.zsh-completions]
 github = "zsh-users/zsh-completions"
+
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
 
 [plugins.1password]
 github = "ohmyzsh/ohmyzsh"

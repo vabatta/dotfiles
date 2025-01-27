@@ -34,12 +34,17 @@ export XDG_RUNTIME_DIR="$HOME/.local/run"
 export ZSH_CACHE_DIR="$XDG_CACHE_HOME/zsh"
 # ripgrep will look for a single configuration file if and only if the environment variable RIPGREP_CONFIG_PATH is set
 export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/config"
+export POWERLEVEL9K_CONFIG_DIR="$XDG_CONFIG_HOME/prompt"
+export POWERLEVEL9K_CONFIG_FILE="$XDG_CONFIG_HOME/prompt/p10k.zsh"
 
 # set zsh cache dir for Oh My Zsh plugins
 [[ -d "$ZSH_CACHE_DIR" ]] || mkdir -p "$ZSH_CACHE_DIR"
 [[ -d "$ZSH_CACHE_DIR/completions" ]] || mkdir -p "$ZSH_CACHE_DIR/completions"
 [[ -d "$ZSH_CACHE_DIR/history" ]] || mkdir -p "$ZSH_CACHE_DIR/history"
 [[ -d "$ZSH_CACHE_DIR/zcompdump" ]] || mkdir -p "$ZSH_CACHE_DIR/zcompdump"
+
+# custom terminfo for capabilities and control sequences of terminal
+[[ -e ~/.terminfo ]] && export TERMINFO_DIRS=~/.terminfo:/usr/share/terminfo
 
 [[ -f ~/.zshenv.local ]] && source ~/.zshenv.local
 

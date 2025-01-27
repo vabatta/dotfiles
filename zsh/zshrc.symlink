@@ -81,18 +81,24 @@ bindkey "^K" history-beginning-search-backward
 
 # matches case insensitive for lowercase
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
 # pasting with tabs doesn't perform completion
 zstyle ':completion:*' insert-tab pending
-
 # default to file completion
 zstyle ':completion:*' completer _expand _complete _files _correct _approximate
-
+# enable verbose mode for zsh completion system.
 zstyle ':completion:*' verbose yes
+# set the format for completion descriptions with bold formatting.
 zstyle ':completion:*:descriptions' format '%B%d%b'
+# set the format for messages shown during completion.
 zstyle ':completion:*:messages' format '%d'
+# customize the format of warnings when no matches are found.
 zstyle ':completion:*:warnings' format 'No matches for: %d'
+# disable grouping of completion results by category.
 zstyle ':completion:*' group-name ''
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
 
 ########################################################
 # Shell setup
@@ -101,12 +107,10 @@ zstyle ':completion:*' group-name ''
 # source plugins from sheldon
 eval "$(sheldon source)"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-export POWERLEVEL9K_CONFIG_FILE="$XDG_CONFIG_HOME/prompt/p10k.zsh"
-[[ -f $XDG_CONFIG_HOME/prompt/p10k.zsh ]] && source $XDG_CONFIG_HOME/prompt/p10k.zsh
-[[ -f $XDG_CONFIG_HOME/prompt/p10k.mise.zsh ]] && source $XDG_CONFIG_HOME/prompt/p10k.mise.zsh
-
-[[ -e ~/.terminfo ]] && export TERMINFO_DIRS=~/.terminfo:/usr/share/terminfo
+# p10k: run `p10k configure` or edit ~/.config/prompt/p10k.zsh
+[[ -f $POWERLEVEL9K_CONFIG_DIR/p10k.zsh ]] && source $POWERLEVEL9K_CONFIG_DIR/p10k.zsh
+[[ -f $POWERLEVEL9K_CONFIG_DIR/p10k.mise.zsh ]] && source $POWERLEVEL9K_CONFIG_DIR/p10k.mise.zsh
+unset ZSH_AUTOSUGGEST_USE_ASYNC # https://github.com/romkatv/powerlevel10k/issues/1554
 
 if [ -f $HOME/.fzf.zsh ]; then
 	zvm_after_init_commands+=("source $HOME/.fzf.zsh")
@@ -114,60 +118,33 @@ if [ -f $HOME/.fzf.zsh ]; then
 	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
-# add color to man pages
-export MANROFFOPT='-c'
-export LESS_TERMCAP_mb=$(tput bold; tput setaf 2)
-export LESS_TERMCAP_md=$(tput bold; tput setaf 6)
-export LESS_TERMCAP_me=$(tput sgr0)
-export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4)
-export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 7)
-export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
-export LESS_TERMCAP_mr=$(tput rev)
-export LESS_TERMCAP_mh=$(tput dim)
+# To make fzf-tab follow FZF_DEFAULT_OPTS.
+# NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
+zstyle ':fzf-tab:*' use-fzf-default-opts yes
+# switch group using `<` and `>`
+zstyle ':fzf-tab:*' switch-group '<' '>'
 
-# https://github.com/romkatv/powerlevel10k/issues/1554
-unset ZSH_AUTOSUGGEST_USE_ASYNC
+# add color to some commands
+# export BATPIPE=color
+# export BATPIPE_ENABLE_COLOR=true
+# eval "$(batpipe)"
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+export MANROFFOPT="-c"
+export GREP_OPTIONS='--color=auto'
 
-# Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1; then # GNU `ls`
-	colorflag="--color"
-else # macOS `ls`
-	colorflag="-G"
-fi
-
-# look for all .zsh files and source them
-config_files=($DOTFILES/**/*.zsh)
+# look for all aliases.zsh files and source them
+config_files=($DOTFILES/**/aliases.zsh)
 for file in $config_files[@]; do
 	zvm_after_init_commands+=("source $file")
 done
 
-# Start theme monitor
-function update_shell_theme() {
-	case "$1" in
-		"dark")
-			export FZF_DEFAULT_OPTS=" \
-				--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8 \
-				--color=fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc \
-				--color=marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 \
-				--color=selected-bg:#45475a \
-				--multi"
-			;;
-		"light")
-			export FZF_DEFAULT_OPTS=" \
-				--color=bg+:#ccd0da,bg:#eff1f5,spinner:#dc8a78,hl:#d20f39 \
-				--color=fg:#4c4f69,header:#d20f39,info:#8839ef,pointer:#dc8a78 \
-				--color=marker:#7287fd,fg+:#4c4f69,prompt:#8839ef,hl+:#d20f39 \
-				--color=selected-bg:#bcc0cc \
-				--multi"
-			;;
-	esac
-}
+export CATPPUCCIN_THEME="$(appearance)"
+source $XDG_CONFIG_HOME/catppuccin/init.sh
 
-update_shell_theme $(current_theme)
-
+# start theme monitor
 # theme-monitor | while read -r theme; do
-# 	update_shell_theme "$theme"
+# 	CATPPUCCIN_THEME="$theme"
+# 	source $XDG_CONFIG_HOME/catppuccin/init.sh
 # done &
 
 # If a ~/.zshrc.local exists, source it

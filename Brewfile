@@ -55,6 +55,7 @@ brew "tmux" # terminal multiplexer
 # system alternatives
 brew "fzf" # fuzzy file searcher, used in scripts and in vim
 brew "bat" # better cat
+brew "bat-extras" # additional bat features
 brew "eza" # better ls
 brew "fd" # better find
 brew "ripgrep" # very fast file searcher

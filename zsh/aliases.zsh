@@ -1,37 +1,30 @@
 # reload zsh config
 alias reload!='RELOAD=1 source ~/.zshrc'
 
-# Alias using zoxide
+# Common aliases
+alias cat='bat --paging=never'
 alias cd='z'
+alias ls='eza --icons'
+alias vim='nvim'
 
 # Filesystem aliases
 alias ..='cd ..'
 alias ...='cd ../..'
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
 alias cdp='cd ~/Projects'
 alias cdd='cd ~/Downloads'
 
-# use eza if available
-if [[ -x "$(command -v eza)" ]]; then
-	alias ls='eza'
-	unset colorflag
-else
-	alias ls="ls ${colorflag}"
-fi
-alias la="ls -lah ${colorflag}"
-alias ll="ls -lh ${colorflag}"
-alias lld="ls -l | grep ^d"
-alias rmf="rm -rf"
+# List all files colorized in long format
+alias la='ls -lah'
+alias ll='ls -lh'
 
-# Don't have me think about vim or nvim
-alias vim=nvim
+alias rmf='rm -rf'
 
 # Utilities
 alias bb='brew update && brew upgrade'
 
 # Helpers
-alias grep='grep --color=auto'
 alias df='df -h' # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
 

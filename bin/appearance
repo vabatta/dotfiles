@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+show_help() {
+	cat << EOF
+Usage: $0
+
+Detect and output system theme (dark/light).
+On macOS, reads system appearance.
+On other systems, uses THEME environment variable.
+
+Output: "dark" or "light"
+EOF
+	exit 0
+}
+
+[[ "$1" == "-h" || "$1" == "--help" ]] && show_help
+
+# Set default theme
+THEME=${THEME:-"light"}
+
+# Check for macOS and get system appearance
+if [[ "$(uname)" == "Darwin" ]]; then
+	THEME=$((defaults read -g AppleInterfaceStyle 2>/dev/null || echo 'Light') | tr '[:upper:]' '[:lower:]')
+fi
+
+# Sanitize output
+case $THEME in
+	"dark") export THEME="dark" ;;
+	*) export THEME="light" ;;
+esac
+
+printf "%s" "$THEME"

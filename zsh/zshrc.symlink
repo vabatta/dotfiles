@@ -140,6 +140,7 @@ done
 
 export CATPPUCCIN_THEME="$(appearance)"
 source $XDG_CONFIG_HOME/catppuccin/init.sh
+alias themeup='CATPPUCCIN_THEME="$(appearance)" source $XDG_CONFIG_HOME/catppuccin/init.sh'
 
 # start theme monitor
 # theme-monitor | while read -r theme; do

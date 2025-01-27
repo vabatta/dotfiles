@@ -10,6 +10,7 @@ CATPPUCCIN_THEME="${CATPPUCCIN_THEME:-"latte"}"
 CATPPUCCIN_MODULES=(
 	"bat.sh"
 	"fzf.sh"
+	"lazygit.sh"
 	"zsh-syntax-highlighting.zsh"
 )
 

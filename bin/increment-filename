@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+generate_unique_filename() {
+	local input="$1"
+	local pattern="$2"
+	local filename="${input%.*}"
+	local extension="${input##*.}"
+	local n=1
+	local file
+
+	# Default pattern if not provided
+	if [[ -z $pattern ]]; then
+		pattern="${filename}.\$n.${extension}"
+	fi
+
+	# Replace placeholders in the pattern
+	file=$(eval echo "$pattern")
+
+	while [[ -e $file ]]; do
+		((n++))
+		file=$(eval echo "$pattern")
+	done
+
+	echo "$file"
+}
+
+show_help() {
+	echo "Generate a unique filename based on a pattern."
+	echo ""
+	echo "Usage: increment-filename <input_filename> [pattern]"
+	echo ""
+	echo "Arguments:"
+	echo "  <input_filename>   The name of the input file (e.g., file.txt)."
+	echo "  [pattern]          (Optional) A pattern for naming the file."
+	echo "                     Default pattern: \${filename}.\$n.\${extension}"
+	echo ""
+	echo "Pattern placeholders:"
+	echo "  \${filename}       Base name of the input file without extension."
+	echo "  \${extension}      File extension of the input file."
+	echo "  \$n                Counter for uniqueness."
+	echo ""
+	echo "Examples:"
+	echo "  increment-filename file.txt"
+	echo "  # Generates file.1.txt if file.txt exists."
+	echo ""
+	echo "  increment-filename file.txt '\${filename}_v\$n.\${extension}'"
+	echo "  # Generates file_v1.txt if file_v0.txt exists."
+	echo ""
+	exit 0
+}
+
+# Check for help option
+if [[ $1 == "--help" || $1 == "-h" ]]; then
+	show_help
+fi
+
+# Ensure at least one argument is provided
+if [[ $# -lt 1 ]]; then
+	echo "Error: Missing required argument <input_filename>."
+	echo "Use --help or -h for usage information."
+	exit 1
+fi
+
+# Call the main function with the provided arguments
+generate_unique_filename "$1" "$2"

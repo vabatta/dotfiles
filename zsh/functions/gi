@@ -1,1 +1,0 @@
-curl -fLw '\n' https://www.toptal.com/developers/gitignore/api/"${(j:,:)@}"

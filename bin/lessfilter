@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# https://github.com/wofr06/lesspipe?tab=readme-ov-file#9-user-defined-filtering
+
+# extract useful information from the file
+mime=$(file -Lbs --mime-type "$1")
+category=${mime%%/*}
+kind=${mime##*/}
+ext=${1##*.}
+
+if [ -d "$1" ]; then
+	eza -hl --git --color=always --icons "$1"
+else
+	exit 1
+fi

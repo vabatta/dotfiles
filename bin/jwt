@@ -1,15 +1,128 @@
 #!/usr/bin/env bash
-# Decode JWT
-# By default this decodes the body of the jwt.
-# To decode the head, pass 1 as the second argument
 
-_decode_base64_url() {
-	local len=$((${#1} % 4))
-	local result="$1"
-	if [ $len -eq 2 ]; then result="$1"'=='
-	elif [ $len -eq 3 ]; then result="$1"'=' 
-	fi
-	echo "$result" | tr '_-' '/+' | base64 -d
+show_help() {
+	cat << EOF
+Usage: jwt_decode <token> [part] [--verify <secret/key>]
+
+Decode JWT token and verify signature if requested.
+Parts: header, payload (default)
+
+Required tools: openssl, jq, base64
+
+Options:
+	--verify <secret>  Verify signature using provided secret/key
+	--help            Show this help
+
+Examples:
+	jwt_decode eyJ...xyz                    # Decode payload
+	jwt_decode eyJ...xyz header             # Decode header
+	jwt_decode eyJ...xyz --verify secretkey # Verify signature
+EOF
+	exit 1
 }
 
-_decode_base64_url "$(echo -n "$1" | cut -d "." -f "${2:-2}")" | jq .
+decode_base64_url() {
+	local input="$1"
+	local len=$((${#input} % 4))
+	
+	case $len in
+		2) input+="==" ;;
+		3) input+="=" ;;
+	esac
+	
+	echo "$input" | tr '_-' '/+' | base64 -d
+}
+
+verify_signature() {
+	local token="$1"
+	local secret="$2"
+	local header payload signature signing_input
+	
+	header="$(echo -n "$token" | cut -d "." -f1)"
+	payload="$(echo -n "$token" | cut -d "." -f2)"
+	signature="$(echo -n "$token" | cut -d "." -f3)"
+	signing_input="${header}.${payload}"
+	
+	local alg
+	alg="$(decode_base64_url "$header" | jq -r .alg)"
+	
+	case "$alg" in
+		"HS256")
+			local expected
+			expected=$(echo -n "$signing_input" | \
+				openssl dgst -binary -sha256 -hmac "$secret" | \
+				base64 | tr '+/' '-_' | tr -d '=')
+			if [[ "$signature" == "$expected" ]]; then
+				echo "Signature verified (HS256)" >&2
+				return 0
+			fi
+			;;
+		"HS384")
+			local expected
+			expected=$(echo -n "$signing_input" | \
+				openssl dgst -binary -sha384 -hmac "$secret" | \
+				base64 | tr '+/' '-_' | tr -d '=')
+			if [[ "$signature" == "$expected" ]]; then
+				echo "Signature verified (HS384)" >&2
+				return 0
+			fi
+			;;
+		"HS512")
+			local expected
+			expected=$(echo -n "$signing_input" | \
+				openssl dgst -binary -sha512 -hmac "$secret" | \
+				base64 | tr '+/' '-_' | tr -d '=')
+			if [[ "$signature" == "$expected" ]]; then
+				echo "Signature verified (HS512)" >&2
+				return 0
+			fi
+			;;
+		"RS256"|"RS384"|"RS512")
+			echo "RSA signatures not implemented yet" >&2
+			return 2
+			;;
+		*)
+			echo "Unsupported algorithm: $alg" >&2
+			return 2
+			;;
+	esac
+	
+	echo "Signature verification failed" >&2
+	return 1
+}
+
+[[ "$1" == "-h" || "$1" == "--help" || -z "$1" ]] && show_help
+
+token="$1"
+part="2"
+verify_mode=false
+secret=""
+
+shift
+while [[ $# -gt 0 ]]; do
+	case "$1" in
+		header) part="1" ;;
+		payload) part="2" ;;
+		--verify)
+			verify_mode=true
+			secret="$2"
+			shift
+			;;
+		*) show_help ;;
+	esac
+	shift
+done
+
+[[ ! "$token" =~ ^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$ ]] && {
+	echo "Error: Invalid JWT format" >&2
+	exit 1
+}
+
+if [[ "$verify_mode" == true ]]; then
+	verify_signature "$token" "$secret" || exit $?
+fi
+
+decode_base64_url "$(echo -n "$token" | cut -d "." -f "$part")" | jq . || {
+	echo "Error: Invalid JWT content" >&2
+	exit 1
+}

@@ -1,18 +1,20 @@
 # reload zsh config
 alias reload!='RELOAD=1 source ~/.zshrc'
 
-# Common aliases
+# Commands
 alias cat='bat --paging=never'
 alias cd='z'
 alias ls='eza --icons=auto'
 alias vim='nvim'
 # alias docker='lima nerdctl'
+
+# Shortcuts
 alias d='docker'
 alias k='kubectl'
 alias n='nerdctl'
 alias g='git'
 
-# Filesystem aliases
+# Filesystem
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -20,16 +22,14 @@ alias .....='cd ../../../..'
 alias cdp='cd ~/Projects'
 alias cdd='cd ~/Downloads'
 
-# List all files colorized in long format
+# Common use
 alias la='ls -lah'
 alias ll='ls -lh'
 
 alias rmf='rm -rf'
 
-# Utilities
 alias bb='brew update && brew upgrade'
 
-# Helpers
 alias df='df -h' # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
 

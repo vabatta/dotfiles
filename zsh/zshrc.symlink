@@ -5,39 +5,31 @@
 #   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 # fi
 
-export ZSH=$DOTFILES/zsh
+########################################################
+# Configuration
+########################################################
+
+config_files=($DOTFILES/**/aliases.zsh)
+for file in $config_files[@]; do
+	source $file
+done
 
 if [[ -d $DOTFILES/zsh/functions ]]; then
 	for func in $DOTFILES/zsh/functions/*(:t); autoload -U $func
 fi
-
-########################################################
-# Configuration
-########################################################
 
 # initialize autocomplete
 autoload -U bashcompinit
 bashcompinit
 autoload -U compinit add-zsh-hook
 compinit
-# compdef kubectl k
-_k_completion() {
-  _kubectl "$@"  # Just call the kubectl completion function
-}
-compdef _k_completion k
+
+# setopt COMPLETE_ALIASES
 
 prepend_path /usr/local/opt/grep/libexec/gnubin
 prepend_path /usr/local/sbin
 prepend_path $DOTFILES/bin
 prepend_path $HOME/bin
-
-# define the code directory
-# This is where my code exists and where I want the `c` autocomplete to work from exclusively
-if [[ -d ~/code ]]; then
-	export CODE_DIR=~/code
-elif [[ -d ~/Projects ]]; then
-	export CODE_DIR=~/Projects
-fi
 
 # display how long all tasks over 10 seconds take
 export REPORTTIME=10
@@ -58,8 +50,6 @@ setopt EXTENDED_HISTORY          # write the history file in the ":start:elapsed
 setopt HIST_REDUCE_BLANKS        # remove superfluous blanks before recording entry.
 setopt SHARE_HISTORY             # share history between all sessions.
 setopt HIST_IGNORE_ALL_DUPS      # delete old recorded entry if new entry is a duplicate.
-
-setopt COMPLETE_ALIASES
 
 # make terminal command navigation sane again
 bindkey "^[[1;5C" forward-word                      # [Ctrl-right] - forward one word
@@ -118,10 +108,17 @@ eval "$(sheldon source)"
 unset ZSH_AUTOSUGGEST_USE_ASYNC # https://github.com/romkatv/powerlevel10k/issues/1554
 
 if [ -f $HOME/.fzf.zsh ]; then
-	zvm_after_init_commands+=("source $HOME/.fzf.zsh")
+	source $HOME/.fzf.zsh
 	export FZF_DEFAULT_COMMAND='fd --type f'
 	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
+
+export ZVM_INIT_MODE='sourcing'
+
+# add color to some commands
+export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
+export MANROFFOPT="-c"
+export GREP_OPTIONS='--color=auto'
 
 # To make fzf-tab follow FZF_DEFAULT_OPTS.
 # NOTE: This may lead to unexpected behavior since some flags break this plugin. See Aloxaf/fzf-tab#455.
@@ -129,19 +126,6 @@ zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
 
-# add color to some commands
-# export BATPIPE=color
-# export BATPIPE_ENABLE_COLOR=true
-# eval "$(batpipe)"
-export MANPAGER="sh -c 'sed -u -e \"s/\\x1B\[[0-9;]*m//g; s/.\\x08//g\" | bat -p -lman'"
-export MANROFFOPT="-c"
-export GREP_OPTIONS='--color=auto'
-
-# look for all aliases.zsh files and source them
-config_files=($DOTFILES/**/aliases.zsh)
-for file in $config_files[@]; do
-	zvm_after_init_commands+=("source $file")
-done
 
 export CATPPUCCIN_THEME="$(appearance)"
 source $XDG_CONFIG_HOME/catppuccin/init.sh
@@ -161,14 +145,3 @@ alias themeup='CATPPUCCIN_THEME="$(appearance)" source $XDG_CONFIG_HOME/catppucc
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/vabatta/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
-
-
-# Herd injected PHP 8.4 configuration.
-export HERD_PHP_84_INI_SCAN_DIR="/Users/vabatta/Library/Application Support/Herd/config/php/84/"
-
-
-# Herd injected PHP binary.
-export PATH="/Users/vabatta/Library/Application Support/Herd/bin/":$PATH
-
-# bun completions
-[ -s "/opt/homebrew/share/zsh/site-functions/_bun" ] && source "/opt/homebrew/share/zsh/site-functions/_bun"

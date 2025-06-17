@@ -12,6 +12,9 @@
 
 shell = "zsh"
 
+[templates]
+LESSPIPE = 'eval "$(lesspipe.sh)"'
+
 [plugins]
 
 [plugins.powerlevel10k]
@@ -52,3 +55,7 @@ use = ["plugins/mise/mise.plugin.zsh"]
 github = "ohmyzsh/ohmyzsh"
 branch = "master"
 use = ["plugins/zoxide/zoxide.plugin.zsh"]
+
+[plugins.lesspipe]
+github = "wofr06/lesspipe"
+apply = ["PATH", "LESSPIPE"]

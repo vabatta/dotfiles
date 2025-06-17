@@ -6,6 +6,10 @@ alias cat='bat --paging=never'
 alias cd='z'
 alias ls='eza --icons'
 alias vim='nvim'
+alias d='docker'
+alias n='nerdctl'
+# alias k='kubectl'
+# alias docker='lima nerdctl'
 
 # Filesystem aliases
 alias ..='cd ..'

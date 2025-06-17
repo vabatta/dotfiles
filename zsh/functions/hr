@@ -1,0 +1,2 @@
+printf '%*s\n' "$COLUMNS" '' | tr ' ' '─'
+

@@ -29,6 +29,8 @@ if OS.mac?
 	cask "visual-studio-code" # Visual Studio Code
 	cask "responsively" # a tool to develop responsive websites
 	cask "figma" # Figma
+	cask "docker" # Docker and related CLIs
+	cask "rancher" # Rancher Desktop
 
 	# Applications from App Store
 	mas "magnet", id: 441258766 # Magnet window manager
@@ -43,12 +45,8 @@ elsif OS.linux?
 	brew "xclip" # access to clipboard (similar to pbcopy/pbpaste)
 end
 
-# containers
-brew "colima" # container runtimes on macOS (and Linux) with minimal setup
-brew "docker" # docker container runtime
-brew "kubectl" # kubernetes
-
 # system packages
+brew "bash" # bash (latest)
 brew "zsh" # zsh (latest)
 brew "git" # Git version control (latest)
 brew "make" # make (latest)

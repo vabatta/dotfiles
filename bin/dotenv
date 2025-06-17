@@ -54,60 +54,16 @@ EXIT STATUS
 
 SEE ALSO
   env(1), export(1), source(1)
-
 EOF
+	exit 0
 }
 
-# Initialize variables
-env_files=()
-command=()
-debug=false
-
-# Parse command line options
-while [[ $# -gt 0 ]]; do
-	case $1 in
-		-e)
-			if [[ -n "$2" ]]; then
-				env_files+=("$2")
-				shift 2
-			else
-				echo "Error: -e option requires a file argument" >&2
-				echo "Try 'dotenv --help' for more information." >&2
-				exit 1
-			fi
-			;;
-		-h|--help)
-			show_help
-			exit 0
-			;;
-		-d|--debug)
-			debug=true
-			shift
-			;;
-		-*)
-			echo "Error: Unknown option $1" >&2
-			echo "Try 'dotenv --help' for more information." >&2
-			exit 1
-			;;
-		*)
-			# Add the current argument to command array and shift
-			command+=("$1")
-			shift
-			# Add any remaining arguments to command array
-			while [[ $# -gt 0 ]]; do
-				command+=("$1")
-				shift
-			done
-			;;
-	esac
-done
-
-# Check if command is provided
-if [[ ${#command[@]} -eq 0 ]]; then
-	echo "Error: No command specified" >&2
-	echo "Try 'dotenv --help' for more information." >&2
-	exit 1
-fi
+die() {
+	local msg=$1
+	local code=${2-1} # default exit status 1
+	echo "$msg" >&2
+	exit "$code"
+}
 
 # Function to parse a single .env file
 parse_env_file() {
@@ -212,13 +168,43 @@ parse_env_file() {
 	return 0
 }
 
+parse_params() {
+	env_files=()
+	command=()
+	debug=false
+
+	while :; do
+		case "${1-}" in
+		-h | --help) show_help ;;
+		-d | --debug) debug=true ;;
+		-e)
+			if [[ -n "${2-}" ]]; then
+				env_files+=("$2")
+				shift
+			else
+				die "Error: -e option requires a file argument"
+			fi
+			;;
+		-?*) die "Unknown option: $1" ;;
+		*) break ;;
+		esac
+		shift
+	done
+
+	args=("$@")
+	[[ ${#args[@]} -eq 0 ]] && die "Error: No command specified"
+	command=("${args[@]}")
+
+	# If no env files are specified, use the default .env file
+	[[ ${#env_files[@]} -eq 0 ]] && env_files=(".env")
+
+	return 0
+}
+
 # Initialize temp_vars array
 temp_vars=()
 
-# If no env files are specified, use the default .env file
-if [[ ${#env_files[@]} -eq 0 ]]; then
-	env_files=(".env")
-fi
+parse_params "$@"
 
 if [[ $debug == true ]]; then
 	echo "env_files: ${env_files[@]}"

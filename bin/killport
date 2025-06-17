@@ -1,5 +1,67 @@
 #!/usr/bin/env bash
 
-# Kill the process that is currently listening on the provided port
+show_help() {
+	cat << 'EOF'
+killport - Kill process listening on a specific port
 
-wtfport "$1" | xargs kill -9
+SYNOPSIS
+  killport [OPTIONS] PORT
+
+DESCRIPTION
+  Finds and kills the process that is currently listening on the specified port.
+  Uses wtfport to find the process and then sends a SIGKILL signal to terminate it.
+
+OPTIONS
+  -h, --help    Show this help message and exit
+
+ARGUMENTS
+  PORT          Port number to kill process on
+
+EXAMPLES
+  # Kill process on port 3000
+  killport 3000
+
+  # Kill process on port 8080
+  killport 8080
+
+EXIT STATUS
+  0    Success
+  1    Error (no port specified or process not found)
+
+SEE ALSO
+  wtfport(1), kill(1)
+EOF
+	exit 0
+}
+
+die() {
+	local msg=$1
+	local code=${2-1} # default exit status 1
+	echo "$msg" >&2
+	exit "$code"
+}
+
+parse_params() {
+	port=""
+
+	while :; do
+		case "${1-}" in
+		-h | --help) show_help ;;
+		-?*) die "Unknown option: $1" ;;
+		*) break ;;
+		esac
+		shift
+	done
+
+	args=("$@")
+	[[ ${#args[@]} -eq 0 ]] && die "Missing required argument: PORT"
+	[[ ${#args[@]} -gt 1 ]] && die "Too many arguments"
+	port="${args[0]}"
+
+	return 0
+}
+
+parse_params "$@"
+
+# Kill the process that is currently listening on the provided port
+wtfport "$port" | xargs kill -9

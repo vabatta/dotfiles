@@ -3,19 +3,41 @@
 set -Eeuo pipefail
 trap cleanup SIGINT SIGTERM ERR EXIT
 
-usage() {
-	cat << EOF # remove the space between << and EOF, this is due to web plugin issue
-Usage: $(basename "${BASH_SOURCE[0]}") [-h] [-v] [-l] repository
+show_help() {
+	cat << 'EOF'
+git-bare-clone - Clone a bare git repository with worktree support
 
-Clone a bare git repo and set up environment for working comfortably and exclusively from worktrees.
+SYNOPSIS
+  git-bare-clone [OPTIONS] REPOSITORY
 
-Available options:
+DESCRIPTION
+  Clones a git repository as a bare repository and sets up the environment
+  for working comfortably and exclusively from worktrees. This is useful
+  for managing multiple worktrees from a single repository.
 
--h, --help      Print this help and exit
--v, --verbose   Print script debug info
--l, --location  Location of the bare repo contents (default: .bare)
+OPTIONS
+  -h, --help           Show this help message and exit
+  -v, --verbose        Print script debug info
+  -l, --location DIR   Location of the bare repo contents (default: .bare)
+
+ARGUMENTS
+  REPOSITORY          URL or path of the repository to clone
+
+EXAMPLES
+  # Clone with default location
+  git-bare-clone https://github.com/user/repo.git
+
+  # Clone to specific location
+  git-bare-clone -l .gitbare https://github.com/user/repo.git
+
+EXIT STATUS
+  0    Success
+  1    Error (missing arguments or git command failed)
+
+SEE ALSO
+  git-clone(1), git-worktree(1)
 EOF
-	exit
+	exit 0
 }
 
 cleanup() {
@@ -46,7 +68,7 @@ parse_params() {
 
 	while :; do
 		case "${1-}" in
-		-h | --help) usage ;;
+		-h | --help) show_help ;;
 		-v | --verbose) set -x ;;
 		--no-color) NO_COLOR=1 ;;
 		-l | --location)

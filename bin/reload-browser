@@ -4,23 +4,72 @@
 # Based on original script by Eric Radman, 2014
 # http://entrproject.org/
 
-usage() {
-	case $( uname ) in
-	Darwin)
-		# applescript needs the exact title
-		echo "Usage: $( basename "$0" ) Firefox [Safari \"Google Chrome\" ...]"
-		;;
-	*)
-		# xdotool uses regular expressions
-		echo "Usage: $( basename "$0" ) Firefox [Chrome ...]"
-		;;
-	esac
-	exit 1
+show_help() {
+	cat << 'EOF'
+reload-browser - Reload current tab in specified browser(s)
+
+SYNOPSIS
+  reload-browser [OPTIONS] BROWSER [BROWSER...]
+
+DESCRIPTION
+  Reloads the current tab in one or more specified browsers.
+  Works cross-platform (macOS and Linux) using appropriate methods
+  for each platform.
+
+OPTIONS
+  -h, --help    Show this help message and exit
+
+ARGUMENTS
+  BROWSER       One or more browser names to reload
+                On macOS: "Firefox", "Safari", "Google Chrome"
+                On Linux: "firefox", "chrome", etc.
+
+EXAMPLES
+  # Reload Firefox
+  reload-browser Firefox
+
+  # Reload multiple browsers
+  reload-browser Firefox "Google Chrome"
+
+EXIT STATUS
+  0    Success
+  1    Error (no browser specified or browser not found)
+
+SEE ALSO
+  osascript(1), xdotool(1)
+EOF
+	exit 0
 }
 
-[ $# -lt 1 ] && usage
+die() {
+	local msg=$1
+	local code=${2-1} # default exit status 1
+	echo "$msg" >&2
+	exit "$code"
+}
 
-for app in "$@"; do
+parse_params() {
+	browsers=()
+
+	while :; do
+		case "${1-}" in
+		-h | --help) show_help ;;
+		-?*) die "Unknown option: $1" ;;
+		*) break ;;
+		esac
+		shift
+	done
+
+	args=("$@")
+	[[ ${#args[@]} -eq 0 ]] && die "Missing required argument: BROWSER"
+	browsers=("${args[@]}")
+
+	return 0
+}
+
+parse_params "$@"
+
+for app in "${browsers[@]}"; do
 	echo "$app"
 	case $( uname ) in
 		Darwin)

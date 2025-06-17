@@ -1,2 +1,4 @@
-printf '%*s\n' "$COLUMNS" '' | tr ' ' '─'
+#!/usr/bin/env zsh
 
+# uses special zsh variable $COLUMNS to get the width of the terminal and prints a horizontal line
+printf '%*s\n' "$COLUMNS" '' | tr ' ' '─'

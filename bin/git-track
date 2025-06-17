@@ -1,7 +1,67 @@
 #!/usr/bin/env bash
 
-# push up the branch and set upstream for the current branch
+show_help() {
+	cat << 'EOF'
+git-track - Push and set upstream tracking for current branch
 
+SYNOPSIS
+  git-track [OPTIONS] [REMOTE]
+
+DESCRIPTION
+  Pushes the current branch to the specified remote and sets up tracking.
+  This is a convenience command that combines 'git push -u' in one step.
+
+OPTIONS
+  -h, --help    Show this help message and exit
+
+ARGUMENTS
+  REMOTE        Remote name to push to (default: origin)
+
+EXAMPLES
+  # Push and track current branch to origin
+  git-track
+
+  # Push and track current branch to a specific remote
+  git-track upstream
+
+EXIT STATUS
+  0    Success
+  1    Error (git command failed)
+
+SEE ALSO
+  git-push(1), git-branch(1)
+EOF
+	exit 0
+}
+
+die() {
+	local msg=$1
+	local code=${2-1} # default exit status 1
+	echo "$msg" >&2
+	exit "$code"
+}
+
+parse_params() {
+	remote="origin"
+
+	while :; do
+		case "${1-}" in
+		-h | --help) show_help ;;
+		-?*) die "Unknown option: $1" ;;
+		*) break ;;
+		esac
+		shift
+	done
+
+	args=("$@")
+	[[ ${#args[@]} -gt 1 ]] && die "Too many arguments"
+	[[ ${#args[@]} -eq 1 ]] && remote="${args[0]}"
+
+	return 0
+}
+
+parse_params "$@"
+
+# push up the branch and set upstream for the current branch
 branch=$(git rev-parse --abbrev-ref HEAD)
-remote="${1:-origin}"
 git push -u "$remote" "$branch"

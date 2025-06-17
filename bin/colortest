@@ -1,5 +1,58 @@
 #!/usr/bin/env bash
 
+show_help() {
+	cat << 'EOF'
+colortest - Display terminal color palette
+
+SYNOPSIS
+  colortest [OPTIONS]
+
+DESCRIPTION
+  Displays a test pattern of all 256 terminal colors.
+  Shows both foreground and background colors for each color number.
+  Useful for testing terminal color support and finding color numbers.
+
+OPTIONS
+  -h, --help    Show this help message and exit
+
+EXAMPLES
+  # Display all terminal colors
+  colortest
+
+EXIT STATUS
+  0    Success
+
+SEE ALSO
+  fromhex(1)
+EOF
+	exit 0
+}
+
+die() {
+	local msg=$1
+	local code=${2-1} # default exit status 1
+	echo "$msg" >&2
+	exit "$code"
+}
+
+parse_params() {
+	while :; do
+		case "${1-}" in
+		-h | --help) show_help ;;
+		-?*) die "Unknown option: $1" ;;
+		*) break ;;
+		esac
+		shift
+	done
+
+	args=("$@")
+	[[ ${#args[@]} -gt 0 ]] && die "Too many arguments"
+
+	return 0
+}
+
+parse_params "$@"
+
 fg=""
 bg=""
 for i in {0..255}; do

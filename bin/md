@@ -1,0 +1,72 @@
+#!/bin/bash
+
+show_help() {
+	cat << 'EOF'
+md - Create directory and change to it
+
+SYNOPSIS
+  md [OPTIONS] DIRECTORY
+
+DESCRIPTION
+  Creates a directory (including any necessary parent directories) and changes
+  the current working directory to it.
+
+OPTIONS
+  -h, --help        Show this help message and exit
+
+ARGUMENTS
+  DIRECTORY         Path to the directory to create and change to
+
+EXAMPLES
+  # Create and change to a new directory
+  md new-project
+
+  # Create and change to a nested directory
+  md projects/new-project
+
+EXIT STATUS
+  0    Success
+  1    Error (invalid arguments, permission denied, etc.)
+
+SEE ALSO
+  mkdir(1), cd(1)
+EOF
+	exit 0
+}
+
+die() {
+	local msg=$1
+	local code=${2-1} # default exit status 1
+	echo "$msg" >&2
+	exit "$code"
+}
+
+parse_params() {
+	directory=""
+
+	while :; do
+		case "${1-}" in
+		-h | --help) show_help ;;
+		-?*) die "Unknown option: $1" ;;
+		*) break ;;
+		esac
+		shift
+	done
+
+	args=("$@")
+	[[ ${#args[@]} -eq 0 ]] && die "Error: No directory specified"
+	directory="${args[0]}"
+
+	return 0
+}
+
+parse_params "$@"
+
+# Create directory and change to it
+if ! mkdir -p "$directory"; then
+	die "Error: Failed to create directory '$directory'"
+fi
+
+if ! cd "$directory"; then
+	die "Error: Failed to change to directory '$directory'"
+fi 

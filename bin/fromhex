@@ -1,6 +1,69 @@
 #!/usr/bin/env bash
 
-hex=${1#"#"}
+show_help() {
+	cat << 'EOF'
+fromhex - Convert hex color code to terminal color number
+
+SYNOPSIS
+  fromhex [OPTIONS] HEX_COLOR
+
+DESCRIPTION
+  Converts a hex color code (e.g., #FF0000) to its closest terminal color number.
+  Useful for finding the closest terminal color to a given hex color.
+
+OPTIONS
+  -h, --help    Show this help message and exit
+
+ARGUMENTS
+  HEX_COLOR     Hex color code (with or without # prefix)
+
+EXAMPLES
+  # Convert red color
+  fromhex "#FF0000"
+
+  # Convert without # prefix
+  fromhex "00FF00"
+
+EXIT STATUS
+  0    Success
+  1    Error (no color specified or invalid format)
+
+SEE ALSO
+  colortest(1)
+EOF
+	exit 0
+}
+
+die() {
+	local msg=$1
+	local code=${2-1} # default exit status 1
+	echo "$msg" >&2
+	exit "$code"
+}
+
+parse_params() {
+	hex_color=""
+
+	while :; do
+		case "${1-}" in
+		-h | --help) show_help ;;
+		-?*) die "Unknown option: $1" ;;
+		*) break ;;
+		esac
+		shift
+	done
+
+	args=("$@")
+	[[ ${#args[@]} -eq 0 ]] && die "Missing required argument: HEX_COLOR"
+	[[ ${#args[@]} -gt 1 ]] && die "Too many arguments"
+	hex_color="${args[0]}"
+
+	return 0
+}
+
+parse_params "$@"
+
+hex=${hex_color#"#"}
 r=$(printf '0x%0.2s' "$hex")
 g=$(printf '0x%0.2s' "${hex#??}")
 b=$(printf '0x%0.2s' "${hex#????}")

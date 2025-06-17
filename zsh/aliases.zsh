@@ -4,12 +4,13 @@ alias reload!='RELOAD=1 source ~/.zshrc'
 # Common aliases
 alias cat='bat --paging=never'
 alias cd='z'
-alias ls='eza --icons'
+alias ls='eza --icons=auto'
 alias vim='nvim'
-alias d='docker'
-alias n='nerdctl'
-# alias k='kubectl'
 # alias docker='lima nerdctl'
+alias d='docker'
+alias k='kubectl'
+alias n='nerdctl'
+alias g='git'
 
 # Filesystem aliases
 alias ..='cd ..'

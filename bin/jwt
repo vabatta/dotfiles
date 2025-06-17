@@ -1,24 +1,48 @@
 #!/usr/bin/env bash
 
 show_help() {
-	cat << EOF
-Usage: jwt_decode <token> [part] [--verify <secret/key>]
+	cat << 'EOF'
+jwt - Decode and verify JWT tokens
 
-Decode JWT token and verify signature if requested.
-Parts: header, payload (default)
+SYNOPSIS
+  jwt [OPTIONS] TOKEN [PART]
 
-Required tools: openssl, jq, base64
+DESCRIPTION
+  Decodes JWT tokens and optionally verifies their signatures.
+  Can display either the header or payload part of the token.
 
-Options:
-	--verify <secret>  Verify signature using provided secret/key
-	--help            Show this help
+OPTIONS
+  -h, --help            Show this help message and exit
+  --verify SECRET       Verify signature using provided secret/key
 
-Examples:
-	jwt_decode eyJ...xyz                    # Decode payload
-	jwt_decode eyJ...xyz header             # Decode header
-	jwt_decode eyJ...xyz --verify secretkey # Verify signature
+ARGUMENTS
+  TOKEN                JWT token to decode
+  PART                 Part to display (header or payload, default: payload)
+
+REQUIREMENTS
+  openssl              For signature verification
+  jq                   For JSON formatting
+  base64              For base64 decoding
+
+EXAMPLES
+  # Decode payload (default)
+  jwt eyJ...xyz
+
+  # Decode header
+  jwt eyJ...xyz header
+
+  # Verify signature
+  jwt eyJ...xyz --verify secretkey
+
+EXIT STATUS
+  0    Success
+  1    Error (invalid token format or content)
+  2    Error (verification failed or unsupported algorithm)
+
+SEE ALSO
+  openssl(1), jq(1), base64(1)
 EOF
-	exit 1
+	exit 0
 }
 
 decode_base64_url() {
@@ -91,38 +115,52 @@ verify_signature() {
 	return 1
 }
 
-[[ "$1" == "-h" || "$1" == "--help" || -z "$1" ]] && show_help
+die() {
+	local msg=$1
+	local code=${2-1} # default exit status 1
+	echo "$msg" >&2
+	exit "$code"
+}
 
-token="$1"
-part="2"
-verify_mode=false
-secret=""
+parse_params() {
+	token=""
+	part="2"
+	verify_mode=false
+	secret=""
 
-shift
-while [[ $# -gt 0 ]]; do
-	case "$1" in
-		header) part="1" ;;
-		payload) part="2" ;;
+	while :; do
+		case "${1-}" in
+		-h | --help) show_help ;;
 		--verify)
 			verify_mode=true
-			secret="$2"
+			secret="${2-}"
 			shift
 			;;
-		*) show_help ;;
-	esac
-	shift
-done
+		header) part="1" ;;
+		payload) part="2" ;;
+		-?*) die "Unknown option: $1" ;;
+		*) break ;;
+		esac
+		shift
+	done
 
-[[ ! "$token" =~ ^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$ ]] && {
-	echo "Error: Invalid JWT format" >&2
-	exit 1
+	args=("$@")
+	[[ ${#args[@]} -eq 0 ]] && die "Missing required argument: TOKEN"
+	token="${args[0]}"
+
+	[[ ! "$token" =~ ^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$ ]] && {
+		die "Invalid JWT format"
+	}
+
+	return 0
 }
+
+parse_params "$@"
 
 if [[ "$verify_mode" == true ]]; then
 	verify_signature "$token" "$secret" || exit $?
 fi
 
 decode_base64_url "$(echo -n "$token" | cut -d "." -f "$part")" | jq . || {
-	echo "Error: Invalid JWT content" >&2
-	exit 1
+	die "Invalid JWT content"
 }

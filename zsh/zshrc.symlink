@@ -108,7 +108,7 @@ eval "$(sheldon source)"
 unset ZSH_AUTOSUGGEST_USE_ASYNC # https://github.com/romkatv/powerlevel10k/issues/1554
 
 if [ -f $HOME/.fzf.zsh ]; then
-	source $HOME/.fzf.zsh
+	zvm_after_init_commands+=("source $HOME/.fzf.zsh")
 	export FZF_DEFAULT_COMMAND='fd --type f'
 	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi

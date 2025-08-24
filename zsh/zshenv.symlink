@@ -50,6 +50,10 @@ export POWERLEVEL9K_CONFIG_FILE="$XDG_CONFIG_HOME/prompt/p10k.zsh"
 [[ -d "$ZSH_CACHE_DIR/history" ]] || mkdir -p "$ZSH_CACHE_DIR/history"
 [[ -d "$ZSH_CACHE_DIR/zcompdump" ]] || mkdir -p "$ZSH_CACHE_DIR/zcompdump"
 
+# build
+export LDFLAGS="-L/opt/homebrew/lib"
+export CPPFLAGS="-I/opt/homebrew/include"
+
 # custom terminfo for capabilities and control sequences of terminal
 [[ -e ~/.terminfo ]] && export TERMINFO_DIRS=~/.terminfo:/usr/share/terminfo
 

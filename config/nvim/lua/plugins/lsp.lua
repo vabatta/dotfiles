@@ -33,12 +33,12 @@ now(function()
 	require("mason").setup()
 	require("mason-lspconfig").setup({
 		ensure_installed = {
-			"lua_ls",
-			"zls",
-			"ts_ls",
+			"bashls",
 			"biome",
 			"dockerls",
-			"bashls",
+			"gopls",
+			"lua_ls",
+			"ts_ls",
 		},
 		handlers = {
 			function(server_name)
@@ -61,12 +61,13 @@ now(function()
 		ensure_installed = {
 			"lua",
 			"vimdoc",
-			"zig",
 			"typescript",
 			"html",
 			"css",
 			"json",
 			"toml",
+			"go",
+			"bash",
 		},
 		highlight = {
 			enable = true,

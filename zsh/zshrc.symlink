@@ -26,8 +26,6 @@ compinit
 
 # setopt COMPLETE_ALIASES
 
-prepend_path /usr/local/opt/grep/libexec/gnubin
-prepend_path /usr/local/sbin
 prepend_path $DOTFILES/bin
 prepend_path $HOME/bin
 

@@ -4,7 +4,6 @@ Navigation Configuration (core/nav.lua)
 Core Navigation (now)
 - File Navigation:
   - netrw.nvim
-  - mini.files
 - Window Management: smart-splits.nvim
 
 Enhanced Navigation (later)
@@ -30,14 +29,6 @@ now(function()
 	-- File navigation (immediate access needed)
 	add("prichrd/netrw.nvim")
 	require("netrw").setup()
-
-	add("echasnovski/mini.files")
-	require("mini.files").setup({
-		options = {
-			-- Whether to use for editing directories
-			use_as_default_explorer = false,
-		},
-	})
 
 	-- Window management (critical for workflow)
 	add("mrjones2014/smart-splits.nvim")

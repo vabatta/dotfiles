@@ -29,6 +29,13 @@ if [[ $(uname) == Darwin ]] && command -v swiftc >/dev/null && [[ ! -x $HOME/.lo
   bad=1
 fi
 
+# 1Password: the app settings are not in the repo, so test what the tools need
+if command -v op >/dev/null; then
+  sock=$(ssh -F home/ssh/.ssh/config -G github.com 2>/dev/null | sed -n 's/^identityagent //p')
+  [[ -S $sock ]] || { echo "1password no agent socket (app: Settings > Developer > Use the SSH agent)"; bad=1; }
+  op account list >/dev/null 2>&1 || { echo "1password op is not signed in (app: Settings > Developer > Integrate with 1Password CLI)"; bad=1; }
+fi
+
 all=$(mktemp)
 trap 'rm -f "$all"' EXIT
 cat darwin/Brewfile "hosts/$host/Brewfile" >"$all"

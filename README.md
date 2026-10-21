@@ -52,7 +52,8 @@ Edit the skills and the agents in `ai/`.
         cd ~/dotfiles
         ./install.sh --macos
 
-4. Run `./doctor.sh` to find problems.
+4. Open 1Password and sign in. In Settings > Developer, turn on `Use the SSH agent` and `Integrate with 1Password CLI`.
+5. Run `./doctor.sh` to find problems.
 
 ### Options
 

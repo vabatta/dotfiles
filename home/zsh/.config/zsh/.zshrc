@@ -41,7 +41,7 @@ ZSH_AUTOSUGGEST_STRATEGY=(history)
 for f in "$ZDOTDIR"/conf.d/*.zsh(N); do source "$f"; done
 unset f
 
-# small custom functions, one per file (scripts/ package)
+# functions, one per file (any package can add to functions/)
 for f in "$ZDOTDIR"/functions/*.zsh(N); do source "$f"; done
 unset f
 [[ -r $ZDOTDIR/local.zsh ]] && source "$ZDOTDIR/local.zsh"

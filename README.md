@@ -9,9 +9,8 @@ installed by hand. It is only for project dev shells.
 | Path | Contents |
 |---|---|
 | `darwin/` | Brewfile, macOS defaults, and local taps. Every host uses them. |
-| `home/` | One stow package for each tool, laid out like $HOME. |
+| `home/` | One stow package for each tool, laid out like $HOME. A package holds everything for its tool: configuration, commands, aliases, and functions. |
 | `hosts/` | A Brewfile and a `home/` overlay for each host (git identity, SSH agent). |
-| `scripts/` | `bin/` links to `~/.local/bin`. `functions/` links to `~/.config/zsh/functions`. |
 | `ai/` | Skills, agents, and rules for Claude Code and OpenCode. |
 | `install.sh` | Apply everything. |
 | `doctor.sh` | Show where this Mac differs from the repository. |
@@ -52,8 +51,10 @@ they are. Then run `git diff` and commit the changes.
 |---|---|
 | New host | Add `hosts/<host>/Brewfile` and `hosts/<host>/home/`. |
 | New tool | Add `home/<tool>/`. Use the same paths as in $HOME. |
-| New script | Put it in `scripts/bin/`. Then run `./install.sh`. |
-| New function | Put it in `scripts/functions/`. Then run `./install.sh`. |
+| New command | Put it in `home/<tool>/.local/bin/`. Then run `./install.sh`. |
+| New alias | Put it in `home/<tool>/.config/zsh/conf.d/<nn>-<tool>.zsh`. |
+| New variable or PATH entry | Put it in `home/<tool>/.config/zsh/env.d/<tool>.zsh`. |
+| New function | Put it in `home/zsh/.config/zsh/functions/`. Then run `./install.sh`. |
 | New command for a skill | Put it in `ai/skills/<skill>/bin/`. It is on PATH at once. |
 | Find problems | Run `./doctor.sh`. It shows missing links, replaced files, and software that is not in a Brewfile. |
 

@@ -1,20 +1,7 @@
 alias -- ..='cd ..'
 alias -- ...='cd ../..'
 alias -- ....='cd ../../..'
-alias -- cat=bat
-alias -- cc=claude
-alias -- ccd='claude --dangerously-skip-permissions'
 alias -- cdd='cd ~/Downloads'
 alias -- cdp='cd ~/Projects'
-alias -- g=git
-alias -- k=kubectl
 alias -- la='ls -lah'
-alias -- lg=lazygit
 alias -- ll='ls -lh'
-alias -- nd='nix develop'
-alias -- nnz='nix shell nixpkgs#nodejs_24 nixpkgs#corepack_24 --command zsh'
-alias -- ns=nix-shell
-alias -- nsz='nix-shell --run '\''exec zsh'\'''
-alias -- oc=opencode
-alias -- ssh='TERM=xterm-256color ssh'
-alias -- tree='eza --tree'

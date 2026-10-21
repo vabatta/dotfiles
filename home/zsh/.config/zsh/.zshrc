@@ -28,13 +28,7 @@ zstyle ':completion:*:git-checkout:*' sort false
 
 autoload -U compinit && compinit
 
-# fixed prefix: `brew --prefix` is too slow for shell startup
-brew_share=/opt/homebrew/share
-[[ -r $brew_share/zsh-autosuggestions/zsh-autosuggestions.zsh ]] && source $brew_share/zsh-autosuggestions/zsh-autosuggestions.zsh
-ZSH_AUTOSUGGEST_STRATEGY=(history)
-[[ -r $brew_share/fzf-tab/fzf-tab.zsh ]] && source $brew_share/fzf-tab/fzf-tab.zsh
-
-# snippets from the tool packages; 00 defines the `theme` wrapper, 01 loads the sheldon plugins, 90 loads syntax highlighting last
+# snippets from the tool packages and zsh extensions; 00 defines the `theme` wrapper, 90 loads syntax highlighting last
 for f in "$ZDOTDIR"/conf.d/*.zsh(N); do source "$f"; done
 unset f
 

@@ -15,6 +15,33 @@ installed by hand. It is only for project dev shells.
 | `install.sh` | Apply everything. |
 | `doctor.sh` | Show where this Mac differs from the repository. |
 
+## How it works
+
+Each tool has one stow package in `home/<tool>/`. The paths inside the
+package are the same as the paths in $HOME. Stow makes one symlink for each
+file. The installer uses `--no-folding`. As a result, a tool cannot write its
+runtime files into the repository.
+
+A package holds everything for its tool:
+
+| Path in the package | Use |
+|---|---|
+| `.config/<tool>/` | The configuration of the tool. |
+| `.local/bin/` | Commands. This directory is on PATH. |
+| `.config/zsh/env.d/<tool>.zsh` | Variables and PATH entries. Every shell loads them. |
+| `.config/zsh/conf.d/<nn>-<tool>.zsh` | Aliases and shell setup. Interactive shells load them in number order. |
+| `.config/zsh/functions/<name>.zsh` | Functions. Interactive shells load them. |
+| `.config/theme/handlers.d/<tool>.sh` | The theme handler of the tool. The `theme` command runs it. |
+
+Stow cannot replace a file for one host. Host differences use include files:
+
+- A shared file includes a local file. Example: `git/config` includes `config.local`.
+- `hosts/<host>/home/` adds the files that only this host has.
+- The installer stows `hosts/<host>/home/` after the shared packages.
+
+The `claude`, `opencode`, and `agents` packages contain symlinks into `ai/`.
+Edit the skills and the agents in `ai/`.
+
 ## Install
 
 1. Install Nix: https://docs.determinate.systems/

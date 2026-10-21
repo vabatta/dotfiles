@@ -1,4 +1,4 @@
-# `sheldon lock` (run by install.sh) clones these; `sheldon source` in .zshrc loads them.
+# `sheldon lock` (run by install.sh) clones these; `sheldon source` in conf.d/01-sheldon.zsh loads them.
 shell = "zsh"
 
 # theme, cz, dotenv, jwt on PATH, plus man pages and completions

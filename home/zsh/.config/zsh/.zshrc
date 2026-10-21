@@ -34,10 +34,7 @@ brew_share=/opt/homebrew/share
 ZSH_AUTOSUGGEST_STRATEGY=(history)
 [[ -r $brew_share/fzf-tab/fzf-tab.zsh ]] && source $brew_share/fzf-tab/fzf-tab.zsh
 
-# plugins from sheldon (scriptorium: theme, cz, dotenv, jwt)
-(( $+commands[sheldon] )) && eval "$(sheldon source)"
-
-# snippets from the tool packages; 00 defines the `theme` wrapper, 90 loads syntax highlighting last
+# snippets from the tool packages; 00 defines the `theme` wrapper, 01 loads the sheldon plugins, 90 loads syntax highlighting last
 for f in "$ZDOTDIR"/conf.d/*.zsh(N); do source "$f"; done
 unset f
 

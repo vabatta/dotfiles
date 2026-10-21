@@ -100,7 +100,7 @@ The command `theme [dark|light]` comes from scriptorium.
 
 - `home/sheldon/.config/sheldon/plugins.toml` lists the zsh plugins.
 - `install.sh` runs `sheldon lock`.
-- `.zshrc` runs `sheldon source`.
+- `home/sheldon/.config/zsh/conf.d/01-sheldon.zsh` runs `sheldon source`.
 
 ## Notes
 

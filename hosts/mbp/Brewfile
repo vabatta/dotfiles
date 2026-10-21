@@ -1,0 +1,6 @@
+# Host mbp: adds to darwin/Brewfile. local/container lives in darwin/taps; install.sh links it.
+tap "local/container"
+tap "wouterdebie/tap"
+
+cask "local/container/container", trusted: true
+cask "wouterdebie/tap/davit", trusted: true

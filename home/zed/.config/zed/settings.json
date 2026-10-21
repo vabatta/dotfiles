@@ -1,0 +1,26 @@
+{
+  "agent": {
+    "default_model": {
+      "model": "openrouter/auto",
+      "provider": "openrouter"
+    }
+  },
+  "auto_install_extensions": {
+    "catppuccin": true
+  },
+  "buffer_font_family": "Hack Nerd Font",
+  "buffer_font_size": 14,
+  "language_models": {
+    "open_router": {
+      "api_url": "https://openrouter.ai/api/v1"
+    }
+  },
+  "option_as_meta": true,
+  "theme": {
+    "dark": "Catppuccin Mocha",
+    "light": "Catppuccin Latte",
+    "mode": "system"
+  },
+  "ui_font_family": "Helvetica Neue",
+  "ui_font_size": 15
+}

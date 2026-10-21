@@ -1,0 +1,38 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
+  "model": "isoquant/glm-5.3-flash",
+  "permission": "allow",
+  "provider": {
+    "isoquant": {
+      "models": {
+        "glm-5.3-flash": {
+          "cost": {
+            "cache_read": 0.014,
+            "input": 0.07,
+            "output": 0.2
+          },
+          "interleaved": {
+            "field": "reasoning_content"
+          },
+          "limit": {
+            "context": 1048576,
+            "output": 1048576
+          },
+          "name": "GLM-5.3-Flash",
+          "reasoning": true,
+          "tool_call": true
+        }
+      },
+      "name": "Isoquant",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "apiKey": "{env:ISOQUANT_API_KEY}",
+        "baseURL": "https://api.isoquant.ai/v1",
+        "headers": {
+          "Isoquant-ZDR": "required"
+        }
+      }
+    }
+  }
+}

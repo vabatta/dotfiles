@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Shadows the Homebrew binary on PATH so the keys come from 1Password at launch.
+set -euo pipefail
+
+OPENROUTER_API_KEY="$(op read 'op://Development/OpenRouter API Key - opencode/credential' --no-newline)"
+ISOQUANT_API_KEY="$(op read 'op://Development/Isoquant API Key/credential' --no-newline)"
+export OPENROUTER_API_KEY ISOQUANT_API_KEY
+exec /opt/homebrew/bin/opencode "$@"

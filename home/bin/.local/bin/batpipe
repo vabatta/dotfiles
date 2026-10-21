@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# batpipe: preprocessor for less via LESSOPEN
+# usage: LESSOPEN="| batpipe %s"
+set -euo pipefail
+
+file="${1:-}"
+
+# exit early if no file
+[[ -z "$file" ]] && exit 1
+
+# directory: list contents
+if [[ -d "$file" ]]; then
+  if command -v eza &>/dev/null; then
+    eza -la --color=always --icons=always "$file"
+  else
+    ls -la --color=always "$file"
+  fi
+  exit 0
+fi
+
+# non-existent file
+[[ ! -e "$file" ]] && exit 1
+
+# handle by extension
+# bash 3.2 (macOS /bin/bash) has no ${var,,}
+case "$(printf %s "$file" | tr '[:upper:]' '[:lower:]')" in
+  # archives
+  *.tar|*.tar.gz|*.tgz|*.tar.bz2|*.tbz2|*.tar.xz|*.txz)
+    tar -tvf "$file" 2>/dev/null ;;
+  *.zip|*.jar|*.war|*.ear)
+    unzip -l "$file" 2>/dev/null ;;
+  *.rar)
+    unrar l "$file" 2>/dev/null ;;
+  *.7z)
+    7z l "$file" 2>/dev/null ;;
+  *.gz)
+    gzip -l "$file" 2>/dev/null ;;
+
+  # documents
+  *.pdf)
+    pdftotext -layout "$file" - 2>/dev/null ;;
+  *.docx|*.odt)
+    pandoc -t plain "$file" 2>/dev/null ;;
+
+  # images (show metadata)
+  *.png|*.jpg|*.jpeg|*.gif|*.bmp|*.webp|*.ico|*.svg)
+    if command -v exiftool &>/dev/null; then
+      exiftool "$file" 2>/dev/null
+    elif command -v file &>/dev/null; then
+      file "$file"
+    fi ;;
+
+  # binary/data files
+  *.bin|*.exe|*.dll|*.so|*.dylib)
+    file "$file"
+    hexdump -C "$file" 2>/dev/null | head -100 ;;
+
+  # sqlite
+  *.db|*.sqlite|*.sqlite3)
+    sqlite3 "$file" ".tables" 2>/dev/null ;;
+
+  # default: use bat for syntax highlighting
+  *)
+    bat --color=always --paging=never --style=numbers "$file" 2>/dev/null
+    ;;
+esac

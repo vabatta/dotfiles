@@ -1,0 +1,15 @@
+# Host mbp-unique: adds to darwin/Brewfile.
+brew "azure-cli"
+
+# devtools
+cask "cursor"
+cask "devtunnel"
+cask "google-chrome"
+cask "mongodb-compass"
+cask "openlens"
+
+# everyday apps
+cask "loom"
+cask "slack"
+
+mas "Tailscale", id: 1475387142

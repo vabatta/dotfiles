@@ -1,0 +1,13 @@
+{
+  "name": "validate-mermaid",
+  "version": "1.0.0",
+  "description": "Validate Mermaid diagrams with the real mermaid.parse() grammar.",
+  "type": "module",
+  "bin": {
+    "validate-mermaid": "validate_mermaid.mjs"
+  },
+  "dependencies": {
+    "jsdom": "30.0.1",
+    "mermaid": "11.17.2"
+  }
+}

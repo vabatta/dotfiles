@@ -1,0 +1,16 @@
+[user]
+	name = "vabatta"
+	email = "2137077+vabatta@users.noreply.github.com"
+	signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIERFqyE4flUaslGeGLB/O0KXoPfi+Azp35X8UJ0oAE3U"
+
+[gpg]
+	format = "ssh"
+
+[commit]
+	gpgSign = true
+
+[tag]
+	gpgSign = true
+
+[credential]
+	helper = "osxkeychain"

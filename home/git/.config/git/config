@@ -1,0 +1,128 @@
+[alias]
+	aa = "add --all"
+	addnw = "!sh -c 'git diff -U0 -w --no-color \"$@\" | git apply --cached --ignore-whitespace --unidiff-zero -'"
+	age = "!git log --pretty=format:\"%ad %an\" --date=short | sort | head -1"
+	ahead = "!git rev-list --left-right --count origin/$(git rev-parse --abbrev-ref HEAD)...HEAD"
+	assume = "update-index --assume-unchanged"
+	assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+	bare-clone = "!f() { REPO=$1; BARE_DIR=\".bare\"; git clone --bare \"$REPO\" \"$BARE_DIR\" && cd \"$BARE_DIR\" && git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*' && cd - > /dev/null && echo \"gitdir: $BARE_DIR\" > .git; }; f"
+	br = "branch"
+	ca = "commit --amend"
+	cane = "commit --amend --no-edit"
+	cb = "checkout -b"
+	cbr = "rev-parse --abbrev-ref HEAD"
+	changed = "diff --stat"
+	churn = "!f() { git log --all -M -C --name-only --format='format:' \"$@\" | sort | grep -v '^$' | uniq -c | sort | awk 'BEGIN {print \"count\\tfile\"} {print $1 \"\\t\" $2}' | sort -g; }; f"
+	ci = "commit"
+	cm = "commit -m"
+	co = "checkout"
+	count = "shortlog -sn"
+	d = "diff"
+	delete-merged-branches = "!f() { git checkout --quiet master && git branch --merged | grep --invert-match '\\*' | xargs -n 1 git branch --delete; git checkout --quiet @{-1}; }; f"
+	ds = "diff --staged"
+	files = "!git ls-tree -r HEAD --name-only | wc -l"
+	hist = "!git log --pretty=tformat: --numstat | awk '{ added += $1; removed += $2 } END { print \"Added:\", added, \"Removed:\", removed }'"
+	l = "log --graph --pretty=format:'%Cred%h%Creset %C(bold blue)%an%C(reset) - %s - %Creset %C(yellow)%d%Creset %Cgreen(%cr)%Creset' --abbrev-commit --date=relative"
+	last = "log -1"
+	last-sha = "!sh -c 'printf %s \"$(git rev-parse ${1:-HEAD})\"'"
+	latest = "!git for-each-ref --sort='-committerdate' --format='%(color:red)%(refname)%(color:reset)%09%(committerdate)' refs/remotes | sed -e 's-refs/remotes/origin/--' | less -XFR"
+	lg = "log --oneline --graph --decorate --all"
+	list-aliases = "!git config -l | grep alias | cut -c 7-"
+	loc = "!git ls-files | xargs wc -l"
+	pf = "push --force-with-lease"
+	pl = "pull"
+	ps = "push"
+	rb = "rebase"
+	rbc = "rebase --continue"
+	rbi = "rebase -i"
+	recent = "!git for-each-ref --sort='-committerdate' --format='%(color:red)%(refname)%(color:reset)%09%(committerdate)' refs/heads | sed -e 's-refs/heads/--' | less -XFR"
+	review = "!git log --no-merges --pretty=%an | head -n 100 | sort | uniq -c | sort -nr"
+	rs = "reset"
+	rsh = "reset --hard"
+	s = "status -sb"
+	si = "submodule init"
+	size = "!git ls-tree -r HEAD --long | awk '{ sum += $4 } END { print sum }'"
+	st = "status"
+	su = "submodule update"
+	sub = "!git submodule sync && git submodule update"
+	sw = "switch"
+	today = "!git log --since=midnight --author=\"$(git config user.name)\" --oneline"
+	top = "shortlog -sne"
+	unassume = "update-index --no-assume-unchanged"
+	unassumeall = "!git assumed | xargs git update-index --no-assume-unchanged"
+	undo = "reset --soft HEAD~1"
+	update = "!git fetch upstream && git rebase upstream/`git rev-parse --abbrev-ref HEAD`"
+	who = "blame -e"
+	whoami = "config --get-regexp ^user\\."
+
+[apply]
+	whitespace = "nowarn"
+
+[branch]
+	autosetuprebase = "always"
+
+[color]
+	branch = "auto"
+	diff = "auto"
+	interactive = "auto"
+	status = "auto"
+	ui = "auto"
+
+[core]
+	pager = "less -R"
+	whitespace = "cr-at-eol"
+
+[credential "https://gist.github.com"]
+	helper = ""
+	helper = "!gh auth git-credential"
+
+[credential "https://github.com"]
+	helper = ""
+	helper = "!gh auth git-credential"
+
+[diff]
+	compactionHeuristic = true
+	mnemonicprefix = true
+	renames = "copies"
+
+[difftool]
+	prompt = false
+
+[filter "lfs"]
+	clean = "git-lfs clean -- %f"
+	process = "git-lfs filter-process"
+	required = true
+	smudge = "git-lfs smudge -- %f"
+
+[github]
+	user = "vabatta"
+
+[gpg "ssh"]
+	allowedSignersFile = "~/.config/git/allowed_signers"
+	program = "ssh-keygen"
+
+[grep]
+	extendRegexp = true
+	lineNumber = true
+
+[init]
+	defaultBranch = "main"
+
+[pull]
+	rebase = true
+
+[push]
+	default = "current"
+
+[rebase]
+	autoStash = true
+	instructionFormat = "[%an - %ar] %s"
+
+[rerere]
+	enabled = true
+
+[safe]
+	directory = "*"
+
+[include]
+	path = "~/.config/git/config.local"

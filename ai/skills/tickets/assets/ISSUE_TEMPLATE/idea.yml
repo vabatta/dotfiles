@@ -1,0 +1,26 @@
+name: Idea
+description: Sketch an idea to explore — not yet brainstormed or scoped
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Instructions
+        Describe the idea. Keep it short — details come after brainstorming.
+  - type: textarea
+    id: what
+    attributes:
+      label: What
+      description: What's the capability or problem? One paragraph is fine.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: Who benefits, what it unblocks, why it matters.
+  - type: textarea
+    id: open-questions
+    attributes:
+      label: Open questions
+      description: Things to figure out during brainstorming.

@@ -62,6 +62,11 @@ for pkg in home/*/; do
 done
 stow --no-folding $adopt -d "hosts/$host" -t "$HOME" home
 
+# macOS only: prints "dark" or "light" each time the appearance changes (needs the Xcode tools)
+if [[ $(uname) == Darwin ]] && command -v swiftc >/dev/null; then
+  swiftc -O -o "$HOME/.local/bin/theme-monitor" darwin/theme-monitor.swift
+fi
+
 bat cache --build
 sheldon lock
 

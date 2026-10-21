@@ -24,6 +24,11 @@ while IFS= read -r file; do
   fi
 done < <(find home "hosts/$host/home" \( -type f -o -type l \) -not -name .DS_Store)
 
+if [[ $(uname) == Darwin ]] && command -v swiftc >/dev/null && [[ ! -x $HOME/.local/bin/theme-monitor ]]; then
+  echo "missing   .local/bin/theme-monitor   (built by ./install.sh)"
+  bad=1
+fi
+
 all=$(mktemp)
 trap 'rm -f "$all"' EXIT
 cat darwin/Brewfile "hosts/$host/Brewfile" >"$all"

@@ -8,7 +8,7 @@ installed by hand. It is only for project dev shells.
 
 | Path | Contents |
 |---|---|
-| `darwin/` | Brewfile, macOS defaults, and local taps. Every host uses them. |
+| `darwin/` | Brewfile, macOS defaults, local taps, and the `theme-monitor` source. Every host uses them. |
 | `home/` | One stow package for each tool, laid out like $HOME. A package holds everything for its tool: configuration, commands, aliases, and functions. |
 | `hosts/` | A Brewfile and a `home/` overlay for each host (git identity, SSH agent). |
 | `ai/` | Skills, agents, and rules for Claude Code and OpenCode. |
@@ -92,6 +92,8 @@ The command `theme [dark|light]` comes from scriptorium.
 - It reads the macOS appearance and selects a Catppuccin flavor.
 - It runs the handlers in `home/<tool>/.config/theme/`.
 - The flavor mapping is in `home/theme/.config/theme/provider.sh`.
+- The installer builds `theme-monitor` from `darwin/theme-monitor.swift`. It prints `dark` or `light` each time the macOS appearance changes.
+- To follow the appearance, run `theme-monitor | while read -r mode; do theme "$mode"; done`.
 
 ## Plugins
 

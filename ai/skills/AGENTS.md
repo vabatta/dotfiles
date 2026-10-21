@@ -1,7 +1,7 @@
 # Writing skills in this folder
 
 Rules for authoring and editing the `SKILL.md` files here. Follow these;
-`scripts/check-skills.sh` fails the build otherwise.
+`check-skills` fails the build otherwise.
 
 ## Frontmatter
 

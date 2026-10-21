@@ -1,0 +1,7 @@
+palette() {
+  local -a colors
+  for i in {000..255}; do
+    colors+=("%F{$i}$i%f")
+  done
+  print -cP $colors
+}

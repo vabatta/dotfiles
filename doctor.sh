@@ -7,8 +7,12 @@ host=${1:-$(scutil --get LocalHostName)}
 bad=0
 
 while IFS= read -r file; do
-  rel=${file#*/*/}
-  [[ $file == hosts/* ]] && rel=${file#hosts/*/home/}
+  case $file in
+    scripts/bin/*) rel=.local/bin/${file#scripts/bin/} ;;
+    scripts/functions/*) rel=.config/zsh/functions/${file#scripts/functions/} ;;
+    hosts/*) rel=${file#hosts/*/home/} ;;
+    *) rel=${file#*/*/} ;;
+  esac
   target="$HOME/$rel"
   if [[ ! -e $target && ! -L $target ]]; then
     echo "missing   $rel"
@@ -20,7 +24,7 @@ while IFS= read -r file; do
     echo "foreign   $rel -> $(readlink "$target")"
     bad=1
   fi
-done < <(find home "hosts/$host/home" \( -type f -o -type l \) -not -name .DS_Store)
+done < <(find home scripts "hosts/$host/home" \( -type f -o -type l \) -not -name .DS_Store)
 
 all=$(mktemp)
 trap 'rm -f "$all"' EXIT

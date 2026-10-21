@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../../../../ai/skills/mermaid/scripts"
+dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../scripts"
 [[ -d $dir/node_modules ]] || npm ci --prefix "$dir" --no-audit --no-fund >&2
 exec node "$dir/validate_mermaid.mjs" "$@"

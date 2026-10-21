@@ -4,7 +4,6 @@ alias -- ....='cd ../../..'
 alias -- cat=bat
 alias -- cc=claude
 alias -- ccd='claude --dangerously-skip-permissions'
-alias -- cd=z
 alias -- cdd='cd ~/Downloads'
 alias -- cdp='cd ~/Projects'
 alias -- g=git

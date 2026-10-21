@@ -46,5 +46,3 @@ theme_zsh_highlight() {
   ZSH_HIGHLIGHT_STYLES[path_pathseparator]="fg=#$red,underline"
   ZSH_HIGHLIGHT_STYLES[path_prefix_pathseparator]="fg=#$red,underline"
 }
-
-THEME_FUNCS+=("theme_zsh_highlight")

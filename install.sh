@@ -43,8 +43,12 @@ command -v stow >/dev/null || {
 
 # a real file that already exists where stow will link: identical ones go, differing ones move aside
 while IFS= read -r file; do
-  rel=${file#*/*/}
-  [[ $file == hosts/* ]] && rel=${file#hosts/*/home/}
+  case $file in
+    scripts/bin/*) rel=.local/bin/${file#scripts/bin/} ;;
+    scripts/functions/*) rel=.config/zsh/functions/${file#scripts/functions/} ;;
+    hosts/*) rel=${file#hosts/*/home/} ;;
+    *) rel=${file#*/*/} ;;
+  esac
   target="$HOME/$rel"
   [[ -f $target && ! -L $target && ! $target -ef $file ]] || continue
   if cmp -s "$file" "$target"; then
@@ -53,15 +57,19 @@ while IFS= read -r file; do
     mv "$target" "$target.pre-stow"
     echo "moved $target to $target.pre-stow (differs from the repo; merge by hand or rerun with --adopt)" >&2
   fi
-done < <(find home "hosts/$host/home" \( -type f -o -type l \) -not -name .DS_Store)
+done < <(find home scripts "hosts/$host/home" \( -type f -o -type l \) -not -name .DS_Store)
 
 for pkg in home/*/; do
   stow --no-folding $adopt -d home -t "$HOME" "$(basename "$pkg")"
 done
+# scripts/ links straight into its two target directories
+mkdir -p "$HOME/.local/bin" "$HOME/.config/zsh/functions"
+stow --no-folding $adopt -d scripts -t "$HOME/.local/bin" bin
+stow --no-folding $adopt -d scripts -t "$HOME/.config/zsh/functions" functions
 stow --no-folding $adopt -d "hosts/$host" -t "$HOME" home
 
 bat cache --build
-home/bin/.local/bin/scriptorium-install
+sheldon lock
 
 if ((macos)); then
   darwin/defaults.sh

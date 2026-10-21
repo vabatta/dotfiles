@@ -64,7 +64,7 @@ Based on the user interview, fill in these components:
 - **compatibility**: Required tools, dependencies (optional, rarely needed)
 - **the rest of the skill**
 
-Follow the authoring rules in `ai/skills/AGENTS.md`, and run the bundle checker `bash scripts/check-skills.sh ai/skills ai/AGENTS.md` from the repository that holds the bundle before handing the skill back. For a bundle elsewhere, pass that bundle's own skills directory and rules file. Done when it reports 0 failures and 0 warnings for the skill.
+Follow the authoring rules in `ai/skills/AGENTS.md`, and run the bundle checker `check-skills ai/skills ai/AGENTS.md` from the repository that holds the bundle before handing the skill back. For a bundle elsewhere, pass that bundle's own skills directory and rules file. Done when it reports 0 failures and 0 warnings for the skill.
 
 ### Skill Writing Guide
 

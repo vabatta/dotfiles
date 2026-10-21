@@ -17,6 +17,8 @@ typeset -U path
 path=("$HOME/.local/bin" /opt/homebrew/bin /opt/homebrew/sbin $path)
 # Nix is installed by hand (Determinate installer) and only used for project dev shells
 [[ -d /nix/var/nix/profiles/default/bin ]] && path+=(/nix/var/nix/profiles/default/bin)
+# a skill ships its own commands in <skill>/bin (validate-mermaid, check-skills)
+path+=("$HOME"/.agents/skills/*/bin(N))
 
 # tool packages ship their own variables here
 for f in "$ZDOTDIR"/env.d/*.zsh(N); do source "$f"; done

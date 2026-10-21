@@ -1,61 +1,81 @@
 # dotfiles
 
-Everything about these Macs lives here: apps, system settings, shell, tool configs and scripts. Homebrew installs software, [GNU Stow](https://www.gnu.org/software/stow/) links the configs, and shell scripts set macOS options. Nix is installed by hand and used only for project dev shells.
+My macOS setup. Homebrew installs the software. GNU Stow links the
+configuration files. A few shell scripts set the macOS options. Nix is
+installed by hand. It is only for project dev shells.
 
-The layout follows the Nix setup it replaced:
+## Layout
 
-```
-darwin/                 system level, shared by every host        (was darwin/*.nix)
-  Brewfile              CLI tools, casks, fonts, Mac App Store apps
-  defaults.sh           macOS settings
-  sudo-touchid.sh       Touch ID for sudo
-  maxfiles.sh           launchd file-descriptor limit (nix-daemon needs it)
-  taps/<name>/Casks/    casks that are not on GitHub (tableplus, container)
-home/<tool>/...         one stow package per tool, mirroring $HOME   (was home/<tool>.nix)
-home/bin/.local/bin/    scripts on PATH
-hosts/<host>/           everything that differs per Mac           (was hosts/<host>/configuration.nix)
-  Brewfile              extra casks, formulae, taps, App Store apps
-  home/...              files stowed over the shared ones: git identity and signing key, SSH agent socket
-ai/                     skills, agents, plugins and rules, shared by Claude Code, OpenCode and ~/.agents
-install.sh              apply everything                          (was darwin-rebuild switch)
-doctor.sh               report drift
-```
+| Path | Contents |
+|---|---|
+| `darwin/` | Brewfile, macOS defaults, and local taps. Every host uses them. |
+| `home/` | One stow package for each tool, laid out like $HOME. |
+| `hosts/` | A Brewfile and a `home/` overlay for each host (git identity, SSH agent). |
+| `scripts/` | `bin/` links to `~/.local/bin`. `functions/` links to `~/.config/zsh/functions`. |
+| `ai/` | Skills, agents, and rules for Claude Code and OpenCode. |
+| `install.sh` | Apply everything. |
+| `doctor.sh` | Show where this Mac differs from the repository. |
 
-Hosts: `mbp`, `mbp-unique`. A new host is a `hosts/<host>/` directory with a `Brewfile` and a `home/` overlay.
+## Install
 
-## Use
+1. Install Nix: https://docs.determinate.systems/
+2. Install Homebrew: https://brew.sh
+3. Clone the repository and run the installer:
 
-```sh
-./install.sh [host]        # taps, brew bundle, stow, bat cache, scriptorium
-./install.sh --macos       # also apply the darwin/*.sh scripts (prompts for sudo)
-./install.sh --adopt       # pull differing files already in $HOME into the repo
-./doctor.sh                # report missing, replaced or undeclared items
-```
+        git clone <repo> ~/dotfiles
+        cd ~/dotfiles
+        ./install.sh --macos
 
-## Two-way sync
+4. Run `./doctor.sh` to find problems.
 
-Files in `$HOME` are symlinks into this repo, so editing `~/.config/foo/bar` edits the repo file. Review with `git diff`, then commit.
+### Options
 
-- Software: install with `brew install` as usual; `./doctor.sh` lists what is installed but not in a Brewfile.
-- Per-host differences are plain files that the shared config includes (git `config.local`, zsh `env.d/`), not templates.
-- If an app replaces a symlink with a real file, `doctor.sh` reports `not-link`; `./install.sh --adopt` moves it back.
-- `~/.claude/skills`, `agents` and the OpenCode equivalents are directory symlinks into `ai/`. New skills land in `git status`.
-- Not tracked: `gh/hosts.yml`, 1Password's `op` config, Claude Code runtime state, `~/.config/eza/theme.yml` (the theme switcher rewrites it).
+The command is `install.sh [--adopt] [--macos] [host]`.
 
-## New Mac
+| Option | Effect |
+|---|---|
+| `host` | The host name. The default is the name of this Mac (`mbp` or `mbp-unique`). |
+| `--macos` | Also apply the macOS defaults, Touch ID for sudo, and the file limits. |
+| `--adopt` | Pull a different file that is already in place into the repository. |
 
-1. Install Nix by hand with the [Determinate installer](https://docs.determinate.systems/).
-2. Install Homebrew from https://brew.sh.
-3. `git clone <repo> ~/dotfiles && cd ~/dotfiles && ./install.sh --macos`
-4. Run `./doctor.sh`.
+### Files that already exist
 
-Files that already exist where a link goes are replaced when identical and moved aside as `<name>.pre-stow` when they differ.
+- An identical file: the installer replaces it.
+- A different file: the installer moves it aside as `<name>.pre-stow`.
 
-## Differences from the old Nix setup
+## Daily use
 
-- No pinning: Homebrew and the App Store install the latest. The only pin is the `local/tableplus` tap in `darwin/taps/`.
-- `scriptorium` and `validate-mermaid` come from `scriptorium-install` and `npm ci`; they are not Homebrew packages.
-- `nix-direnv` is vendored in `home/direnv` (no Homebrew formula).
-- Neovim is not ported yet; the `neovim` formula is installed with no config.
-- `k9s` is new here: its Nix module existed but was never imported.
-- AI tools link only portable config: rules, skills, agents, plugins, `opencode.json`, `tui.json`, Claude `settings.json` and ccstatusline settings. History, sessions, caches, `settings.local.json`, backups and `node_modules` stay out.
+The files in $HOME are symlinks into this repository. Edit the files where
+they are. Then run `git diff` and commit the changes.
+
+| Task | Action |
+|---|---|
+| New host | Add `hosts/<host>/Brewfile` and `hosts/<host>/home/`. |
+| New tool | Add `home/<tool>/`. Use the same paths as in $HOME. |
+| New script | Put it in `scripts/bin/`. Then run `./install.sh`. |
+| New function | Put it in `scripts/functions/`. Then run `./install.sh`. |
+| New command for a skill | Put it in `ai/skills/<skill>/bin/`. It is on PATH at once. |
+| Find problems | Run `./doctor.sh`. It shows missing links, replaced files, and software that is not in a Brewfile. |
+
+## Themes
+
+The command `theme [dark|light]` comes from scriptorium.
+
+- It reads the macOS appearance and selects a Catppuccin flavor.
+- It runs the handlers in `home/<tool>/.config/theme/`.
+- The flavor mapping is in `home/theme/.config/theme/provider.sh`.
+
+## Plugins
+
+- `home/sheldon/.config/sheldon/plugins.toml` lists the zsh plugins.
+- `install.sh` runs `sheldon lock`.
+- `.zshrc` runs `sheldon source`.
+
+## Notes
+
+- Nothing has a pinned version, except the `local/tableplus` tap.
+- The repository contains `getoptions` and `nix-direnv`. Homebrew does not
+  have them.
+- The Neovim configuration is not ported yet.
+- The repository does not track these files: gh `hosts.yml`, the `op`
+  configuration of 1Password, and the state of Claude Code.

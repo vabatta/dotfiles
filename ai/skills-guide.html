@@ -292,7 +292,7 @@
 <aside id="drawer" aria-label="Skill detail" aria-hidden="true"></aside>
 
 <footer>
-  Click a skill to open its detail panel. After you edit skills, run <code>bash scripts/check-skills.sh --write-guide ai/skills ai/skills-guide.html</code> to refresh the embedded data. Then run <code>bash scripts/check-skills.sh ai/skills ai/AGENTS.md ai/skills-guide.html</code>. The flake runs the same check. The check fails if a journey step lists a building block or a principle. List those under <b>applies</b> or in the text.
+  Click a skill to open its detail panel. After you edit skills, run <code>check-skills --write-guide ai/skills ai/skills-guide.html</code> to refresh the embedded data. Then run <code>check-skills ai/skills ai/AGENTS.md ai/skills-guide.html</code>. The flake runs the same check. The check fails if a journey step lists a building block or a principle. List those under <b>applies</b> or in the text.
 </footer>
 
 <script>
@@ -516,7 +516,7 @@ const JOURNEYS = [
   ["Create or edit a skill",
    "You want a new skill, a change to an existing skill, or a measured test of a skill.",
    [
-     [["skill-creator"], "", "Create, edit, or evaluate the skill. Run the checker with bash scripts/check-skills.sh ai/skills ai/AGENTS.md from the repo root. The eval loop works without subagents. It fails with a clear message if no run is graded.", "For a small edit of wording or of one step, skip the eval loop. Edit, run the checker, and show the diff. To tighten the wording of a finished skill, use writing-for-agents.", ["principle-prove-it-works"]]
+     [["skill-creator"], "", "Create, edit, or evaluate the skill. Run the checker with check-skills ai/skills ai/AGENTS.md from the repo root. The eval loop works without subagents. It fails with a clear message if no run is graded.", "For a small edit of wording or of one step, skip the eval loop. Edit, run the checker, and show the diff. To tighten the wording of a finished skill, use writing-for-agents.", ["principle-prove-it-works"]]
    ],
    "the skill passes the checker, and the diff or the graded eval runs show the change.", "new skill / edit this skill / eval a skill", "People and sessions"],
   ["Change which model does what",

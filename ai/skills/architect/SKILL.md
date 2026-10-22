@@ -90,7 +90,7 @@ When you scrap:
 
 ## Outputs
 
-The caller's usage is written first and the type sketch derived from it. One file with new types and signatures for small changes; module map plus type definitions for larger work. The rationale ships alongside, shaped per `references/rationale-template.md`, including the usage sketch and the synthesis decision. Write both to `.agent/runs/architect/<slug>/` (ignore `.agent/` per the rule in the skills `AGENTS.md`). When the design is hard to reverse, also record it as an ADR via **domain-modeling**, which owns the ADR location. With no checkpoint, list the open questions in the final report.
+The caller's usage is written first and the type sketch derived from it. One file with new types and signatures for small changes; module map plus type definitions for larger work. The rationale ships alongside, shaped per `references/rationale-template.md`, including the usage sketch and the synthesis decision. Write both to `.agent/runs/architect/<slug>/`. When the design is hard to reverse, also record it as an ADR via **domain-modeling**, which owns the ADR location. With no checkpoint, list the open questions in the final report.
 
 ## Vocabulary
 

@@ -234,7 +234,7 @@
 
   <section id="layout">
     <h2>Where things live <span class="hint">one home for each artifact, chosen by audience</span></h2>
-    <p class="lead">Ask: does a reviewer need this after the run ends? If yes, commit it under <code>docs/</code>. If no, it is working state under the gitignored <code>.agent/</code>. To promote a file, move it. The issue tracker holds the work itself.</p>
+    <p class="lead">Ask: does a reviewer need this after the run ends? If yes, commit it under <code>docs/</code>. If no, it is the agents' own knowledge base and working state under <code>.agent/</code>. To promote a file, move it. The issue tracker holds the work itself.</p>
     <div class="treewrap">
       <div class="tree">
         <span class="p">repo/</span><span class="n"></span>
@@ -245,7 +245,7 @@
         <span class="p">│   ├── <i class="d">adr/</i>0001-slug.md</span><span class="n">one decision and its reason</span>
         <span class="p">│   ├── <i class="d">specs/</i>slug.md</span><span class="n">contract for the requirements</span>
         <span class="p">│   └── <i class="d">decisions/</i>slug.tsv</span><span class="n">promoted from .agent/</span>
-        <span class="p">└── <i class="a">.agent/</i></span><span class="n">gitignored, working state</span>
+        <span class="p">└── <i class="a">.agent/</i></span><span class="n">agent knowledge base, working state</span>
         <span class="p">    ├── <i class="a">decisions/</i>slug.tsv</span><span class="n"></span>
         <span class="p">    ├── <i class="a">runs/</i>skill/slug/</span><span class="n">plans, designs, briefs, evals</span>
         <span class="p">    ├── <i class="a">handoffs/</i>slug.md</span><span class="n">includes reflect-backlog.md</span>
@@ -257,7 +257,7 @@
       </div>
       <div class="legend">
         <span><i class="sw doc"></i><b>docs/</b> committed durable knowledge</span>
-        <span><i class="sw agent"></i><b>.agent/</b> gitignored working state</span>
+        <span><i class="sw agent"></i><b>.agent/</b> agent knowledge base, working state</span>
         <span><i class="sw skill"></i><b>skill/</b> references, scripts, and assets are part of the skill</span>
         <span><i class="sw track"></i><b>tickets</b> owns the board: statuses, dependencies, and sub-issues</span>
       </div>
@@ -509,7 +509,7 @@ const JOURNEYS = [
   ["Improve the setup after a session",
    "Something went wrong twice, or a session taught you something worth keeping. This journey is not for a new skill: use Create or edit a skill.",
    [
-     [["reflect"], "", "Examine the finished session through independent lenses, with or without a transcript. Send each learning to a skill, a check, or structure. reflect builds the check itself, first red and then green. The structural backlog goes to .agent/handoffs/reflect-backlog.md, which is not committed.", "", ["principle-encode-lessons-in-structure"]],
+     [["reflect"], "", "Examine the finished session through independent lenses, with or without a transcript. Send each learning to a skill, a check, or structure. reflect builds the check itself, first red and then green. The structural backlog goes to .agent/handoffs/reflect-backlog.md.", "", ["principle-encode-lessons-in-structure"]],
      [["skill-creator"], "", "Apply the approved skill edit. Use writing-for-agents for the wording.", "If a learning becomes a skill edit, do this step.", []]
    ],
    "a durable check or skill edit exists that stops the repeat, and it is verified.", "retro this / improve the skills", "People and sessions"],

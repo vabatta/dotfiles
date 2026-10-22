@@ -13,9 +13,7 @@ solutions. Do not use it for a mechanical change.
 2. Produce at least two structurally different candidates when the decision is
    architectural.
 3. Fan the writers out per **delegate**, each with its own directory under
-   `.agent/runs/arena/<slug>/candidate-N/`. Candidates
-   are working state and stay out of git, so ignore `.agent/` first per the rule
-   in the skills `AGENTS.md`. Isolation comes from the separate directories (**principle-separate-before-serializing-shared-state**).
+   `.agent/runs/arena/<slug>/candidate-N/`. Isolation comes from the separate directories (**principle-separate-before-serializing-shared-state**).
 4. Read every candidate and score it against the rubric.
 5. Select the base by rubric score. Break ties with the smallest, clearest
    public surface.

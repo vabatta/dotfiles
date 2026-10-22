@@ -23,8 +23,7 @@ first, and when it exists the finding is a compliance gap, not a new rule.
 4. Build each Accepted mechanical check now per
    **principle-encode-lessons-in-structure**, wire it into the repo's check
    command, and run it red on the failing case, then green on the fix. Write
-   what exceeds the budget to `.agent/handoffs/reflect-backlog.md`, after
-   `grep -qx '.agent/' .git/info/exclude || echo '.agent/' >> .git/info/exclude`. Done when
+   what exceeds the budget to `.agent/handoffs/reflect-backlog.md`. Done when
    every check has a red and a green run or a backlog entry.
 5. Apply the Accepted skill edits, routing them through **skill-creator** for
    structure and evals and **writing-for-agents** for wording. Done when every

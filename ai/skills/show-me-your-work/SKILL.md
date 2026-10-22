@@ -40,9 +40,9 @@ Log decision points and checkpoints, not every action: a fork chosen, a unit com
 
 ## Where it lives
 
-By default the log is a working artifact, not committed. Keep it at `.agent/decisions/<slug>.tsv`. Most work doesn't need a committed trail; the local log still keeps the run honest and can be discarded after.
+The log is working state. Always write it to `.agent/decisions/<slug>.tsv`, never to `docs/`. It keeps the run honest and can be discarded after.
 
-When the work is ambitious enough that a reviewer needs the trail to trust the result, promote it to `docs/decisions/<slug>.tsv` and commit it: a large cross-language port, a multi-week migration, anything where confidence has to be shown rather than assumed. A committed log renders as a table in the PR.
+Promote it to `docs/decisions/<slug>.tsv` and commit it there only when the user asks for a committed trail, or the task text says a reviewer needs one. Size or ambition of the work is not a reason on its own. Without that request, offer promotion in the final report and leave the log where it is. A committed log renders as a table in the PR.
 
 ## Rules
 

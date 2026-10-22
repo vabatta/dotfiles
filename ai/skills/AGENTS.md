@@ -62,7 +62,8 @@ Skills that write files pick a home by audience, not by skill. Three homes exist
   `docs/glossary.md`, `docs/glossary-map.md` and `docs/glossary/<context>.md` when a
   repo has multiple contexts, `docs/adr/NNNN-<slug>.md`, `docs/specs/<slug>.md`,
   `docs/decisions/<slug>.tsv` when a trail is promoted.
-- Working state that is not committed, under `.agent/` (gitignored):
+- The agents' own knowledge base and working state, under `.agent/`. Whether a repo
+  commits it is the repo's choice, so no skill depends on either:
   `.agent/decisions/<slug>.tsv`, `.agent/runs/<skill>/`, `.agent/handoffs/<slug>.md`,
   `.agent/questionnaires/<slug>.md`, `.agent/tickets/<slug>.md` (the fallback without `gh`), `.agent/teaching/`, `.agent/prototypes/<slug>/`,
   `.agent/wizards/<slug>.sh`.
@@ -71,9 +72,6 @@ Skills that write files pick a home by audience, not by skill. Three homes exist
 Promotion is one move. An artifact under `.agent/` that earns durability moves to
 `docs/`, for example `.agent/decisions/<slug>.tsv` to `docs/decisions/<slug>.tsv`.
 Do not invent a fourth location.
-
-Before the first write under `.agent/`, ignore it locally with
-`grep -qx '.agent/' .git/info/exclude || echo '.agent/' >> .git/info/exclude`.
 
 A skill's own `references/`, `scripts/`, and `assets/` ship with the skill. They are
 not project artifacts and never go under `docs/` or `.agent/`.

@@ -24,7 +24,7 @@ The wrong branch wastes the whole prototype. If the branch is ambiguous and the 
 5. Surface the full relevant state after every action or variant switch.
 6. Capture when done. Done when all of these hold:
    - The verdict (yes, no, conditional, or pending human) and the constraints found are written in `.agent/prototypes/<slug>/VERDICT.md`.
-   - The prototype is kept on a throwaway branch off main (`git add -f`, because `.agent/` is ignored).
+   - The prototype is kept on a throwaway branch off main.
    - A context pointer is on the issue, only if one exists.
    - Nothing is folded into real code. The prototype is evidence, not the implementation.
 

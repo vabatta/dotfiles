@@ -11,5 +11,3 @@ cask "openlens"
 # everyday apps
 cask "loom"
 cask "slack"
-
-mas "Tailscale", id: 1475387142

@@ -53,8 +53,8 @@ cask "font-hack-nerd-font"
 
 # OS enhancements
 cask "betterdisplay"
-cask "jordanbaird-ice"
 cask "keepingyouawake"
+cask "thaw"
 
 # everyday apps
 cask "1password"
@@ -75,6 +75,7 @@ cask "zed"
 mas "1Password for Safari", id: 1569813296
 mas "Magnet", id: 441258766
 mas "Pages", id: 409201541
+mas "Tailscale", id: 1475387142
 mas "Userscripts", id: 1463298887
 mas "Xcode", id: 497799835
 mas "Yoink", id: 457622435

@@ -1,0 +1,7 @@
+confirm-close-surface = false
+cursor-color = cell-foreground
+font-family = Hack Nerd Font
+macos-option-as-alt = true
+macos-titlebar-style = native
+mouse-hide-while-typing = true
+theme = light:Catppuccin Latte,dark:Catppuccin Mocha

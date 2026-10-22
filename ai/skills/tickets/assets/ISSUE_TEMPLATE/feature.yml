@@ -1,0 +1,34 @@
+name: Feature
+description: New feature or capability
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Instructions
+        Fill in each section. Context and Approach are required.
+        Edge cases and Technical notes help the spec writer and implementer.
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: Who hits this problem, what they can't do today, why it matters.
+    validations:
+      required: true
+  - type: textarea
+    id: approach
+    attributes:
+      label: Approach
+      description: How we're solving it — key design decisions, not implementation code.
+    validations:
+      required: true
+  - type: textarea
+    id: edge-cases
+    attributes:
+      label: Edge cases
+      description: Things the spec writer and implementer need to consider.
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: Technical notes
+      description: Key files, error codes, schema changes. Use GitHub issue relationships for dependencies instead of listing them here.

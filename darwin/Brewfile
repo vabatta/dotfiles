@@ -1,0 +1,81 @@
+# Shared by every host, like darwin/ in the old Nix setup; hosts/<host>/Brewfile adds the rest.
+# local/tableplus lives in this repo (darwin/taps); install.sh links it into Homebrew's tap directory.
+# `trusted: true` replaces nix-homebrew's trust.casks (Homebrew refuses non-official tap casks otherwise).
+tap "local/tableplus"
+
+# CLI tools
+brew "bash"
+brew "bat"
+brew "bottom"
+brew "curl"
+brew "direnv"
+brew "entr"
+brew "eza"
+brew "fastfetch"
+brew "fx"
+brew "fzf"
+brew "fzf-tab"
+brew "gh"
+brew "git"
+brew "git-lfs"
+brew "gnupg"
+brew "jj"
+brew "jjui"
+brew "k9s"
+brew "kubectl"
+brew "lazydocker"
+brew "lazygit"
+brew "less"
+brew "mas"
+brew "neovim"
+brew "nixfmt"
+brew "node"
+brew "noti"
+brew "oha"
+brew "opencode"
+brew "parallel"
+brew "sheldon"
+brew "starship"
+brew "stow"
+brew "vivid"
+brew "zoxide"
+brew "zsh-autosuggestions"
+brew "zsh-syntax-highlighting"
+
+# CLI tools without a formula
+cask "1password-cli"
+cask "claude-code"
+
+# fonts
+cask "font-fira-code-nerd-font"
+cask "font-fira-mono-nerd-font"
+cask "font-hack-nerd-font"
+
+# OS enhancements
+cask "betterdisplay"
+cask "keepingyouawake"
+cask "thaw"
+
+# everyday apps
+cask "1password"
+cask "claude"
+cask "iina"
+cask "knockknock"
+cask "logitech-g-hub"
+cask "obsidian"
+cask "opensuperwhisper"
+
+# devtools
+cask "docker-desktop"
+cask "ghostty"
+cask "local/tableplus/tableplus", trusted: true
+cask "visual-studio-code"
+cask "zed"
+
+mas "1Password for Safari", id: 1569813296
+mas "Magnet", id: 441258766
+mas "Pages", id: 409201541
+mas "Tailscale", id: 1475387142
+mas "Userscripts", id: 1463298887
+mas "Xcode", id: 497799835
+mas "Yoink", id: 457622435

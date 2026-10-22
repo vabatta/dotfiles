@@ -1,0 +1,8 @@
+{
+  "$schema": "https://opencode.ai/tui.json",
+  "plugin": [
+    "opencode-bytheway@0.8.0",
+    "opencode-session-recall@2.1.0"
+  ],
+  "theme": "system"
+}

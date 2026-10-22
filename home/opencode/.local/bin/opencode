@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Shadows the Homebrew binary on PATH so the keys come from 1Password at launch.
+# One `op run` call means one prompt; --no-masking keeps the terminal attached to the TUI.
+set -euo pipefail
+
+exec op run --no-masking --env-file="$HOME/.config/opencode/op.env" -- /opt/homebrew/bin/opencode "$@"

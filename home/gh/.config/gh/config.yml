@@ -1,0 +1,19 @@
+aliases:
+  bw: browse
+  co: pr checkout
+  ic: issue create --web
+  il: issue list
+  is: issue status
+  iv: issue view --web
+  pc: pr create --web
+  pl: pr list
+  pm: pr merge --squash --delete-branch
+  ps: pr status
+  pv: pr view --web
+  rc: repo clone
+  rf: repo fork --clone
+  rv: repo view --web
+editor: nvim
+git_protocol: ssh
+prompt: enabled
+version: '1'

@@ -1,0 +1,9 @@
+{
+  "default": "inherit",
+  "roles": {
+    "exploration": "inherit",
+    "implementation": "inherit",
+    "judgment": "inherit",
+    "prose": "inherit"
+  }
+}

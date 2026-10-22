@@ -1,0 +1,999 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skill guide</title>
+<style>
+  :root {
+    --bg: #f3efe6;
+    --panel: #fffcf5;
+    --panel-2: #e9e3d4;
+    --text: #1c1a15;
+    --muted: #665f4f;
+    --line: #c9c0a9;
+    --accent: #1f3a93;
+    --accent-soft: #dde3fb;
+    --process: #a63c13;
+    --process-soft: #f7dccf;
+    --oneshot: #176b40;
+    --oneshot-soft: #d3eddd;
+    --principle: #6a3fa3;
+    --principle-soft: #e8dcf6;
+    --note: #4a463b;
+    --note-soft: #e1dac7;
+    --hover: #ffc9a3;
+    --hover-ink: #3a1500;
+    --radius: 0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #15130e;
+      --panel: #1d1b15;
+      --panel-2: #27241b;
+      --text: #efe9d8;
+      --muted: #a59e8a;
+      --line: #3c382b;
+      --accent: #94acff;
+      --accent-soft: #1f2850;
+      --process: #ff9566;
+      --process-soft: #3a2216;
+      --oneshot: #62d79b;
+      --oneshot-soft: #12301f;
+      --principle: #bc9eff;
+      --principle-soft: #2b2040;
+      --note: #cfc8b4;
+      --note-soft: #2e2b21;
+      --hover: #ffbf94;
+      --hover-ink: #2a1000;
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 15.5px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 92%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--line);
+    padding: 10px 22px;
+    display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 8px 20px; align-items: center;
+  }
+  header h1 { font-size: 16px; margin: 0; letter-spacing: 0.02em; text-transform: uppercase; white-space: nowrap; }
+  nav.nav { display: flex; gap: 4px; font-size: 12.5px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+  nav.nav::-webkit-scrollbar { display: none; }
+  nav.nav a { color: var(--muted); text-decoration: none; padding: 4px 9px; border-radius: var(--radius); white-space: nowrap; }
+  nav.nav a:hover { color: var(--hover-ink); background: var(--hover); }
+  nav.nav a.active { color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+  .find { position: relative; width: 280px; }
+  header input {
+    width: 100%; padding: 7px 78px 7px 12px; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--panel); color: var(--text); font-size: 14px; outline: none;
+  }
+  header input:focus { border-color: var(--accent); }
+  .find .count { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 11.5px; pointer-events: none; white-space: nowrap; }
+  @media (max-width: 860px) {
+    header { grid-template-columns: 1fr auto; padding: 8px 16px; }
+    nav.nav { grid-column: 1 / -1; grid-row: 2; }
+    .find { width: min(280px, 56vw); }
+  }
+  main { max-width: 1120px; margin: 0 auto; padding: 24px 22px 72px; }
+  section { margin-bottom: 46px; scroll-margin-top: 96px; }
+  section:target h2 { color: var(--accent); }
+  h2 {
+    font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.1em;
+    margin: 0 0 6px; padding-bottom: 8px; border-bottom: 2px solid var(--line);
+  }
+  h2 .hint { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--muted); margin-left: 8px; }
+  h3.group {
+    font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--muted); margin: 22px 0 10px;
+  }
+  p.lead { margin: 10px 0 18px; color: var(--muted); max-width: 78ch; }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.88em; }
+  .layers { display: grid; grid-template-columns: repeat(auto-fit, minmax(176px, 1fr)); gap: 12px; margin-top: 14px; }
+  .layer { background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: var(--radius); padding: 13px 15px; }
+  .layer h4 { margin: 0 0 5px; font-size: 14px; }
+  .layer p { margin: 0; color: var(--muted); font-size: 13px; }
+  .layer .chain { margin-top: 9px; }
+  .journey .step .chain.extra { margin-top: 5px; }
+  .chain .tag { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin-right: 2px; }
+  .card.part { border-left-color: var(--note); }
+  #drawer .badge.part { color: var(--note); background: var(--note-soft); }
+  .jfam { display: grid; gap: 16px; min-width: 0; }
+  .layer .k { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+
+  .rules { list-style: none; margin: 12px 0 0; padding: 0; display: grid; gap: 7px; }
+  .rules li { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: var(--radius); padding: 9px 13px; display: flex; justify-content: space-between; gap: 14px; align-items: baseline; }
+  .rules li .txt { font-size: 13.5px; }
+  .rules li .ref { font-family: ui-monospace, monospace; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+  .rules li .ref.link:hover { background: var(--hover); color: var(--hover-ink); }
+
+  .treewrap { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 18px; margin-top: 12px; align-items: start; }
+  @media (max-width: 760px) { .treewrap { grid-template-columns: 1fr; } }
+  .tree { display: grid; grid-template-columns: auto 1fr; column-gap: 18px; row-gap: 3px; margin: 0; padding: 14px 16px; background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius); }
+  .tree .p { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12.5px; white-space: pre; }
+  .tree .p i { font-style: normal; }
+  .tree .p i.d { color: var(--accent); }
+  .tree .p i.a { color: var(--process); }
+  .tree .n { color: var(--muted); font-size: 12.5px; align-self: center; }
+  .legend { display: grid; gap: 9px; align-content: start; }
+  .legend span { display: flex; align-items: baseline; gap: 9px; font-size: 12.5px; color: var(--muted); }
+  .legend b { color: var(--text); font-family: ui-monospace, monospace; font-weight: 600; }
+  .sw { width: 12px; height: 12px; border-radius: 0; display: inline-block; border: 1px solid var(--line); flex: none; transform: translateY(1px); }
+  .sw.doc { background: var(--accent); }
+  .sw.agent { background: var(--process); }
+  .sw.skill { background: var(--oneshot); }
+  .sw.track { background: var(--principle); }
+
+
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 12px; }
+  .card { min-width: 0; }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--oneshot); border-radius: var(--radius); padding: 11px 13px; }
+  .card.proc { border-left-color: var(--process); }
+  .card.rule { border-left-color: var(--principle); }
+  .card h3 { margin: 0 0 4px; font-size: 13.5px; }
+  .card h3 .name { font-family: ui-monospace, monospace; }
+  .card p { margin: 0; color: var(--muted); font-size: 12.5px; }
+  .journeys { display: grid; gap: 16px; margin-top: 14px; }
+  .journey { background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--accent); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+  .journey h3 { margin: 0 0 2px; font-size: 15px; }
+  .journey .when { color: var(--muted); font-size: 13px; margin: 0 0 10px; max-width: 80ch; }
+  .journey ol { list-style: none; counter-reset: step; margin: 0; padding: 0; display: grid; gap: 9px; }
+  .journey li.step { counter-increment: step; position: relative; padding-left: 30px; min-width: 0; }
+  .journey li.step::before { content: counter(step); position: absolute; left: 0; top: 1px; width: 21px; height: 21px; border-radius: 0; background: var(--accent-soft); color: var(--accent); font-size: 11.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .journey .step .chain { margin-bottom: 3px; }
+  .journey .step p { margin: 0; font-size: 13.5px; }
+  .journey .step .branch { margin: 4px 0 0; font-size: 12.5px; color: var(--note); background: var(--note-soft); border-radius: var(--radius); padding: 4px 8px; }
+  .journey .done { margin-top: 11px; padding-top: 9px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--muted); }
+  .journey .done b { color: var(--text); }
+  .chip { font-family: ui-monospace, monospace; font-size: 11.5px; border: 1px solid var(--line); background: var(--panel-2); border-radius: var(--radius); padding: 2px 7px; color: var(--text); }
+  .chip.link { cursor: pointer; }
+  .chip.link:hover { border-color: var(--hover-ink); color: var(--hover-ink); background: var(--hover); }
+  .chain { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; }
+  .chain .sep { color: var(--muted); font-size: 11px; }
+  .hidden { display: none !important; }
+  .card[data-name] { cursor: pointer; }
+  .card[data-name]:hover, .card[data-name]:hover * { background: var(--hover); color: var(--hover-ink); border-color: var(--hover-ink); }
+  .card[data-name]:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .empty-note { margin: 14px 0 0; padding: 18px; text-align: center; color: var(--muted); font-size: 13.5px; border: 1px dashed var(--line); border-radius: var(--radius); }
+  .tools { display: flex; gap: 6px; margin-top: 10px; }
+  .tools button { font: inherit; font-size: 12px; color: var(--muted); background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 3px 10px; cursor: pointer; }
+  .tools button:hover { color: var(--hover-ink); background: var(--hover); border-color: var(--hover-ink); }
+  details.journey { padding: 0; scroll-margin-top: 96px; }
+  details.journey > summary { list-style: none; cursor: pointer; padding: 12px 16px; display: grid; gap: 2px; grid-template-columns: 1fr auto; align-items: start; }
+  details.journey > summary::-webkit-details-marker { display: none; }
+  details.journey > summary::after { content: "\25B8"; color: var(--muted); font-size: 13px; grid-row: 1; grid-column: 2; transition: transform .15s; }
+  details.journey[open] > summary::after { transform: rotate(90deg); }
+  details.journey > summary:hover { background: var(--hover); color: var(--hover-ink); }
+  details.journey > summary:hover .when { color: var(--hover-ink); }
+  details.journey > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+  details.journey > summary .when { grid-column: 1; margin: 0; }
+  details.journey > summary .say { grid-column: 1; justify-self: start; margin-top: 6px; font-family: ui-monospace, monospace; font-size: 11.5px; color: var(--note); background: var(--note-soft); border-radius: var(--radius); padding: 2px 8px; }
+  details.journey > .jbody { padding: 2px 16px 14px; }
+  #drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(400px, 100vw); background: var(--panel); border-left: 1px solid var(--line); box-shadow: 0 8px 30px rgba(0,0,0,.18); z-index: 40; padding: 18px; overflow: auto; transform: translateX(105%); transition: transform .18s; visibility: hidden; }
+  #drawer.open { transform: none; visibility: visible; }
+  #drawer h3 { font-family: ui-monospace, monospace; font-size: 15px; margin: 8px 0; word-break: break-word; }
+  #drawer h5 { margin: 16px 0 6px; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+  #drawer .d { margin: 0; font-size: 13.5px; }
+  #drawer .x { float: right; font: inherit; font-size: 12.5px; border: 1px solid var(--line); background: var(--panel-2); color: var(--text); border-radius: var(--radius); padding: 2px 10px; cursor: pointer; }
+  #drawer .lnk { display: block; width: 100%; text-align: left; border: 0; background: none; padding: 3px 0; color: var(--accent); font: inherit; font-size: 13px; cursor: pointer; }
+  #drawer .lnk:hover { background: var(--hover); color: var(--hover-ink); }
+  #drawer .x:hover { background: var(--hover); color: var(--hover-ink); border-color: var(--hover-ink); }
+  #drawer .badge { font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; padding: 1px 6px; border-radius: var(--radius); }
+  #drawer .badge.process { color: var(--process); background: var(--process-soft); }
+  #drawer .badge.oneshot { color: var(--oneshot); background: var(--oneshot-soft); }
+  #drawer .badge.principle { color: var(--principle); background: var(--principle-soft); }
+  .empty { color: var(--muted); font-style: italic; padding: 18px 0; display: none; }
+  footer { border-top: 2px solid var(--line); padding: 18px 22px; color: var(--muted); font-size: 12.5px; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Skill guide</h1>
+  <nav class="nav">
+    <a href="#idea">Idea</a>
+    <a href="#rules">Rules</a>
+    <a href="#layout">Where things live</a>
+    <a href="#journeys">Journeys</a>
+    <a href="#process">Process</a>
+    <a href="#skills">Skills</a>
+    <a href="#principles">Principles</a>
+  </nav>
+  <div class="find">
+    <input id="search" type="search" placeholder="Filter" autocomplete="off">
+    <span class="count" id="count"></span>
+  </div>
+</header>
+
+<main>
+
+  <section id="idea">
+    <h2>The idea</h2>
+    <p class="lead">Skills load on demand. The host reads the one-line description of each skill and loads the one that matches. The description alone decides the trigger. You call most skills as entry points. Other skills run the building blocks. The agent applies principles, and you never call them. There are five layers: the always-on rules, the journeys, and three kinds of skill.</p>
+    <div class="layers">
+      <div class="layer"><span class="k">Rules</span><h4>Always on</h4><p>Four global rules load in every session in Claude Code and opencode. They apply to everything below and need no trigger. Each rule names a principle that the agent then loads.</p></div>
+      <div class="layer"><span class="k">Journeys</span><h4>Start here for a situation</h4><p>A named entry point for one real situation. It sets where you start.</p></div>
+      <div class="layer"><span class="k">Process</span><h4>One workflow, several skills</h4><p>A named phase that puts other skills in order: design, plan, review, debug. Run it directly, or let a journey call it.</p></div>
+      <div class="layer"><span class="k">One-shot</span><h4>One skill, one job</h4><p>A single invocation that produces one thing: a trace, a verdict, a diagram, or a fix.</p></div>
+      <div class="layer"><span class="k">Principles</span><h4>Rules, applied inline</h4><p>Narrow policies. The agent loads a principle when its trigger matches and obeys it while it works. A principle does not run. It constrains.</p></div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <h2>Global rules <span class="hint">always loaded, in every session</span></h2>
+    <ol class="rules" id="rules-list"></ol>
+  </section>
+
+  <section id="layout">
+    <h2>Where things live <span class="hint">one home for each artifact, chosen by audience</span></h2>
+    <p class="lead">Ask: does a reviewer need this after the run ends? If yes, commit it under <code>docs/</code>. If no, it is the agents' own knowledge base and working state under <code>.agent/</code>. To promote a file, move it. The issue tracker holds the work itself.</p>
+    <div class="treewrap">
+      <div class="tree">
+        <span class="p">repo/</span><span class="n"></span>
+        <span class="p">├── <i class="d">docs/</i></span><span class="n">committed, durable</span>
+        <span class="p">│   ├── glossary.md</span><span class="n">the project language</span>
+        <span class="p">│   ├── glossary-map.md</span><span class="n">index for several contexts</span>
+        <span class="p">│   ├── <i class="d">glossary/</i>&lt;context&gt;.md</span><span class="n">one glossary for each context</span>
+        <span class="p">│   ├── <i class="d">adr/</i>0001-slug.md</span><span class="n">one decision and its reason</span>
+        <span class="p">│   ├── <i class="d">specs/</i>slug.md</span><span class="n">contract for the requirements</span>
+        <span class="p">│   └── <i class="d">decisions/</i>slug.tsv</span><span class="n">promoted from .agent/</span>
+        <span class="p">└── <i class="a">.agent/</i></span><span class="n">agent knowledge base, working state</span>
+        <span class="p">    ├── <i class="a">decisions/</i>slug.tsv</span><span class="n"></span>
+        <span class="p">    ├── <i class="a">runs/</i>skill/slug/</span><span class="n">plans, designs, briefs, evals</span>
+        <span class="p">    ├── <i class="a">handoffs/</i>slug.md</span><span class="n">includes reflect-backlog.md</span>
+        <span class="p">    ├── <i class="a">tickets/</i>slug.md</span><span class="n">fallback without gh</span>
+        <span class="p">    ├── <i class="a">questionnaires/</i>slug.md</span><span class="n"></span>
+        <span class="p">    ├── <i class="a">teaching/</i></span><span class="n"></span>
+        <span class="p">    ├── <i class="a">prototypes/</i>slug/</span><span class="n">VERDICT.md, never merged</span>
+        <span class="p">    └── <i class="a">wizards/</i>slug.sh</span><span class="n">ephemeral</span>
+      </div>
+      <div class="legend">
+        <span><i class="sw doc"></i><b>docs/</b> committed durable knowledge</span>
+        <span><i class="sw agent"></i><b>.agent/</b> agent knowledge base, working state</span>
+        <span><i class="sw skill"></i><b>skill/</b> references, scripts, and assets are part of the skill</span>
+        <span><i class="sw track"></i><b>tickets</b> owns the board: statuses, dependencies, and sub-issues</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="journeys">
+    <h2>Journeys <span class="hint">start from your situation. Each step names the skill to call.</span></h2>
+    <p class="lead">A journey is a preset entry point for one real situation. Journeys are grouped by family, and you can add more. A step lists only the skills that you call. Between the skills in one step, <b>then</b> means in order, <b>or</b> means pick one, and <b>+</b> means do both. A <b>uses</b> line shows the building blocks that the step runs for you. An <b>applies</b> line shows the principles that apply to the step. A branch line says when to do a step or skip it. The global rules above apply to every step: state the stack and the budget, verify the real artifact, and continue on reversible work. A done line says only what the steps produce. Nothing runs the journey for you.</p>
+    <div class="journeys" id="journeys-grid"></div>
+  </section>
+
+  <section id="process">
+    <h2>Process skills <span class="hint">named workflows. Run them directly or from a journey.</span></h2>
+    <div class="grid" id="process-grid"></div>
+  </section>
+
+  <section id="skills">
+    <h2>One-shot skills <span class="hint">one purpose, one invocation</span></h2>
+    <p class="lead">A card with a grey edge is a building block. Other skills run it. Call it directly only for its narrow task.</p>
+    <div id="oneshots"></div>
+  </section>
+
+  <section id="principles">
+    <h2>Principles <span class="hint">narrow rules that apply inline when triggered</span></h2>
+    <div class="grid" id="principles-grid"></div>
+  </section>
+
+
+</main>
+
+<aside id="drawer" aria-label="Skill detail" aria-hidden="true"></aside>
+
+<footer>
+  Click a skill to open its detail panel. After you edit skills, run <code>check-skills --write-guide ai/skills ai/skills-guide.html</code> to refresh the embedded data. Then run <code>check-skills ai/skills ai/AGENTS.md ai/skills-guide.html</code>. The flake runs the same check. The check fails if a journey step lists a building block or a principle. List those under <b>applies</b> or in the text.
+</footer>
+
+<script>
+const RULES = [
+  ["Before you write code, state the stack. Use the standard library, the dependencies, and the existing APIs before you write new code.", "principle-use-before-build"],
+  ["Before you write code, state the budget in net added lines. Make the smallest change that solves the problem. Delete code when you can. Keep the change within the budget.", "principle-laziness-protocol"],
+  ["Before you say that the work is done, verify the real artifact. Run it, read the value, and inspect the diff. Audit the diff against the budget, the shape, and the stack.", "principle-prove-it-works"],
+  ["On reversible execution work, decide and continue. Ask first about product direction, one-way doors, and questions that shape the work.", "principle-never-block-on-the-human"]
+];
+
+const FANOUT = "Give units to workers only if the units share no writes and do not depend on each other. If there is one unit or the units depend on each other, use tdd alone.";
+const INTEGRATE = "Combine the outputs. Run every check on the combined tree. Then run the diff audit against the budget.";
+const PRBODY = "Write the PR description and the commit messages. Then commit.";
+
+const JOURNEYS = [
+  ["Make a small change",
+   "A fix or tweak with a known cause. It is one unit of under about 20 changed lines, and you can name the file. It needs no plan and no spec. If the work is already a board issue, use Work a ticket. If the cause is unknown, use Fix a hard bug. If the code has no tests, use Add tests to existing code.",
+   [
+     [["tdd"], "", "State the stack and the net-added budget. Write the failing test first. Then write the smallest change that passes it.", "If no cheap test target exists, skip this step.", ["principle-laziness-protocol", "principle-use-before-build"]],
+     [[], "", "Run the real thing. Then run the diff audit against the budget.", "", ["principle-prove-it-works"]],
+     [["blast-radius"], "", "Find what else the change can break. Prove the one safety fact.", "If the change touches a signature or helper and you have not read its callers, do this step.", []],
+     [["technical-writing"], "", "Write the commit message.", "If the change is throwaway, skip this step.", []]
+   ],
+   "the check passes, the diff audit is within the budget, and the commit message is written.", "just fix X / small tweak / quick change", "Build"],
+  ["Build a clear-cut feature",
+   "The request is clear enough to plan without an interview. It is too big for one sitting of edits. If the requirements are still fuzzy, start with Start a feature from a rough idea.",
+   [
+     [["plan-work"], "", "Turn the request into ordered units. Each unit ends in a check. State the stack and the budget. Carry the budget, the shape rules, and the stack into the done condition. A phased plan lists one smoke command for each phase.", "If there is one unit, the plan is only the predicate, the baseline, and one check. If there are more than about 10 units or more than one session, use the large change journey.", ["principle-sequence-verifiable-units", "principle-outcome-oriented-execution"]],
+     [["tdd", "delegate"], "with", "Build each unit test first. Give independent units to workers in parallel. Split the budget across the workers.", FANOUT, ["principle-laziness-protocol", "principle-separate-before-serializing-shared-state"]],
+     [[], "", INTEGRATE, "", ["principle-prove-it-works"]],
+     [["accept-change"], "", "Get an accept or reject verdict on the working tree against the base commit of the plan. Do this before you commit. The blast-radius pass of the verdict also shapes the PR body.", "", []],
+     [["technical-writing"], "", PRBODY, "", []]
+   ],
+   "every unit check is green, the diff is within the budget, the verdict is accept, and the commit and the PR body are written.", "add X / implement Y with clear requirements", "Build"],
+  ["Work a ticket",
+   "The work already exists as an issue on the board.",
+   [
+     [["tickets"], "", "Read the ticket, its dependencies, and its sub-issues. Then move it to in progress.", "If gh is not available, tickets keeps the ticket as a file in .agent/tickets/.", []],
+     [["plan-work"], "", "Turn the acceptance criteria into units. Each unit ends in a check.", "If there is one unit (one behavior and about 20 changed lines or fewer), keep only the predicate, the baseline, and one check. Then state the stack and the budget, and continue at tdd. If there are more than about 10 units or more than one session, use figure-it-out.", ["principle-sequence-verifiable-units"]],
+     [["tdd"], "", "Build the units test first.", "", ["principle-laziness-protocol"]],
+     [["accept-change"], "", "Get an accept or reject verdict on the working tree against the ticket text. The verdict reads the ticket text as the spec.", "", []],
+     [["technical-writing"], "", "Write the commit message. It must contain Refs #N.", "", []],
+     [["tickets"], "", "Move the status and close the ticket. Add a link to the evidence: the commit or PR and the output of the check.", "", []]
+   ],
+   "a reviewed commit that contains Refs #N exists, and the ticket is closed with a link to that commit and the output of the check.", "pick up #123 / work this ticket", "Build"],
+  ["Start a feature from a rough idea",
+   "There is no handover file, no earlier work on this idea, and no spec. You know roughly what you want. If a handover file or earlier work on the idea exists, use Resume work.",
+   [
+     [["grill"], "", "Sharpen the idea one question at a time until no branch is open. If no one can answer, grill records assumptions and continues.", "", []],
+     [["prototype"], "", "Prove that the risky part works or looks right before you commit. Put the verdict in .agent/prototypes/<slug>/VERDICT.md. Do not merge the prototype.", "If one piece is a real unknown that you can answer by feel or by one measurement, do this step.", []],
+     [["to-spec"], "", "Write the settled conversation as a spec. Mark it ready with the line Status: ready under the title. to-spec does not interview you, so finish the grill first.", "", []],
+     [["plan-work", "tickets"], "then", "Break the spec into ordered units with checks. Carry the budget, the shape rules, and the stack into the done condition. Then file the units as issues.", "If there is no issue tracker (no remote, .github, or .ghproject), skip tickets.", ["principle-sequence-verifiable-units"]],
+     [["tdd", "delegate"], "with", "Build the units, test first. Give independent slices to workers.", FANOUT, ["principle-laziness-protocol"]],
+     [[], "", INTEGRATE, "If workers built the units, do this step. For one unit, tdd and the diff audit already cover it.", ["principle-prove-it-works"]],
+     [["accept-change"], "", "Get an accept or reject verdict on the working tree. Use the spec as the spec axis. If the verdict is reject, fix the Act on items and run it again.", "", []],
+     [["technical-writing"], "", PRBODY, "", []]
+   ],
+   "a reviewed commit that matches the written spec exists, and the PR body is written.", "build X from an idea / I want something like X", "Build"],
+  ["Resume work",
+   "You stopped earlier, or a fresh session starts, and the state is not clear. Use this journey if a handover file, a branch, or earlier work exists. If none exists, start at Start a feature from a rough idea.",
+   [
+     [["recall"], "", "Point recall at the handover file, the branch, or the topic. It treats them as claims and checks them against the live commits and files. It returns what is true and one next move.", "", []],
+     [[], "", "Follow the next move. It names the skill to call. Then continue in the matching journey. For example: tdd or plan-work in Build a clear-cut feature, diagnosing-bugs in Fix a hard bug, or figure-it-out in the large change journey.", "", []]
+   ],
+   "you work on a verified next move.", "where were we / continue / resume", "Build"],
+  ["Resume and explore before building",
+   "You have a handover file and a rough idea. Some of the idea needs exploration before the design is safe to commit.",
+   [
+     [["recall"], "", "Point recall at the handover file. It treats the file as claims and checks it against the live branches, commits, and files. It returns what is true and one next move.", "", []],
+     [["assess"], "", "Get a verdict with evidence. The verdict says if the idea makes sense and how big it is. For a change of fewer than about 5 call sites, assess scales down. It reuses findings that you supply.", "If you already know that the idea is worth building, skip this step.", []],
+     [["prototype", "arena"], "or", "Use prototype for one question that you can answer by feel or by one measurement. Use arena to score two or more concrete candidate artifacts on a rubric.", "", []],
+     [["grill", "grill-with-docs"], "or", "Answer the interview until every open branch is settled. Use grill-with-docs if the terms and decisions must be written as you go. It ends with the glossary and the ADRs written.", "If the requirements are still fuzzy after the exploration, do this step.", []],
+     [["architect"], "", "Sketch the types and the boundaries. Run competing candidates. Stop at the design package for plan-work.", "If a new module, interface, or data shape appears, do this step.", []],
+     [["to-spec", "plan-work", "tickets"], "then", "Turn the settled design into a spec marked Status: ready. Then make ordered units that each end in a check. Then file the issues.", "If there are more than about 10 units or more than one session, use figure-it-out in place of plan-work. If you do not track work in issues, skip tickets.", ["principle-sequence-verifiable-units"]],
+     [["tdd", "delegate"], "with", "Write the failing test first for each change of behavior. Give independent slices to workers.", FANOUT, ["principle-laziness-protocol"]],
+     [[], "", INTEGRATE, "", ["principle-prove-it-works"]],
+     [["accept-change"], "", "Get one accept or reject verdict on the combined working tree.", "", []],
+     [["technical-writing"], "", PRBODY, "", []],
+     [["recall"], "", "Ask recall for handoff mode. It writes the next handover file.", "If you stop early, do this step.", []]
+   ],
+   "a reviewed commit with the PR body exists, or a new handover file names the next move.", "resume then spike first / explore then build", "Build"],
+  ["Design something new",
+   "A new module, interface, or data shape inside an existing codebase. The right design is not obvious. For a new repo, use Start a new project.",
+   [
+     [["architect"], "", "Trace the area that the design touches, unless the work is greenfield. Sketch the types and the boundaries. Run at least two candidates with different structures through arena. Then synthesize one design. architect stops at the design package in .agent/runs/architect/<slug>/. It records the rejected candidates. If the choice is hard to reverse, it writes an ADR.", "", ["principle-foundational-thinking", "principle-exhaust-the-design-space"]],
+     [["plan-work", "tdd"], "or", "Implement against the chosen sketch. If the work splits into several units, use plan-work. For one unit, use tdd alone.", "", ["principle-laziness-protocol"]],
+     [["delegate"], "", "Build independent slices in parallel.", "If the slices share no writes and do not depend on each other, do this step. If not, build in order.", []],
+     [["accept-change"], "", "Get a verdict on the working tree against the chosen sketch.", "", []]
+   ],
+   "a written design package with the rejected candidates exists, and the implementation has an accept verdict.", "design a module / shape this", "Build"],
+  ["Start a new project",
+   "A new repo or service. The stack, the tooling, and the shape are still open. For a new module in an existing repo, use Design something new.",
+   [
+     [["grill"], "", "Settle the purpose, the constraints, and the stack choices one question at a time.", "If the stack is already decided, skip this step.", []],
+     [["assess", "arena"], "or", "Use assess for a verdict on one contested stack choice. With no code yet, assess uses greenfield as the grounding and runs one dissent lens. Use arena to score two or more candidate scaffolds on a rubric.", "If the choice is hard to reverse (a language, a framework, or a datastore), do this step.", []],
+     [["nixification"], "", "Pin the toolchain in a flake. Then the project builds the same everywhere. In a git repo, run git add flake.nix, nix flake lock, git add flake.lock, and then nix develop.", "If the project already pins its toolchain, skip this step.", ["principle-use-before-build"]],
+     [["plan-work"], "", "Order the scaffold. Put the build and test harness first. If no harness exists, plan-work builds the smallest one from the standard library. Then add the first vertical slice. Take the starting commit for the diff audit after the toolchain pin. Then the flake is not in the budget.", "", ["principle-foundational-thinking", "principle-sequence-verifiable-units"]],
+     [["tdd"], "", "Build the first slice test first.", "", ["principle-laziness-protocol"]],
+     [[], "", "Run the build and the tests from a clean checkout.", "", ["principle-prove-it-works"]],
+     [["accept-change"], "", "Get a verdict on the scaffold.", "", []],
+     [["technical-writing"], "", "Write the commit message for the first commit.", "", []]
+   ],
+   "the project builds and passes its tests from a clean checkout, and the scaffold with the first slice is a reviewed commit.", "new project / new repo / bootstrap", "Build"],
+  ["Plan and run a large, multi-session change",
+   "A cross-cutting migration or an ambitious change that you will review after you step away. It has more than about 10 units, takes more than one session, or has a one-way door.",
+   [
+     [["figure-it-out"], "", "Frame a definition of done that can fail. Design the phases. Then run each unit as an experiment with a measured check. On a resumed run, figure-it-out rebuilds the state itself. It runs architect at one-way doors, gives work to workers through delegate, and keeps the decision trail. Its reply ends with the Attention section of show-me-your-work. The section reads reviewed by none (self only) if no reviewer ran.", "", ["principle-outcome-oriented-execution", "principle-sequence-verifiable-units"]],
+     [["accept-change"], "", "Get a verdict on the whole change against the original definition of done.", "", []]
+   ],
+   "a reply with the plan, the decision trail, and the verdict exists. The verdict is accept or reject against the definition of done. The reply also says what is verified and what is still open.", "big change / review it later", "Build"],
+  ["Run work in parallel",
+   "The work splits into independent slices that can run at the same time.",
+   [
+     [["delegate"], "", "Split the work. Give each worker an owned output and a proof requirement. Then read the real outputs. A single read-only research worker needs no split and no budget share. If delegation is not available, delegate runs the slices in order and writes briefs in .agent/runs/delegate/. To vary the models, see setup-ai.", "Give units to workers only if the units share no writes and do not depend on each other. If there is one unit, dependent units, or a few obvious edits, do the work directly or use tdd alone.", ["principle-separate-before-serializing-shared-state", "principle-guard-agent-context"]],
+     [[], "", INTEGRATE, "", ["principle-prove-it-works"]],
+     [["accept-change"], "", "Get a verdict on the combined working tree.", "", []],
+     [["technical-writing"], "", "Write the commit message. Then commit.", "", []]
+   ],
+   "every slice has evidence, the whole has one accept verdict, and the commit is written.", "use subagents / parallelize / fan out", "Build"],
+  ["Decide whether a change is worth doing",
+   "Someone proposes a migration, a rewrite, or a new dependency. The question is whether to do it, not how. If the question is whether it can work at all, use Prove an idea works.",
+   [
+     [["assess"], "", "Get a verdict of do, do not, or conditional. The load-bearing facts in the verdict are proven. assess traces the code, finds why the code is built that way, and runs independent lenses. Do not run those first. For a change of fewer than about 5 call sites, assess scales down. If no human is present, it states assumptions and continues.", "", []],
+     [["architect"], "", "Sketch the design for the chosen change.", "If the verdict is do and the change adds a new module, interface, or data shape, do this step.", []],
+     [["plan-work"], "", "Plan the change. If there are more than about 10 units or more than one session, use figure-it-out.", "If the verdict is do or a conditional yes, do this step.", []]
+   ],
+   "a verdict of do, do not, or conditional exists with evidence. For a do, a plan to carry it out also exists.", "does this make sense / is it worth it", "Explore and decide"],
+  ["Prove an idea works",
+   "You are not sure that the idea can work at all. It can be a library, an API, an approach, or the feel of a UI.",
+   [
+     [["prototype", "arena"], "or", "Use prototype to answer one question by feel or by one measurement. Use arena to score two or more concrete candidate artifacts on a rubric. Put the verdict of the prototype in .agent/prototypes/<slug>/VERDICT.md. Keep the prototype on a throwaway branch. Never fold it into real code. A backend question with no human audience gets a headless script.", "", ["principle-exhaust-the-design-space"]],
+     [["grill"], "", "If the prototype showed a fuzzy requirement, go back and settle only that branch. If it opened a new unknown, prototype again.", "If the answer opens a new question, do this step.", []]
+   ],
+   "VERDICT.md says yes, no, conditional, or pending human, and lists the constraints found. After a yes, start Design something new or Build a clear-cut feature. The prototype is evidence, not the implementation.", "can we even / POC / spike", "Explore and decide"],
+  ["Pressure-test a plan or decision",
+   "You have a plan, a design, or a decision and you want to attack it before you build on it. To review a diff instead, use Review a change before merging.",
+   [
+     [["grill", "grill-with-docs"], "or", "Answer one question at a time until every branch is settled. Use grill-with-docs if the glossary and the ADRs must be written as decisions settle. It ends with them written. If no human is present, it records assumptions and continues.", "", []],
+     [["team-discussion", "adversarial-review"], "or", "Use team-discussion for one recommendation from read-only lenses. It names the disagreements and allows at most one extra challenge round. Use adversarial-review for up to three reviewers, one for each rubric axis, who try to break the design. It gives no merge verdict.", "If the call has two or more credible options, is a one-way door, or has high stakes, do this step.", []],
+     [["arena"], "", "Build competing candidates in isolation. Score them on a rubric.", "If the choice is between two or more concrete artifacts that you can build and score, do this step.", []]
+   ],
+   "every branch is settled, or one recommendation with evidence names the dissent.", "grill me / roundtable / poke holes", "Explore and decide"],
+  ["Research and compare options",
+   "You need facts before you choose a library, an API, a tool, or an approach.",
+   [
+     [["delegate"], "", "Run one read-only research worker against primary sources: official docs, source code, and specs. It needs no split and no budget share. It follows every claim back to the source that owns it. It runs why for the claims that explain a design or a trade-off.", "", ["principle-guard-agent-context"]],
+     [["prototype", "arena"], "or", "Use prototype to prove the top candidate against your real case. Use arena to score the finalists on a rubric.", "If the docs cannot settle the choice, do this step.", []],
+     [["assess"], "", "Turn the findings into a verdict of do, do not, or conditional. It reuses the findings that you supply.", "If the choice changes a system that you already maintain (a dependency, an API, or a schema that others use), do this step.", []]
+   ],
+   "a recommendation with sources exists, and it names the fact that can change it.", "which library / compare A and B / research X", "Explore and decide"],
+  ["Change existing code",
+   "A refactor, a migration, an upgrade, or a simplification. The behavior must stay the same, and the work fits in one session.",
+   [
+     [[], "", "State the stack and the net-added budget. A simplification targets zero or fewer lines.", "", ["principle-laziness-protocol", "principle-use-before-build"]],
+     [["delegate"], "", "Read the changelog and the breaking changes against primary sources.", "If the work is an upgrade or a move to a new API, do this step.", []],
+     [["blast-radius"], "", "Find what the change can break. Prove the one safety fact. blast-radius runs workers in parallel only past 10 files or callers.", "If the change is inside one module, skip this step.", []],
+     [["tdd"], "", "Pin the current behavior with tests before you touch it. The tests pass at once. Prove each test with one mutation, then restore the code.", "", []],
+     [[], "", "Delete dead code first. Then move every caller to the new shape. Delete the old shape in the same change. If a pure addition has nothing to remove, state that none exists.", "", ["principle-subtract-before-you-add", "principle-migrate-callers-then-delete-legacy-apis"]],
+     [[], "", "Write a codemod or script for the repeated edit.", "If the same edit repeats across 5 or more sites, do this step.", ["principle-build-the-lever"]],
+     [[], "", "Run the diff audit. The proof script of blast-radius is in .agent/ and is not counted.", "", ["principle-laziness-protocol", "principle-prove-it-works"]],
+     [["accept-change"], "", "Get an accept or reject verdict on the working tree. It reuses the blast-radius output if the diff is unchanged.", "", []]
+   ],
+   "tests pin the behavior. Each test fails when the behavior breaks. The old shape is gone. Net lines are at or under the budget. The verdict is accept.", "refactor / migrate / upgrade / simplify", "Change and fix"],
+  ["Fix a hard bug",
+   "Something is broken, flaky, throwing, or slow, and the cause is not obvious. If you can name the file and the cause, use the small change journey.",
+   [
+     [["diagnosing-bugs"], "", "First build a feedback loop that can fail on demand. diagnosing-bugs runs a one-commit why probe before it forms hypotheses. It forms hypotheses until it locates the cause. The Phase 1 test becomes the regression test.", "", []],
+     [[], "", "Choose the fix. If a guard or workaround is possible, fix the root cause instead.", "", ["principle-fix-root-causes"]],
+     [["blast-radius", "accept-change"], "or", "Make sure that the fix is safe. If the fix is under about 20 changed lines, run blast-radius. If it is larger, run accept-change.", "", ["principle-prove-it-works"]]
+   ],
+   "the original repro no longer fails. The Phase 1 test stays as the regression test. The debug scaffolding is gone. The fix has a blast-radius result or an accept verdict.", "it is broken / flaky / slow", "Change and fix"],
+  ["Add tests to existing code",
+   "Working code has no tests. You want to pin its behavior before anyone changes it.",
+   [
+     [["tdd"], "", "Use the Pin existing behaviour mode of tdd. Pick the highest seam that exercises real behavior. Write tests that pin what the code does now. The tests pass at once. Break the behavior once to see each test fail. Then restore it.", "If no seam exists, record that as the finding.", ["principle-prove-it-works", "principle-laziness-protocol"]],
+     [["accept-change"], "", "Get a verdict on the tests. They must pin behavior, not implementation.", "", []]
+   ],
+   "the tests pass, each test fails when the behavior breaks, no test depends on internals, and the verdict is accept.", "add tests / cover this / characterization tests", "Change and fix"],
+  ["Review a change before merging",
+   "You have a diff or a PR and you must know if it is safe. To attack a plan or a design that has no diff yet, use Pressure-test a plan or decision.",
+   [
+     [["accept-change"], "", "accept-change runs adversarial review, breakage analysis, and comment cleanup together. It reviews the working tree against the plan base or the merge-base. It takes the spec from the plan or the ticket first. It reuses an earlier blast-radius run if the diff is unchanged. It returns a binary verdict: reject on any Act on finding or failed rubric item, otherwise accept. It classes findings as act, consider, noted, or dismissed.", "", ["principle-prove-it-works"]],
+     [["adversarial-review", "blast-radius"], "or", "Run one of them alone if the question is narrow. Use adversarial-review to find out if a contested design is right. It gives no merge verdict. Use blast-radius to find out what can break.", "If the question is narrow, do this step instead of step 1.", []]
+   ],
+   "an accept or reject verdict exists, and it names the one thing most likely to bite.", "review this / is it safe to merge", "Review and understand"],
+  ["Understand unfamiliar code or a past decision",
+   "You are new to a subsystem, or you must know why something is the way it is.",
+   [
+     [["teach"], "", "Get a plain explanation that builds up one step at a time. teach traces the flow and finds the rationale itself. It draws a diagram per mermaid where a diagram helps. In a live conversation, it gives a short answer and stops. For a one-shot request, it gives the full account.", "", []],
+     [["why"], "", "Search the history and the sources for the motive. The result separates facts from inference. why labels claims with five confidence tiers. If no PR or remote exists, it uses only git log and git diff.", "If only the reason matters, do this step instead of step 1.", []]
+   ],
+   "you can state a mental model back, and you have sources for the claims about intent.", "how does X work / explain X / why is it like this", "Review and understand"],
+  ["Write or improve documentation",
+   "A readme, an RFC, a runbook, a PR description, or a commit message.",
+   [
+     [["technical-writing"], "", "Pick the document type. Then structure the document and write the sentences. technical-writing already applies six STE rules inline.", "", []],
+     [["simple-english"], "", "Do the deeper Simplified Technical English pass beyond the six inline rules.", "If the text is a runbook, a procedure, an error message, or is for readers who are not native speakers, do this step.", []],
+     [["mermaid", "gherkin"], "or", "Add a diagram, or add acceptance criteria as scenarios. A small diagram or a spec of one or two scenarios needs no reference reads. An undefined limit goes back to the requester as an open question.", "If the document needs them, do this step.", []],
+     [["unslop"], "", "Do a final pass to remove AI writing tells. It runs last.", "", []]
+   ],
+   "a document that reads plainly and has no AI tells.", "write docs / rewrite this plainly", "Review and understand"],
+  ["Get an answer or action only a person can give",
+   "The missing knowledge is with another human, or a step needs a human at a dashboard. To sharpen your own thinking, use Pressure-test a plan or decision.",
+   [
+     [["to-questionnaire", "wizard"], "or", "Use to-questionnaire if the gap is a fact or a decision that someone else holds. It writes the file and reports the path. It does not send the file. Use wizard if the gap is a step that only a human can do, such as credentials, a dashboard, or a cutover. wizard checks the script with bash -n and shellcheck. It traces that no value is left unplaced. It does not run the script end to end.", "", []]
+   ],
+   "a questionnaire is ready to hand over, or a wizard script passes its checks and is ready for the human to run.", "ask the PM / walk me through the dashboard", "People and sessions"],
+  ["Stop mid-way and hand off",
+   "It is the end of the day, or the next session is a fresh agent.",
+   [
+     [["recall"], "", "Ask for handoff mode. recall runs its checks first. Then it writes a portable document with fixed sections. The document names the skills that the next agent must call. It links to specs, issues, and commits and does not copy them. A long audited run keeps its decision trail, and the handoff links to it.", "", []]
+   ],
+   "a handover file exists that the next session can start from with recall.", "write a handoff / end of day", "People and sessions"],
+  ["Improve the setup after a session",
+   "Something went wrong twice, or a session taught you something worth keeping. This journey is not for a new skill: use Create or edit a skill.",
+   [
+     [["reflect"], "", "Examine the finished session through independent lenses, with or without a transcript. Send each learning to a skill, a check, or structure. reflect builds the check itself, first red and then green. The structural backlog goes to .agent/handoffs/reflect-backlog.md.", "", ["principle-encode-lessons-in-structure"]],
+     [["skill-creator"], "", "Apply the approved skill edit. Use writing-for-agents for the wording.", "If a learning becomes a skill edit, do this step.", []]
+   ],
+   "a durable check or skill edit exists that stops the repeat, and it is verified.", "retro this / improve the skills", "People and sessions"],
+  ["Create or edit a skill",
+   "You want a new skill, a change to an existing skill, or a measured test of a skill.",
+   [
+     [["skill-creator"], "", "Create, edit, or evaluate the skill. Run the checker with check-skills ai/skills ai/AGENTS.md from the repo root. The eval loop works without subagents. It fails with a clear message if no run is graded.", "For a small edit of wording or of one step, skip the eval loop. Edit, run the checker, and show the diff. To tighten the wording of a finished skill, use writing-for-agents.", ["principle-prove-it-works"]]
+   ],
+   "the skill passes the checker, and the diff or the graded eval runs show the change.", "new skill / edit this skill / eval a skill", "People and sessions"],
+  ["Change which model does what",
+   "You want a different model for exploration, implementation, judgment, or prose. Or you want to know how the choice is made.",
+   [
+     [["setup-ai"], "", "Resolve, edit, generate, verify, and confirm the effective policy with resolve_policy.py --source and --role. A change for a project targets .ai/model-policy.json. verify_policy.py is the validator. If it cannot confirm a model id, the role stays at inherit.", "To ask which model a role uses, run resolve_policy.py --role. Do not edit.", []]
+   ],
+   "the roles that you changed map to the models that you want. A role with an unconfirmed id stays at inherit. verify_policy.py passes, and resolve_policy.py confirms the effective policy.", "change the model policy / which model does X use", "Setup"],
+  ["Fix a missing tool or environment",
+   "A command is not found, a library is missing, or you need a reproducible environment.",
+   [
+     [["nixification"], "", "If you use one tool once, use an ephemeral Nix shell. If you reuse a tool or use two or more tools, write or extend a flake of about 20 lines with nixpkgs only. In a git repo, run git add flake.nix, nix flake lock, git add flake.lock, and then nix develop. nixification does not ask the human when something fails.", "", ["principle-use-before-build"]]
+   ],
+   "the tool runs, with no global install, from a one-shot nix shell or from nix develop.", "command not found / make a flake", "Setup"]
+];
+
+const FAMILIES = ["Build", "Explore and decide", "Change and fix", "Review and understand", "People and sessions", "Setup"];
+
+const PARTS = ["how", "no-comments", "domain-modeling", "show-me-your-work", "writing-for-agents"];
+
+
+
+const PROCESS = [
+  ["assess", "Evaluates a proposed change before you commit to it. It returns a verdict of do, do not, or conditional. It proves the facts that the verdict depends on and uses independent lenses."],
+  ["figure-it-out", "Designs the workflow for large or unusual work: the phases, a hypothesis loop, and a decision trail that you can audit."],
+  ["plan-work", "Turns a request into ordered units that can land on their own. Each unit has a check and a baseline."],
+  ["to-spec", "Writes a settled discussion as a spec. It does not interview you."],
+  ["architect", "Designs a module, an interface, or a data shape before you write code. Then it implements against the chosen sketch."],
+  ["arena", "Builds competing candidates in isolation. It scores them on a rubric and synthesizes one."],
+  ["delegate", "Briefs independent workers. Each worker gets an owned output, a policy role, and a proof requirement. Then delegate verifies their artifacts."],
+  ["accept-change", "Gives a merge verdict on a change. It runs adversarial review, breakage analysis, and comment cleanup together. It returns one prioritized accept or reject. Any Act on finding means reject."],
+  ["grill-with-docs", "Interviews you to sharpen a design. At the same time, it writes the ADRs and the glossary that the design needs. It combines grill and domain-modeling."],
+  ["grill", "Interviews you one question at a time, in rounds. It settles a plan or design branch by branch until no branch is open."],
+  ["team-discussion", "Runs independent lenses on one question. It returns one recommendation with evidence."],
+  ["diagnosing-bugs", "Builds a feedback loop that can fail. Then it finds the root cause and fixes it there."],
+  ["reflect", "Turns a finished session into durable skills, checks, or structure."],
+  ["teach", "Explains a thing so that the reader understands it, not only reads it. It builds the explanation one step at a time."]
+];
+
+const ONESHOTS = [
+  ["Understand and explain", [
+    ["how", "Traces the inputs, the state, the flow, and the outputs of a subsystem to build a real mental model. Use it to trace or map code, or to find where something lives. For a full explanation, use teach."],
+    ["why", "Searches the history and the sources for the reason behind a design choice, a threshold, or a past decision. It separates fact from inference."],
+    ["bro", "Restates the last message in plain language with no jargon. Use it to re-pitch something that did not land."],
+    ["to-questionnaire", "Turns a decision that you cannot answer alone into a questionnaire. The person who holds the knowledge fills it in."]
+  ]],
+  ["Review and verify", [
+    ["adversarial-review", "Runs independent reviewers on a design or a change. It classes findings as act, consider, noted, or dismissed."],
+    ["blast-radius", "Finds what a change can break elsewhere. It proves the one safety fact by running real code."],
+    ["no-comments", "Removes comments, suppressions, and warnings that restate the code. It keeps durable constraints."],
+    ["tdd", "Drives a test-first loop. The loop makes the intended behavior executable before production code changes. It also pins existing behavior with tests that pass at once. Each test is proven by one mutation."]
+  ]],
+  ["Design and model", [
+    ["prototype", "Builds a throwaway prototype to answer one question about logic, UI, or feasibility (a proof of concept or spike). To score candidates, use arena."],
+    ["domain-modeling", "Builds and sharpens the domain model. It writes the glossary and the ADRs as decisions settle."]
+  ]],
+  ["Track and audit", [
+    ["tickets", "Creates issues from a plan and manages GitHub Projects state: statuses, dependencies, sub-issues, milestones, and closing with evidence. Without gh, it keeps tickets as files."],
+    ["recall", "Rebuilds the recent work and returns one next move. It can also write a handoff for a fresh session. Use it to resume, or when the state is not clear."],
+    ["show-me-your-work", "Keeps an append-only TSV decision trail. A reviewer can rebuild a long run from it after the run ends."]
+  ]],
+  ["Write", [
+    ["technical-writing", "A standard with four layers (Diataxis, Google style, STE, Global English) to create docs, RFCs, readmes, PRs, and commits."],
+    ["simple-english", "Rewrites technical text to ASD-STE100 Simplified Technical English for a reader who is not a native speaker."],
+    ["unslop", "Edits text to remove AI writing tells and restore a human voice. Use it as a final pass."],
+    ["writing-for-agents", "Writing rules for documents that agents read: context pointers, the two loads, information hierarchy, leading words, and no-ops."],
+    ["gherkin", "Writes and reviews production-quality Gherkin .feature files and BDD scenarios."],
+    ["mermaid", "Writes and reviews Mermaid diagrams: flowcharts, sequence, class, state, ER, Gantt, and more."]
+  ]],
+  ["Meta and tooling", [
+    ["skill-creator", "Creates, edits, evaluates, and benchmarks skills. It also optimizes their descriptions for triggering."],
+    ["setup-ai", "Explains and updates the model policy. Exploration, implementation, judgment, and prose each map to inherit, one model, a diversity pool, or a pinned provider object. A project can override the policy with its own policy file."],
+    ["nixification", "Resolves a missing tool or dependency with Nix flakes or an ephemeral shell."],
+    ["wizard", "Generates an interactive bash wizard for steps that only a human can do: credentials, dashboards, and cutovers."]
+  ]]
+];
+
+const PRINCIPLES = [
+  ["principle-boundary-discipline", "Guards are at the system boundaries. Validate at the edge, trust internal types, and keep business logic in pure functions."],
+  ["principle-build-the-lever", "If the same mechanical edit repeats across 5 or more sites, build a codemod, script, or generator. Do not edit by hand."],
+  ["principle-encode-lessons-in-structure", "Turn a repeated correction into a lint, a check, or a script. Do not write more prose."],
+  ["principle-exhaust-the-design-space", "For a novel design, build 2-3 prototypes that are truly different. Compare them before you commit."],
+  ["principle-experience-first", "Resolve product and UX tradeoffs toward user delight. Ship fewer polished things instead of more rough things."],
+  ["principle-fix-root-causes", "At the fix-choice step, if a guard or workaround is possible, trace the cause to its root. Fix it there. Do not silence symptoms with guards."],
+  ["principle-foundational-thinking", "Get the core data structures right before you write logic. Then the code that follows becomes obvious."],
+  ["principle-guard-agent-context", "When the context fills, reduce a single big payload with a script, grep, or jq. Use subagents only for several independent slices. Keep only summaries in the main thread."],
+  ["principle-laziness-protocol", "Set a line budget before you write. Prefer deletion. Audit the diff against the budget with diff-budget.sh."],
+  ["principle-make-operations-idempotent", "Commands and loops reach the same end state after crashes or partial earlier runs."],
+  ["principle-migrate-callers-then-delete-legacy-apis", "When a new API is right, migrate the callers and delete the old API in the same wave."],
+  ["principle-minimize-reader-load", "Count the layers and the hidden state that a reader must trace. Inline any new symbol with fewer than two callers and no boundary. Shrink the scope of mutable state."],
+  ["principle-model-the-domain", "Encode the domain in a structure, not in scattered conditionals."],
+  ["principle-never-block-on-the-human", "On reversible execution work, continue and let the human correct you later. Ask only about one-way doors and decisions that shape the work. If no human is present, record the recommended answer as an assumption and continue."],
+  ["principle-outcome-oriented-execution", "In rewrites, converge on the target architecture. Breakage is allowed only inside a phase. Every phase ends at a passing check. The plan lists one smoke command for each phase."],
+  ["principle-prove-it-works", "Verify the real artifact, not a proxy, a self-report, or the fact that it compiles. Audit the diff against every stated limit."],
+  ["principle-redesign-from-first-principles", "Integrate a new requirement as if it was an assumption from day one. Do not bolt it on."],
+  ["principle-separate-before-serializing-shared-state", "Remove shared writers first. Serialize only if one shared writer is a real invariant."],
+  ["principle-sequence-verifiable-units", "Break multi-step work into small units that each end in a check. A red-first commit counts as passing through its recorded failing run. Unit 1 builds a missing check."],
+  ["principle-subtract-before-you-add", "Remove dead weight and speculative guards first. Then build on the simpler base. The first unit only deletes or simplifies, or states that nothing exists to remove."],
+  ["principle-type-system-discipline", "Brand primitives, derive types from their schema, and exhaust every variant. The Test can end as unverified if no checker exists."],
+  ["principle-use-before-build", "State the stack first. Then check the standard library, the dependencies, and the existing APIs before you write custom code. A named stack is binding."]
+];
+
+/* BEGIN GENERATED: skill data. Refresh with: check-skills --write-guide ai/skills ai/skills-guide.html */
+const FULL = {
+  "accept-change": "Gives a merge verdict on a diff, PR, or change by running adversarial review, breakage analysis, and comment cleanup together and returning one prioritized accept or reject. Use when asked is it safe to merge, sign off, accept, ship it, or LGTM, or for a full pre-merge check. A verdict, not a bug hunt on its own.",
+  "adversarial-review": "Runs independent reviewers against a design or change and classifies findings as act, consider, noted, or dismissed. Use when a change is contested, cross-cutting, or easy to get subtly wrong, and adversarial critique is wanted. It returns classified findings, never a merge verdict. Trigger on adversarial review, red team, poke holes, or find the flaws.",
+  "architect": "Designs a new module, interface, or data shape before code, sketching types and boundaries, running competing candidates, then implementing against the chosen sketch. Use when designing something new before writing code, not for a mechanical edit to an existing shape. Trigger on design the interface, sketch the types, or design this module first.",
+  "arena": "Builds competing candidate artifacts in isolation, scores them against a rubric, and synthesizes one result. Use when asked to implement or draft several versions and pick the best, not for one design to build or a feel test. Trigger on bake-off, score the options, or compare candidate implementations.",
+  "assess": "Evaluates a proposed change before committing to it and returns a verdict with evidence, covering whether it makes sense, what it buys, how big it is, and whether it is feasible. Use when deciding whether to make a change, not how to make it or to prove it by building. Trigger on does this make sense, should we do this, is it worth it, how big a change, or is this feasible.",
+  "blast-radius": "Finds what a change could break elsewhere beyond the diff and proves the one safety fact by running real code. Use when asked what a change could break, for the blast radius of a change, or for a small diff not yet trusted. Trigger on blast radius or what could this break.",
+  "bro": "Restates the last message in plain, jargon-free human language. Use when the user asks to re-pitch or plain-language something that did not land.",
+  "delegate": "Briefs independent workers with an owned output and a proof requirement, then verifies their artifacts. Use when work can be split into independent, non-competing slices and run in parallel. Trigger on subagents, parallelize, fan out, or run these independently. Not for debating a question or reviewing a change.",
+  "diagnosing-bugs": "Runs a diagnosis loop for hard bugs and performance regressions that builds a red-capable feedback loop before hypothesising, then fixes at the root. Use when the user says diagnose or debug this, or reports something broken, throwing, failing, or slow, not for a failure whose cause is already known.",
+  "domain-modeling": "Builds and sharpens a project's domain model by challenging terms, probing concrete scenarios, and writing a glossary and ADRs as decisions settle. Use when naming or defining a term, or when writing an ADR for a settled decision. Merely reading a glossary for vocabulary is not this skill, and neither is interviewing the user.",
+  "figure-it-out": "Designs an auditable phase plan with a hypothesis loop and a decision trail for work too large or unusual for a routine plan. Use when a change is large, cross-cutting, or spans multiple sessions, or the user will review results after stepping away. Trigger on figure it out, long multi-session change, or review it later. Not for a short task that fits one session.",
+  "gherkin": "Writes production-quality Gherkin `.feature` files. Use when asked to write, review, fix, or generate Gherkin scenarios, Cucumber feature files, BDD specifications, or Given/When/Then acceptance criteria, or to convert requirements or user stories into Gherkin. Trigger on BDD, behaviour-driven, behavior-driven, scenario outline, or executable specification.",
+  "grill": "Interviews the user one question at a time to sharpen a plan, decision, or idea, working a design tree in rounds until every branch is settled. Use when asked to grill me, interview me, or quiz me on my own thinking before building.",
+  "grill-with-docs": "Grills the user to sharpen a design while writing the ADRs and glossary the conversation implies. Use when a design conversation should leave a written record as it goes. Trigger on grill with docs. Not for a plain interview that needs no written record.",
+  "how": "Traces a subsystem's call graph and data flow and returns a written trace, used as a step inside other skills or to answer where code lives. Use when explicitly asked to trace or map code. Trigger on trace this, map this, or where does this live. Not for teaching a learner.",
+  "mermaid": "Writes production-quality Mermaid diagrams. Use when asked to write, review, fix, or generate a Mermaid diagram or any diagram as text, including flowchart, sequence, class, state, ER, Gantt, pie, mindmap, timeline, gitgraph, C4, sankey, block, kanban, and architecture diagrams.",
+  "nixification": "Resolves a missing tool, binary, library, or dependency with Nix flakes or an ephemeral shell. Use on command not found, missing-package errors, or a request to create a flake.nix or reproducible environment. Not for NixOS system or home-manager configuration, nor for errors whose cause is not an absent tool.",
+  "no-comments": "Removes code comments, suppressions, and warning markers that restate code, keeps durable constraints, and encodes recurring ones as structure. Use when comments or suppressions need cleanup.",
+  "plan-work": "Turns a request into ordered, independently landable units, each with a check and a baseline to measure against. Use for a routine multi-step effort, or when asked to plan, break down, or sequence work into tasks or slices. Trigger on plan this, break it down, decompose, or sequence the work.",
+  "principle-boundary-discipline": "Apply when external data enters the system, such as the CLI, config, network, or an external API. Validate and handle errors there, and trust internal types so business logic stays pure.",
+  "principle-build-the-lever": "Apply when the same mechanical edit repeats across five or more sites. Build a codemod, script, or generator instead of editing by hand, so a reviewer can rerun it.",
+  "principle-encode-lessons-in-structure": "Apply when the same instruction is about to be written a second time, or a correction keeps recurring. Encode the rule as a lint, metadata flag, runtime check, or script instead of more text.",
+  "principle-exhaust-the-design-space": "Apply when a novel interaction or subsystem has no precedent in the codebase. Prototype two or three alternatives and compare before committing.",
+  "principle-experience-first": "Apply when product, UX, or feature-scope tradeoffs come up. Choose user delight over implementation convenience, and ship fewer polished features over more rough ones.",
+  "principle-fix-root-causes": "Apply when choosing the fix for a failure whose cause is known or suspected, with a guard or workaround on the table. Fix at the root cause and sweep the same pattern everywhere. Not for locating an unknown cause.",
+  "principle-foundational-thinking": "Apply when choosing the core data structures of a new module. Get the data shape right first so downstream code becomes obvious.",
+  "principle-guard-agent-context": "Apply when context is filling up, on outputs or files over about 200 lines, repeated reads, or fan-out planning. Reduce bulk with a script or route it to subagents, and keep summaries in the main thread, not raw payloads.",
+  "principle-laziness-protocol": "Apply before writing code that adds lines, when tempted to add a layer, abstraction, or config knob, when a smaller change would solve the problem, and when a task states a size cap. Set a line budget, prefer deleting code, and audit the diff against it.",
+  "principle-make-operations-idempotent": "Apply when designing commands, lifecycle steps, or processing loops that run amid crashes, restarts, and retries. Converge to the same end state regardless of partial prior runs.",
+  "principle-migrate-callers-then-delete-legacy-apis": "Apply when replacing an existing internal API that still has callers. Migrate every caller and delete the old API in the same change.",
+  "principle-minimize-reader-load": "Apply when shaping or reviewing code with many indirections or hidden state, or when a task bans indirection or wrapping code. Collapse one-caller wrappers and shrink mutable scope.",
+  "principle-model-the-domain": "Apply when conditionals or booleans encode domain rules. Replace the branch ladder with a datatype that models the domain.",
+  "principle-never-block-on-the-human": "Apply when tempted to ask whether to do something on reversible execution work. Proceed, present the result, and let the human course-correct after the fact. Reserve questions for one-way doors, product direction, and decisions that shape the work.",
+  "principle-outcome-oriented-execution": "Apply when executing a planned rewrite or restructure with phase boundaries. Converge on the verified target architecture and accept planned, reversible breakage inside a phase.",
+  "principle-prove-it-works": "Apply when a task is complete and before declaring it done. Verify against the real artifact (run the feature, read the actual value, inspect the diff), not a proxy, self-report, or 'it compiles.'",
+  "principle-redesign-from-first-principles": "Apply when adding a requirement to an existing design. Reshape it as if the requirement were foundational, instead of bolting it on.",
+  "principle-separate-before-serializing-shared-state": "Apply when concurrent actors might write to the same file, branch, key, or state object. Eliminate the sharing first, and serialize structurally only when one shared writer is a real invariant.",
+  "principle-sequence-verifiable-units": "Apply when work spans many steps or commits that need checkable intermediate states. Split it into units that each end at a passing check, and order the delivery so the sequence replays.",
+  "principle-subtract-before-you-add": "Apply when about to make a large addition or refactor. Delete dead code, redundant validators, and stubs first, then build on the smaller base.",
+  "principle-type-system-discipline": "Apply when declaring types or signatures in statically typed code. Brand primitives, derive shapes from their schema, and exhaust every variant.",
+  "principle-use-before-build": "Apply when about to write a helper, wrapper, or custom implementation, and when a task names an SDK, module, or stack. Check the standard library, installed packages, and existing project APIs first.",
+  "prototype": "Builds a throwaway prototype to answer one question, logic, UI, or feasibility, and captures the answer. Use to sanity-check whether a state model feels right, to explore what a UI should look like, or to prove a proof of concept or spike works, not for scoring finished candidates. Trigger on prototype, mock it up, proof of concept, POC, or spike.",
+  "recall": "Reconstructs recent work from the conversation, repository state, and history and returns one next move. Use when resuming work or the current state is unclear, or when handing off to a fresh session. Trigger on where were we, recall, what is the current state, or write a handoff.",
+  "reflect": "Examines a completed session through independent lenses and routes the learnings into skills, checks, or structure. Use after a session ends, on retro, what did we learn, or improve the setup. Not for starting a skill from scratch.",
+  "setup-ai": "Explains and updates which model each role uses in the shared AI workflow. Use when changing the model policy or asking how model selection works.",
+  "show-me-your-work": "Appends each decision, reason, evidence, and result to a TSV trail while a run proceeds. Use when asked for a decision log, audit trail, or show your work, or to record choices alongside any run so a reviewer can reconstruct them.",
+  "simple-english": "Writes or rewrites technical text to the rules of ASD-STE100 Simplified Technical English so it is clear and unambiguous for a non-native reader. Use when rewriting existing text for plain, unambiguous English or STE compliance, on runbooks, procedures, error messages, release notes, incident reports, and API guides. Also use on STE, Simplified Technical English, or ASD-STE100, or for docs that translate well. Not for general tone or document structure.",
+  "skill-creator": "Creates new skills, modifies and improves existing skills, and measures skill performance. Use when users want to create a skill from scratch, edit, or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy. Not for tightening the wording of a finished skill.",
+  "tdd": "Drives a test-first loop that makes intended behaviour executable before production code changes. Use when asked for TDD, a failing test, or a regression test, or when a behaviour change has a cheap test target and deserves to be locked down first. Trigger on TDD, test-first, write a failing test, or add a regression test.",
+  "teach": "Explains how something works so it is understood, not just stated, weaving a traced flow and its rationale into one plain account built up a step at a time. Use when asked to explain or help someone really understand a topic, or how a subsystem works. Trigger on explain this, how does X work, help me understand, or teach me. Not for a bare trace or a history lookup.",
+  "team-discussion": "Runs independent lenses on one question and returns one evidenced recommendation, surfacing where perspectives disagree. Use when one question needs several viewpoints, such as a roundtable or panel. Trigger on roundtable, panel, get perspectives, or what do others think. Not for splitting work into slices.",
+  "technical-writing": "Applies a four-layer technical-writing standard covering Diátaxis structure, Google developer style sentences, STE instruction rules, and Global English syntax. Use when creating or structuring a doc, readme, RFC, PR description, or commit message.",
+  "tickets": "Manages GitHub Projects tickets and board state, including creating issues from a plan, statuses, dependencies, sub-issues, milestones, issue templates, and closing with evidence. Use when creating, moving, or closing tickets or working the board, backlog, or milestones. Trigger on file these as issues, move this ticket, update the board, what is blocked, milestone, or close this issue. Not for writing the requirements themselves.",
+  "to-questionnaire": "Turns a decision the user cannot answer alone into a fillable questionnaire for the person who holds the knowledge. Use when the missing information lives with another human rather than in the code, history, or sources.",
+  "to-spec": "Synthesises the current conversation into a written spec and publishes it, without interviewing. Use when a discussion is settled and a durable requirements artifact is needed before planning. Trigger on write the spec, capture the requirements, or turn this into a spec.",
+  "unslop": "Edits text to remove AI writing tells and restore a human voice. Use as the last pass on prose before delivery, after any other writing skill, or when asked to humanize text, de-slop it, or remove AI tells.",
+  "why": "Searches history, ADRs, and sources for the motive behind a design choice, threshold, or past decision, separating facts from inference. Use when asked why did we choose X, why is it built this way, or what was the reasoning.",
+  "wizard": "Generates an interactive bash wizard that walks a human through steps only they can perform. Use when provisioning infrastructure, setting up credentials or CI secrets, walking a third-party dashboard, or running a one-off migration or cutover. Do not use it for steps the agent can perform itself.",
+  "writing-for-agents": "Applies writing doctrine to the prose of agent-consumed documents such as skills, AGENTS.md, and referenced files, covering context pointers, information hierarchy, leading words, and no-op pruning. Use when tightening the wording of a skill or AGENTS.md. Not for creating or evaluating a skill.",
+};
+const REFS = {
+  "accept-change": ["adversarial-review", "blast-radius", "delegate", "no-comments", "principle-laziness-protocol", "principle-minimize-reader-load", "principle-prove-it-works"],
+  "adversarial-review": ["delegate", "grill", "principle-prove-it-works"],
+  "architect": ["adversarial-review", "arena", "delegate", "domain-modeling", "how", "plan-work", "principle-boundary-discipline", "principle-encode-lessons-in-structure", "principle-fix-root-causes", "principle-foundational-thinking", "principle-laziness-protocol", "principle-make-operations-idempotent", "principle-minimize-reader-load", "principle-model-the-domain", "principle-outcome-oriented-execution", "principle-redesign-from-first-principles", "principle-separate-before-serializing-shared-state", "principle-subtract-before-you-add", "principle-type-system-discipline", "principle-use-before-build", "tdd", "why"],
+  "arena": ["delegate", "domain-modeling", "principle-separate-before-serializing-shared-state", "prototype"],
+  "assess": ["architect", "arena", "blast-radius", "delegate", "domain-modeling", "grill", "how", "plan-work", "prototype", "team-discussion", "to-questionnaire", "why"],
+  "blast-radius": ["delegate", "how", "principle-prove-it-works", "unslop", "why"],
+  "bro": ["domain-modeling", "simple-english"],
+  "delegate": ["architect", "principle-build-the-lever", "principle-guard-agent-context", "principle-prove-it-works", "principle-separate-before-serializing-shared-state", "setup-ai", "why"],
+  "diagnosing-bugs": ["accept-change", "blast-radius", "domain-modeling", "principle-fix-root-causes", "tdd", "why"],
+  "domain-modeling": ["to-spec"],
+  "figure-it-out": ["architect", "arena", "delegate", "diagnosing-bugs", "plan-work", "principle-encode-lessons-in-structure", "principle-foundational-thinking", "principle-guard-agent-context", "principle-laziness-protocol", "principle-never-block-on-the-human", "principle-outcome-oriented-execution", "principle-prove-it-works", "principle-separate-before-serializing-shared-state", "principle-sequence-verifiable-units", "principle-use-before-build", "prototype", "recall", "show-me-your-work", "tdd"],
+  "gherkin": ["how"],
+  "grill": ["delegate", "how", "principle-experience-first", "principle-never-block-on-the-human", "why"],
+  "grill-with-docs": ["domain-modeling", "grill"],
+  "how": ["delegate"],
+  "mermaid": ["why"],
+  "nixification": ["principle-use-before-build"],
+  "no-comments": ["accept-change", "delegate", "principle-minimize-reader-load"],
+  "plan-work": ["accept-change", "architect", "delegate", "principle-foundational-thinking", "principle-laziness-protocol", "principle-make-operations-idempotent", "principle-prove-it-works", "principle-sequence-verifiable-units", "principle-subtract-before-you-add", "tickets", "to-spec", "wizard"],
+  "principle-boundary-discipline": ["principle-migrate-callers-then-delete-legacy-apis", "principle-type-system-discipline"],
+  "principle-build-the-lever": ["delegate", "principle-laziness-protocol", "principle-prove-it-works", "principle-use-before-build"],
+  "principle-encode-lessons-in-structure": ["reflect"],
+  "principle-exhaust-the-design-space": ["prototype"],
+  "principle-experience-first": [],
+  "principle-fix-root-causes": ["diagnosing-bugs"],
+  "principle-foundational-thinking": ["architect", "principle-model-the-domain"],
+  "principle-guard-agent-context": ["delegate"],
+  "principle-laziness-protocol": ["principle-minimize-reader-load", "principle-subtract-before-you-add"],
+  "principle-make-operations-idempotent": ["wizard"],
+  "principle-migrate-callers-then-delete-legacy-apis": [],
+  "principle-minimize-reader-load": ["principle-guard-agent-context"],
+  "principle-model-the-domain": ["principle-foundational-thinking", "principle-type-system-discipline"],
+  "principle-never-block-on-the-human": ["grill"],
+  "principle-outcome-oriented-execution": ["principle-migrate-callers-then-delete-legacy-apis", "principle-prove-it-works", "principle-sequence-verifiable-units"],
+  "principle-prove-it-works": ["principle-laziness-protocol", "principle-minimize-reader-load", "principle-use-before-build", "show-me-your-work"],
+  "principle-redesign-from-first-principles": ["principle-sequence-verifiable-units"],
+  "principle-separate-before-serializing-shared-state": [],
+  "principle-sequence-verifiable-units": ["principle-build-the-lever", "principle-prove-it-works"],
+  "principle-subtract-before-you-add": [],
+  "principle-type-system-discipline": ["principle-boundary-discipline", "principle-encode-lessons-in-structure", "principle-model-the-domain"],
+  "principle-use-before-build": ["principle-build-the-lever", "principle-laziness-protocol", "principle-minimize-reader-load"],
+  "prototype": ["arena", "principle-exhaust-the-design-space", "tdd"],
+  "recall": ["show-me-your-work"],
+  "reflect": ["delegate", "principle-encode-lessons-in-structure", "skill-creator", "writing-for-agents"],
+  "setup-ai": ["delegate", "principle-never-block-on-the-human"],
+  "show-me-your-work": ["delegate", "principle-encode-lessons-in-structure", "unslop"],
+  "simple-english": ["unslop", "writing-for-agents"],
+  "skill-creator": ["why", "writing-for-agents"],
+  "tdd": ["architect", "diagnosing-bugs", "gherkin", "principle-encode-lessons-in-structure", "principle-fix-root-causes", "principle-laziness-protocol", "principle-prove-it-works", "principle-sequence-verifiable-units", "principle-use-before-build"],
+  "teach": ["delegate", "how", "mermaid", "unslop", "why"],
+  "team-discussion": ["adversarial-review", "arena", "delegate", "how", "principle-experience-first", "principle-prove-it-works", "why"],
+  "technical-writing": ["blast-radius", "simple-english", "unslop"],
+  "tickets": ["plan-work", "principle-migrate-callers-then-delete-legacy-apis", "to-spec"],
+  "to-questionnaire": ["grill", "how", "why"],
+  "to-spec": ["architect", "domain-modeling", "grill", "grill-with-docs", "plan-work", "tickets"],
+  "unslop": ["simple-english"],
+  "why": ["domain-modeling", "to-questionnaire"],
+  "wizard": ["plan-work"],
+  "writing-for-agents": ["skill-creator"],
+};
+/* END GENERATED */
+
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+function searchBlob(parts) { return parts.join(" ").toLowerCase(); }
+
+function setFilter(name) {
+  const s = document.getElementById("search");
+  s.value = name;
+  s.dispatchEvent(new Event("input"));
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+const OPS = { then: " \u203a ", or: " or ", with: " + " };
+function chipEl(name) {
+  const chip = el("span", "chip link", name);
+  chip.title = "Open " + name;
+  chip.addEventListener("click", ev => { ev.stopPropagation(); openSkill(name); });
+  return chip;
+}
+function chipRow(label, names) {
+  const row = el("div", "chain extra");
+  row.appendChild(el("span", "tag", label));
+  names.forEach(n => row.appendChild(chipEl(n)));
+  return row;
+}
+function journeyCard([title, when, steps, done, say]) {
+  const c = el("details", "journey");
+  c.dataset.search = searchBlob([title, when, done, say || "", ...steps.flatMap(([sk, , t, b, ap]) => [...sk, ...(ap || []), t, b || ""])]);
+  const sm = el("summary");
+  sm.appendChild(el("h3", null, title));
+  sm.appendChild(el("p", "when", when));
+  if (say) sm.appendChild(el("span", "say", "say: " + say));
+  c.appendChild(sm);
+  const body = el("div", "jbody");
+  const ol = el("ol");
+  steps.forEach(([skills, op, text, branch, applies]) => {
+    const li = el("li", "step");
+    if (skills.length) {
+      const ch = el("div", "chain");
+      skills.forEach((name, i) => {
+        if (i) ch.appendChild(el("span", "sep", OPS[op] || " + "));
+        ch.appendChild(chipEl(name));
+      });
+      li.appendChild(ch);
+    }
+    li.appendChild(el("p", null, text));
+    if (branch) li.appendChild(el("p", "branch", branch));
+    const inside = [...new Set(skills.flatMap(n => (REFS[n] || []).filter(r => PARTS.includes(r) && !skills.includes(r))))];
+    if (inside.length) li.appendChild(chipRow("uses", inside));
+    if (applies && applies.length) li.appendChild(chipRow("applies", applies));
+    ol.appendChild(li);
+  });
+  body.appendChild(ol);
+  const d = el("div", "done");
+  d.append("Done when: ", el("b", null, done));
+  body.appendChild(d);
+  c.appendChild(body);
+  return c;
+}
+function skillCard(name, desc, kind) {
+  const c = el("div", "card " + (kind || ""));
+  c.dataset.search = searchBlob([name, desc]);
+  c.dataset.name = name;
+  c.tabIndex = 0;
+  c.setAttribute("role", "button");
+  c.addEventListener("click", () => openSkill(name));
+  c.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); openSkill(name); } });
+  const h = el("h3");
+  h.appendChild(el("span", "name", name));
+  c.appendChild(h);
+  c.appendChild(el("p", null, desc));
+  return c;
+}
+
+const rulesRoot = document.getElementById("rules-list");
+RULES.forEach(([text, ref]) => {
+  const li = el("li");
+  li.appendChild(el("span", "txt", text));
+  if (ref) { const r = el("span", "ref link", ref); r.style.cursor = "pointer"; r.title = "Open " + ref; r.addEventListener("click", () => openSkill(ref)); li.appendChild(r); }
+  rulesRoot.appendChild(li);
+});
+
+const journeysRoot = document.getElementById("journeys-grid");
+const jTools = el("div", "tools");
+[["Expand all", true], ["Collapse all", false]].forEach(([label, open]) => {
+  const b = el("button", null, label);
+  b.type = "button";
+  b.addEventListener("click", () => journeysRoot.querySelectorAll("details.journey:not(.hidden)").forEach(d => { d.open = open; }));
+  jTools.appendChild(b);
+});
+journeysRoot.before(jTools);
+FAMILIES.forEach(family => {
+  journeysRoot.appendChild(el("h3", "group", family));
+  const fam = el("div", "jfam");
+  JOURNEYS.forEach((j, i) => { if (j[5] === family) { const c = journeyCard(j); c.id = "journey-" + i; fam.appendChild(c); } });
+  journeysRoot.appendChild(fam);
+});
+
+const procRoot = document.getElementById("process-grid");
+PROCESS.forEach(([n, d]) => procRoot.appendChild(skillCard(n, d, "proc")));
+
+const oneRoot = document.getElementById("oneshots");
+ONESHOTS.forEach(([group, rows]) => {
+  oneRoot.appendChild(el("h3", "group", group));
+  const g = el("div", "grid");
+  rows.forEach(([n, d]) => g.appendChild(skillCard(n, d, PARTS.includes(n) ? "part" : "")));
+  oneRoot.appendChild(g);
+});
+
+const pRoot = document.getElementById("principles-grid");
+PRINCIPLES.forEach(([n, d]) => pRoot.appendChild(skillCard(n, d, "rule")));
+
+/* ---- skill drawer ---- */
+const KIND = {};
+PROCESS.forEach(([n]) => KIND[n] = ["Process", "process"]);
+ONESHOTS.forEach(([g, rows]) => rows.forEach(([n]) => KIND[n] = [(PARTS.includes(n) ? "Building block" : "One-shot") + " \u00b7 " + g, PARTS.includes(n) ? "part" : "oneshot"]));
+PRINCIPLES.forEach(([n]) => KIND[n] = ["Principle", "principle"]);
+const USED_BY = {};
+Object.entries(REFS).forEach(([from, tos]) => tos.forEach(to => (USED_BY[to] = USED_BY[to] || []).push(from)));
+const drawer = document.getElementById("drawer");
+let drawerFrom = null;
+function drawerChips(names) {
+  const c = el("div", "chain");
+  names.forEach(n => { const chip = el("span", "chip link", n); chip.addEventListener("click", ev => { ev.stopPropagation(); openSkill(n); }); c.appendChild(chip); });
+  return c;
+}
+function openSkill(name) {
+  if (!KIND[name]) return;
+  drawerFrom = document.activeElement;
+  drawer.textContent = "";
+  const x = el("button", "x", "Close");
+  x.type = "button";
+  x.addEventListener("click", closeDrawer);
+  drawer.appendChild(x);
+  drawer.appendChild(el("span", "badge " + KIND[name][1], KIND[name][0]));
+  drawer.appendChild(el("h3", null, name));
+  drawer.appendChild(el("p", "d", FULL[name] || ""));
+  if (PARTS.includes(name)) drawer.appendChild(el("p", "d", "Building block: other skills run it. Call it directly only for its narrow task."));
+  const section = (title, node) => { drawer.appendChild(el("h5", null, title)); drawer.appendChild(node); };
+  const uses = REFS[name] || [], usedBy = USED_BY[name] || [];
+  section("Hands off to", uses.length ? drawerChips(uses) : el("span", "muted", "None. This skill is a leaf."));
+  section("Called from", usedBy.length ? drawerChips(usedBy) : el("span", "muted", "None. Call it directly."));
+  const js = JOURNEYS.map((j, i) => [j, i]).filter(([j]) => j[2].some(st => st[0].includes(name) || (st[4] || []).includes(name)));
+  if (js.length) {
+    drawer.appendChild(el("h5", null, "In journeys"));
+    js.forEach(([j, i]) => { const b = el("button", "lnk", j[0]); b.type = "button"; b.addEventListener("click", () => { closeDrawer(); search.value = ""; update(); const d = document.getElementById("journey-" + i); d.open = true; d.scrollIntoView({ behavior: "smooth", block: "start" }); }); drawer.appendChild(b); });
+  }
+  const f = el("button", "lnk", "Filter the page to this skill");
+  f.type = "button";
+  f.style.marginTop = "14px";
+  f.addEventListener("click", () => { closeDrawer(); setFilter(name); });
+  drawer.appendChild(f);
+  drawer.classList.add("open");
+  drawer.setAttribute("aria-hidden", "false");
+  x.focus();
+}
+function closeDrawer() {
+  if (!drawer.classList.contains("open")) return;
+  drawer.classList.remove("open");
+  drawer.setAttribute("aria-hidden", "true");
+  if (drawerFrom && drawerFrom.focus) drawerFrom.focus();
+}
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeDrawer(); });
+document.addEventListener("click", e => {
+  if (drawer.classList.contains("open") && !drawer.contains(e.target) && !e.target.closest(".card[data-name], .chip.link, .ref.link")) closeDrawer();
+});
+
+const oneShotCount = ONESHOTS.reduce((n, [, rows]) => n + rows.length, 0);
+const totalLabel = (PROCESS.length + oneShotCount + PRINCIPLES.length) + " skills";
+const countEl = document.getElementById("count");
+
+const search = document.getElementById("search");
+const cards = Array.from(document.querySelectorAll(".card"));
+const journeyEls = Array.from(document.querySelectorAll(".journey"));
+const groups = Array.from(document.querySelectorAll("h3.group"));
+const NOUN = { journeys: "journeys", process: "process skills", skills: "one-shot skills", principles: "principles" };
+const SEL = { journeys: ".journey", process: ".card", skills: ".card", principles: ".card" };
+const notes = {};
+Object.keys(NOUN).forEach(id => {
+  const n = el("p", "empty-note hidden");
+  n.setAttribute("role", "status");
+  document.getElementById(id).appendChild(n);
+  notes[id] = n;
+});
+
+function pickCols(n, max) {
+  if (n <= 1 || max <= 1) return 1;
+  max = Math.min(max, n);
+  let best = max, bestEmpty = Infinity;
+  for (let c = max; c >= 2; c--) {
+    const empty = (c - (n % c)) % c;
+    if (empty < bestEmpty) { best = c; bestEmpty = empty; }
+  }
+  return best;
+}
+function balanceAll() {
+  document.querySelectorAll(".grid, .layers").forEach(g => {
+    const w = g.clientWidth;
+    if (!w) return;
+    const n = Array.from(g.children).filter(c => !c.classList.contains("hidden")).length;
+    const gap = parseFloat(getComputedStyle(g).columnGap) || 12;
+    const min = g.classList.contains("layers") ? 190 : 260;
+    const max = Math.max(1, Math.floor((w + gap) / (min + gap)));
+    g.style.gridTemplateColumns = "repeat(" + pickCols(n, max) + ", minmax(0, 1fr))";
+  });
+}
+
+function update() {
+  const q = search.value.trim().toLowerCase();
+  let shown = 0;
+  for (const e of [...cards, ...journeyEls]) {
+    const hit = !q || (e.dataset.search || "").includes(q);
+    e.classList.toggle("hidden", !hit);
+    if (hit) shown++;
+  }
+  for (const g of groups) {
+    let sib = g.nextElementSibling, any = false;
+    while (sib && !sib.classList.contains("group")) {
+      if (sib.classList.contains("grid") && sib.querySelector(".card:not(.hidden)")) any = true;
+      if (sib.classList.contains("jfam") && sib.querySelector(".journey:not(.hidden)")) any = true;
+      sib = sib.nextElementSibling;
+    }
+    g.classList.toggle("hidden", !any && !!q);
+    const grid = g.nextElementSibling;
+    if (grid && (grid.classList.contains("grid") || grid.classList.contains("jfam"))) grid.classList.toggle("hidden", !any && !!q);
+  }
+  countEl.textContent = q ? shown + (shown === 1 ? " match" : " matches") : totalLabel;
+  for (const id of Object.keys(NOUN)) {
+    const left = document.getElementById(id).querySelectorAll(SEL[id] + ":not(.hidden)").length;
+    notes[id].textContent = left || !q ? "" : "No " + NOUN[id] + " match \u201c" + search.value.trim() + "\u201d.";
+    notes[id].classList.toggle("hidden", !!left || !q);
+  }
+  balanceAll();
+}
+search.addEventListener("input", update);
+update();
+new ResizeObserver(balanceAll).observe(document.querySelector("main"));
+
+const navLinks = Array.from(document.querySelectorAll("nav.nav a"));
+const spy = new IntersectionObserver(entries => {
+  for (const en of entries) {
+    if (!en.isIntersecting) continue;
+    navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + en.target.id));
+  }
+}, { rootMargin: "-90px 0px -65% 0px" });
+document.querySelectorAll("main section[id]").forEach(sec => spy.observe(sec));
+</script>
+
+</body>
+</html>

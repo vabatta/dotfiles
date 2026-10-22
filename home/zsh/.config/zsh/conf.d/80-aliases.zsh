@@ -1,0 +1,7 @@
+alias -- ..='cd ..'
+alias -- ...='cd ../..'
+alias -- ....='cd ../../..'
+alias -- cdd='cd ~/Downloads'
+alias -- cdp='cd ~/Projects'
+alias -- la='ls -lah'
+alias -- ll='ls -lh'

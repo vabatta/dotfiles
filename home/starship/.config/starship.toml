@@ -1,0 +1,21 @@
+continuation_prompt = "▶ "
+
+[kubernetes]
+disabled = false
+symbol = "☸️ "
+
+[memory_usage]
+disabled = false
+symbol = "🐏 "
+
+[nix_shell]
+disabled = false
+symbol = "❄️ "
+
+[shlvl]
+disabled = false
+symbol = "↕️ "
+
+[terraform]
+disabled = false
+symbol = "🌋 "
